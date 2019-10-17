@@ -1,27 +1,36 @@
 package MyMusic;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import javafx.scene.layout.*;
+import java.io.IOException;
 
 public class Main extends Application {
 
+    private Scene scene;
     @Override
     public void start(Stage primaryStage) throws Exception {
-        VBox root = new VBox();
+       VBox root1 = new VBox();
 
         // Set up layout
-        root.getChildren().addAll(new TopBar(), new SearchLayout());
+        root1.getChildren().addAll(new TopBar(), new SearchLayout());
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
 
         // Set the title
         primaryStage.setTitle("My Music");
 
-        // Set the initial scene
-        primaryStage.setScene(new Scene(root, Screen.getPrimary().getBounds().getMaxX(), Screen.getPrimary().getBounds().getMaxY()));
+        scene = new Scene(root, Screen.getPrimary().getBounds().getMaxX(), Screen.getPrimary().getBounds().getMaxY());
 
+        // Set the initial scene
+        primaryStage.setScene(scene);
+
+        scene.getStylesheets().add(Main.class.getResource("css/styles.css").toExternalForm());
+        //scene.setRoot(root1);
         // Show the scene
         primaryStage.show();
     }
@@ -29,6 +38,12 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+
+    public void changePage(String fxmlPath) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+        scene.setRoot(root);
     }
 
 }

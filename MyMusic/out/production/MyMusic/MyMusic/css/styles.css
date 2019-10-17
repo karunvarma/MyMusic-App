@@ -1,0 +1,28 @@
+#login-box {
+    -fx-border-color: black;
+}
+
+.login-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 44px;
+}
+
+.login-label {
+    -fx-font-size: 22px;
+}
+
+
+.login-field {
+
+
+}
+
+.login-btn {
+    -fx-font-size: 18px;
+}
+
+.login-error {
+    -fx-text-fill: red;
+    -fx-font-size: 18px;
+    -fx-text-alignment: center;
+}

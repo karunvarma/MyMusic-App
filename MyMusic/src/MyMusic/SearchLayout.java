@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class SearchLayout extends HBox {
@@ -50,8 +51,7 @@ public class SearchLayout extends HBox {
 
 
             // Set style
-            setStyle("-fx-border-style: solid"
-            );
+            setStyle("-fx-border-style: solid");
 
             // Add children
             getChildren().addAll(label, checkBox_Track, checkBox_Album, checkBox_Artist, titledPane_Genre);
@@ -97,7 +97,13 @@ public class SearchLayout extends HBox {
 
     private class SearchResultsVBox extends VBox {
         SearchResultsVBox() {
-
+            Album album = new Album();
+            album.setName("My Album");
+            try {
+                getChildren().addAll(new ItemLayout(album));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
