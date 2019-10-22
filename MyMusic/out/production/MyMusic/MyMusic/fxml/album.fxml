@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -12,7 +9,7 @@
 <?import javafx.scene.image.Image?>
 <?import com.sun.javafx.scene.control.skin.TableHeaderRow?>
 <HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="MyMusic.Controller" alignment="CENTER">
-    <VBox spacing="15">
+    <VBox spacing="25">
         <HBox styleClass="tabBar" alignment="CENTER">
             <padding><Insets top="10"></Insets></padding>
             <Button text="Your Music"/>
@@ -29,7 +26,6 @@
                 </image>
             </ImageView>
             <VBox spacing="10">
-                <padding><Insets top="0"></Insets></padding>
                 <Label text="Name" fx:id="albumNameLabel" styleClass="label-l"></Label>
                 <Label text="Artist" fx:id="albumArtistLabel" styleClass="label-m"></Label>
                 <Button text="Add to YourMusic" fx:id="addAlbumBtn" styleClass="add-btn"></Button>
@@ -47,9 +43,7 @@
                     <TableColumn text="Genre"></TableColumn>
                     <TableColumn text="Plays"></TableColumn>
                     <TableColumn text="Yours"></TableColumn>
-
                 </columns>
-
             </TableView>
         </HBox>
 
