@@ -51,6 +51,10 @@
     -fx-font-size: 20px;
 }
 
+.label-xs {
+    -fx-font-size: 16px;
+}
+
 .imageView {
 
 }
@@ -60,5 +64,9 @@
 }
 
 .tracks-label {
+    -fx-font-size: 28px;
+}
+
+.yourMusic-btn {
     -fx-font-size: 28px;
 }

@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="MyMusic.LoginController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import com.sun.javafx.scene.control.skin.TableHeaderRow?>
+<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="MyMusic.Controller" alignment="CENTER">
+    <VBox spacing="15">
+        <HBox styleClass="tabBar" alignment="CENTER">
+            <padding><Insets top="10"></Insets></padding>
+            <Button text="Your Music"/>
+            <Button text="Find Music"/>
+        </HBox>
 
-</AnchorPane>
+        <Line startX="-800" endX="800"></Line>
+
+        <HBox spacing="10">
+            <VBox fx:id="categoryBox" minWidth="190" minHeight="500" spacing="10">
+                <padding><Insets left="10"></Insets></padding>
+                <Label text="Filter Search" styleClass="label-s"></Label>
+                <CheckBox text="Track Name"></CheckBox>
+                <CheckBox text="Album Name"></CheckBox>
+                <CheckBox text="Artist Name"></CheckBox>
+                <Label text="Genre" styleClass="label-xs"></Label>
+                <VBox fx:id="genreBox" spacing="10">
+                    <padding><Insets left="20"></Insets></padding>
+                    <CheckBox text="All"></CheckBox>
+                    <CheckBox text="Genre 1"></CheckBox>
+                    <CheckBox text="Genre 2"></CheckBox>
+                    <CheckBox text="Genre 3"></CheckBox>
+                    <CheckBox text="Genre 4"></CheckBox>
+                    <CheckBox text="Genre 5"></CheckBox>
+                </VBox>
+            </VBox>
+
+            <VBox fx:id="searchBox" spacing="25">
+                <HBox>
+                    <TextField fx:id="searchField" prefWidth="1300" minHeight="50"></TextField>
+                    <Button text="Search" prefWidth="100" minHeight="50"></Button>
+                </HBox>
+                <ScrollPane prefHeight="775">
+                    <VBox fx:id="searchResultsBox">
+
+                    </VBox>
+                </ScrollPane>
+            </VBox>
+
+        </HBox>
+
+    </VBox>
+</HBox>

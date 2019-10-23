@@ -19,7 +19,7 @@ public class Main extends Application {
 
         // Set up layout
         root1.getChildren().addAll(new TopBar(), new SearchLayout());
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/artist.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
 
         // Set the title
         primaryStage.setTitle("My Music");

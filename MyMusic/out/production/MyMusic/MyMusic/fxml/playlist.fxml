@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="MyMusic.fxml.Playlist"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import com.sun.javafx.scene.control.skin.TableHeaderRow?>
+<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="MyMusic.Controller" alignment="CENTER">
+    <VBox spacing="15">
+        <HBox styleClass="tabBar" alignment="CENTER">
+            <padding><Insets top="10"></Insets></padding>
+            <Button text="Your Music"/>
+            <Button text="Find Music"/>
+        </HBox>
 
-</AnchorPane>
+        <Line startX="-800" endX="800"></Line>
+
+
+        <HBox spacing="25">
+            <ImageView fx:id="albumImage" fitWidth="300" fitHeight="300">
+                <image>
+                    <Image url="@musical-note.jpg" />
+                </image>
+            </ImageView>
+            <VBox spacing="10">
+                <Label text="Name" fx:id="albumNameLabel" styleClass="label-l"></Label>
+                <Label text="Artist" fx:id="albumArtistLabel" styleClass="label-m"></Label>
+                <Button text="Add to YourMusic" fx:id="addAlbumBtn" styleClass="add-btn"></Button>
+            </VBox>
+        </HBox>
+
+        <HBox>
+            <TableView minWidth="1600">
+                <columns>
+                    <TableColumn text="Play"></TableColumn>
+                    <TableColumn text="Name"></TableColumn>
+                    <TableColumn text="Time"></TableColumn>
+                    <TableColumn text="Artist"></TableColumn>
+                    <TableColumn text="Album"></TableColumn>
+                    <TableColumn text="Genre"></TableColumn>
+                    <TableColumn text="Plays"></TableColumn>
+                    <TableColumn text="Yours"></TableColumn>
+                </columns>
+            </TableView>
+        </HBox>
+
+    </VBox>
+</HBox>

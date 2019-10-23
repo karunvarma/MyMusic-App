@@ -9,7 +9,7 @@
 <?import javafx.scene.image.Image?>
 <?import com.sun.javafx.scene.control.skin.TableHeaderRow?>
 <HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="MyMusic.Controller" alignment="CENTER">
-    <VBox spacing="25">
+    <VBox spacing="15">
         <HBox styleClass="tabBar" alignment="CENTER">
             <padding><Insets top="10"></Insets></padding>
             <Button text="Your Music"/>
