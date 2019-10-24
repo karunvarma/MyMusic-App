@@ -13,7 +13,7 @@
         <HBox styleClass="tabBar" alignment="CENTER">
             <padding><Insets top="10"></Insets></padding>
             <Button text="Your Music"/>
-            <Button text="Find Music"/>
+            <Button text="Find Music" onAction="#goToSearchPage"/>
         </HBox>
 
         <Line startX="-800" endX="800"></Line>
@@ -28,7 +28,7 @@
             </VBox>
 
             <ScrollPane prefWidth="1400" prefHeight="850">
-                <VBox fx:id="searchResultsBox">
+                <VBox fx:id="yourMusicContent">
 
                 </VBox>
             </ScrollPane>

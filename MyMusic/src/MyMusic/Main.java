@@ -11,26 +11,27 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
-
     private Scene scene;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-       VBox root1 = new VBox();
-
         // Set up layout
-        root1.getChildren().addAll(new TopBar(), new SearchLayout());
         Parent root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
 
         // Set the title
         primaryStage.setTitle("My Music");
 
+        // Initialize the scene
         scene = new Scene(root, Screen.getPrimary().getBounds().getMaxX(), Screen.getPrimary().getBounds().getMaxY());
 
         // Set the initial scene
         primaryStage.setScene(scene);
 
+        // Add stylesheet
         scene.getStylesheets().add(Main.class.getResource("css/styles.css").toExternalForm());
-        //scene.setRoot(root1);
+
+        // Initialize the controllers
+
         // Show the scene
         primaryStage.show();
     }
@@ -39,11 +40,4 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-
-    public void changePage(String fxmlPath) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-        scene.setRoot(root);
-    }
-
 }

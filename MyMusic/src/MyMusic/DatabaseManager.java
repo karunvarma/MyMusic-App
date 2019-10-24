@@ -1,3 +1,5 @@
+package MyMusic;
+
 import java.sql.*;
 
 public class DatabaseManager {
@@ -47,5 +49,32 @@ public class DatabaseManager {
 	public void addArtist(Artist artist)
 	{
 
+	}
+
+
+
+
+	public User getUser(String username, String password) {
+		try {
+			// Login SQL Query
+			PreparedStatement loginStmt = myConn.prepareStatement("Select * FROM User WHERE username = ?  AND password = ?");
+			loginStmt.setString(1, username);
+			loginStmt.setString(2, password);
+
+			ResultSet rs = loginStmt.executeQuery();
+
+			if (rs.next()) {
+				String name = rs.getString("name");
+				return new User(name, username, password);
+			}
+			else {
+				// Result set is empty. Therefore, a user with the given username and password does not exist in the database.
+				return null;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

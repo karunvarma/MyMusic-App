@@ -2,45 +2,44 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<?import com.sun.javafx.scene.control.skin.TableHeaderRow?>
-<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="MyMusic.Controller" alignment="CENTER">
+
+<HBox fx:controller="MyMusic.SearchController" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
     <VBox spacing="15">
         <HBox styleClass="tabBar" alignment="CENTER">
             <padding><Insets top="10"></Insets></padding>
-            <Button text="Your Music"/>
+            <Button text="Your Music" onAction="#goToHomePage"/>
             <Button text="Find Music"/>
         </HBox>
 
         <Line startX="-800" endX="800"></Line>
 
         <HBox spacing="10">
-            <VBox fx:id="categoryBox" minWidth="190" minHeight="500" spacing="10">
+            <VBox minWidth="190" minHeight="500" spacing="10">
                 <padding><Insets left="10"></Insets></padding>
                 <Label text="Filter Search" styleClass="label-s"></Label>
-                <CheckBox text="Track Name"></CheckBox>
-                <CheckBox text="Album Name"></CheckBox>
-                <CheckBox text="Artist Name"></CheckBox>
+                <CheckBox text="Track Name" id="trackCheckBox" selected="true"></CheckBox>
+                <CheckBox text="Album Name" id="albumCheckBox" selected="true"></CheckBox>
+                <CheckBox text="Artist Name" id="artistCheckBox" selected="true"></CheckBox>
                 <Label text="Genre" styleClass="label-xs"></Label>
                 <VBox fx:id="genreBox" spacing="10">
                     <padding><Insets left="20"></Insets></padding>
-                    <CheckBox text="All"></CheckBox>
-                    <CheckBox text="Genre 1"></CheckBox>
-                    <CheckBox text="Genre 2"></CheckBox>
-                    <CheckBox text="Genre 3"></CheckBox>
-                    <CheckBox text="Genre 4"></CheckBox>
-                    <CheckBox text="Genre 5"></CheckBox>
+                    <CheckBox text="All" id="allGenresCheckBox" selected="true"></CheckBox>
+                    <CheckBox text="Genre 1 " selected="true"></CheckBox>
+                    <CheckBox text="Genre 2" selected="true"></CheckBox>
+                    <CheckBox text="Genre 3" selected="true"></CheckBox>
+                    <CheckBox text="Genre 4" selected="true"></CheckBox>
+                    <CheckBox text="Genre 5" selected="true"></CheckBox>
                 </VBox>
             </VBox>
 
-            <VBox fx:id="searchBox" spacing="25">
+            <VBox spacing="25">
                 <HBox>
-                    <TextField fx:id="searchField" prefWidth="1300" minHeight="50"></TextField>
-                    <Button text="Search" prefWidth="100" minHeight="50"></Button>
+                    <TextField fx:id="searchField" prefWidth="1300" minHeight="50" onAction="#search"></TextField>
+                    <Button text="Search" prefWidth="100" minHeight="50" onAction="#search"></Button>
                 </HBox>
                 <ScrollPane prefHeight="775">
                     <VBox fx:id="searchResultsBox">

@@ -1,12 +1,15 @@
 package MyMusic;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.event.ActionEvent;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import java.io.IOException;
 
-import java.awt.*;
 
 public class LoginController {
     @FXML
@@ -23,12 +26,30 @@ public class LoginController {
     // Validates user input. If invalid, display error message.
     // Validates username and password with the database.
     // If credentials are valid, log user in, else display error message.
-    public void login() {
+    @FXML
+    private void login(ActionEvent event) {
         if (validateLogin()) {
             // DB query
             String username = usernameField.getText();
             String password = passwordField.getText();
-            errorLabel.setText("");
+            User user = null;
+            DatabaseManager dbManager= null;
+
+            try {
+                dbManager = new DatabaseManager();
+                user = dbManager.getUser(username, password);
+            } catch (Exception e) {
+               //e.printStackTrace();
+            }
+
+            if (user != null) {
+                errorLabel.setText("");
+                changePage("fxml/home.fxml");
+            }
+            else {
+                changePage("fxml/home.fxml");
+                errorLabel.setText("You have entered an invalid username or password");
+            }
         }
         else {
             errorLabel.setText("You have entered an invalid username or password");
@@ -54,5 +75,16 @@ public class LoginController {
         }
 
         return isValid;
+    }
+
+    public void changePage(String fxmlPath)  {
+        try {
+            Parent root = null;
+            root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            Scene scene = usernameField.getScene();
+            scene.setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
