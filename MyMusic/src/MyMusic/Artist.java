@@ -7,11 +7,11 @@ public class Artist {
 	private String imagePath;
 	private ArrayList<Track> tracks;
 
-	Artist(String name, String imagePath, ArrayList<Track> tracks)
+	Artist(String name, String imagePath)
 	{
 		this.name=name;
 		this.imagePath=imagePath;
-		this.tracks =tracks ;
+		//this.tracks =tracks ;
 	}
 	
 	public void addTrack(Track track)

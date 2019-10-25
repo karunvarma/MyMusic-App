@@ -19,8 +19,12 @@ public class DatabaseManager {
 	public static void main(String args[])throws Exception
 	{
 		DatabaseManager d=new DatabaseManager();
-		Track t=new Track("Stairway to heaven", 4, 1.31,11);
-		d.addTrack(t);
+		//Track t=new Track("Stairway to heaven", 4, 1.31,11);
+		//d.addTrack(t);
+		//Album album=new Album("Lootera",2016,"pop","",(float)8.21);
+		//d.addAlbum(album);
+		Artist artist=new Artist("Amit Trivedi","/users/downloads/img/amit.jpeg");
+		d.addArtist(artist);
 
 	}
 
@@ -48,7 +52,42 @@ public class DatabaseManager {
 
 	public void addArtist(Artist artist)
 	{
+		PreparedStatement myStmt=null;
 
+		try
+		{
+			myStmt=myConn.prepareStatement("insert into artists (artist_name, image_link) values (?,?)");
+			myStmt.setString(1,artist.getName());
+			myStmt.setString(2,artist.getImagePath());
+			
+			myStmt.executeUpdate();
+			System.out.println("artist added successfully");
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+
+	}
+	
+	public void addAlbum(Album album)
+	{
+		PreparedStatement myStmt=null;
+		try
+		{
+			myStmt=myConn.prepareStatement("insert into albums (album_name,genre,year,image_path,rating) values (?,?,?,?,?)");
+			myStmt.setString(1, album.getName());
+			myStmt.setString(2, album.getGenre());
+			myStmt.setInt(3,album.getYear());
+			myStmt.setString(4,album.getImagePath());
+			myStmt.setFloat(5,album.getImdbRating());
+			myStmt.executeUpdate();
+			System.out.println("Album added successfully");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 

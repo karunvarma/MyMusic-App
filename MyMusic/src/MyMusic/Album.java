@@ -11,7 +11,7 @@ public class Album {
 	private float imdbRating;
 	private ArrayList<Track> tracks;
 
-	Album(String name, String imagePath, int year,String genre, float imdbRating)
+	Album(String name, int year,String genre, String imagePath,float imdbRating)
 	{
 		this.name=name;
 		this.imagePath=imagePath;
