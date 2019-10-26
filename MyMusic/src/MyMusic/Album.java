@@ -8,16 +8,16 @@ public class Album {
 	private String imagePath;
 	private int year;
 	private String genre;
-	private float imdbRating;
+	private float rating;
 	private ArrayList<Track> tracks;
 
-	Album(String name, int year,String genre, String imagePath,float imdbRating)
+	Album(String name, int year, String genre, String imagePath, float rating)
 	{
 		this.name=name;
 		this.imagePath=imagePath;
 		this.year=year;
 		this.genre=genre;
-		this.imdbRating=imdbRating;
+		this.rating=rating;
 	}
 
 	public void addTrack(Track track)
@@ -50,9 +50,9 @@ public class Album {
 		return this.year;
 	}
 
-	public float getImdbRating()
+	public float getRating()
 	{
-		return this.imdbRating;
+		return this.rating;
 	}
 
 
@@ -76,9 +76,9 @@ public class Album {
 		this.year=year;
 	}
 
-	public void setImdbRating(float imdbRating)
+	public void setRating(float rating)
 	{
-		this.imdbRating=imdbRating;
+		this.rating=rating;
 	}
 
 }

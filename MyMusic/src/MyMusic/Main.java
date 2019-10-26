@@ -16,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Set up layout
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/search.fxml"));
 
         // Set the title
         primaryStage.setTitle("My Music");

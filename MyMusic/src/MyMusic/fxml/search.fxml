@@ -21,13 +21,13 @@
             <VBox minWidth="190" minHeight="500" spacing="10">
                 <padding><Insets left="10"></Insets></padding>
                 <Label text="Filter Search" styleClass="label-s"></Label>
-                <CheckBox text="Track Name" id="trackCheckBox" selected="true"></CheckBox>
-                <CheckBox text="Album Name" id="albumCheckBox" selected="true"></CheckBox>
-                <CheckBox text="Artist Name" id="artistCheckBox" selected="true"></CheckBox>
+                <CheckBox text="Track Name" fx:id="trackCheckBox" selected="true"></CheckBox>
+                <CheckBox text="Album Name" fx:id="albumCheckBox" selected="true"></CheckBox>
+                <CheckBox text="Artist Name" fx:id="artistCheckBox" selected="true"></CheckBox>
                 <Label text="Genre" styleClass="label-xs"></Label>
                 <VBox fx:id="genreBox" spacing="10">
                     <padding><Insets left="20"></Insets></padding>
-                    <CheckBox text="All" id="allGenresCheckBox" selected="true"></CheckBox>
+                    <CheckBox text="All" fx:id="allGenresCheckBox" selected="true"></CheckBox>
                     <CheckBox text="Genre 1 " selected="true"></CheckBox>
                     <CheckBox text="Genre 2" selected="true"></CheckBox>
                     <CheckBox text="Genre 3" selected="true"></CheckBox>
@@ -42,7 +42,7 @@
                     <Button text="Search" prefWidth="100" minHeight="50" onAction="#search"></Button>
                 </HBox>
                 <ScrollPane prefHeight="775">
-                    <VBox fx:id="searchResultsBox">
+                    <VBox fx:id="searchResultsBox" spacing="10">
 
                     </VBox>
                 </ScrollPane>

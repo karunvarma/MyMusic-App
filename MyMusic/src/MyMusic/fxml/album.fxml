@@ -33,16 +33,16 @@
         </HBox>
 
         <HBox>
-            <TableView minWidth="1600">
+            <TableView minWidth="1600" columnResizePolicy="CONSTRAINED_RESIZE_POLICY">
                 <columns>
-                    <TableColumn text="Play"></TableColumn>
-                    <TableColumn text="Name"></TableColumn>
-                    <TableColumn text="Time"></TableColumn>
-                    <TableColumn text="Artist"></TableColumn>
-                    <TableColumn text="Album"></TableColumn>
-                    <TableColumn text="Genre"></TableColumn>
-                    <TableColumn text="Plays"></TableColumn>
-                    <TableColumn text="Yours"></TableColumn>
+                    <TableColumn text="Play" prefWidth="200"></TableColumn>
+                    <TableColumn text="Name" prefWidth="200"></TableColumn>
+                    <TableColumn text="Time" prefWidth="200"></TableColumn>
+                    <TableColumn text="Artist" prefWidth="200"></TableColumn>
+                    <TableColumn text="Album" prefWidth="200"></TableColumn>
+                    <TableColumn text="Genre" prefWidth="200"></TableColumn>
+                    <TableColumn text="Plays" prefWidth="200"></TableColumn>
+                    <TableColumn text="Yours" prefWidth="200"></TableColumn>
                 </columns>
             </TableView>
         </HBox>

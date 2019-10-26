@@ -80,7 +80,7 @@ public class DatabaseManager {
 			myStmt.setString(2, album.getGenre());
 			myStmt.setInt(3,album.getYear());
 			myStmt.setString(4,album.getImagePath());
-			myStmt.setFloat(5,album.getImdbRating());
+			myStmt.setFloat(5,album.getRating());
 			myStmt.executeUpdate();
 			System.out.println("Album added successfully");
 		}
