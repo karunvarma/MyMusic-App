@@ -108,7 +108,19 @@ public class SearchController {
         track.setGenre("Genre");
         tracks.add(track);
 
-        searchResultsBox.getChildren().addAll(getAlbumResults(albums), getArtistResults(artists), getTrackResults(tracks));
+        if (searchByAlbum) {
+            // Select from album table query to get list of albums
+            searchResultsBox.getChildren().add(getAlbumResults(albums));
+        }
+        if (searchByArtist) {
+            // Select from artist table query to get list of artist
+            searchResultsBox.getChildren().add(getArtistResults(artists));
+        }
+        if (searchByTrack) {
+            // Select from track table query to get list of tracks
+            searchResultsBox.getChildren().add(getTrackResults(tracks));
+
+        }
     }
 
 

@@ -51,7 +51,6 @@ public class TrackTableView extends TableView {
         getColumns().addAll(playBtnCol, nameCol, timeCol, artistCol, albumCol, genreCol, playCountCol, yoursCol);
 
         for (int i = 0; i < trackList.size(); i++) {
-            System.out.println("yello");
             getItems().add(trackList.get(i));
         }
 
