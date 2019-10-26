@@ -1,14 +1,12 @@
 package MyMusic;
 
-import com.sun.tools.javac.comp.Check;
-import com.sun.xml.internal.bind.v2.runtime.property.PropertyFactory;
+import java.util.List;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.util.List;
 
 public class TrackTableView extends TableView {
     public TrackTableView(List<Track> trackList) {

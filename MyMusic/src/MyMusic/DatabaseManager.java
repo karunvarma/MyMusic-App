@@ -1,6 +1,7 @@
 package MyMusic;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseManager {
 
@@ -19,12 +20,8 @@ public class DatabaseManager {
 	public static void main(String args[])throws Exception
 	{
 		DatabaseManager d=new DatabaseManager();
-		//Track t=new Track("Stairway to heaven", 4, 1.31,11);
-		//d.addTrack(t);
-		//Album album=new Album("Lootera",2016,"pop","",(float)8.21);
-		//d.addAlbum(album);
-		Artist artist=new Artist("Amit Trivedi","/users/downloads/img/amit.jpeg");
-		d.addArtist(artist);
+		ArrayList<Artist> artists=d.searchArtists("tri");
+		ArrayList<Album> albums=d.searchAlbums("ter");
 
 	}
 
@@ -89,7 +86,71 @@ public class DatabaseManager {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public  ArrayList<Artist> searchArtists(String searchString) throws Exception
+	{
+		String s="%"+searchString+"%";
+		PreparedStatement myStmt=null;
+		ResultSet myRs;
+		ArrayList<Artist> artists=new ArrayList<Artist>();
+		try
+		{
+			myStmt=myConn.prepareStatement("SELECT * FROM 	 artists where artist_name like ? ");
+			myStmt.setString(1, s);
+			
+			myRs=myStmt.executeQuery();
+			while(myRs.next())
+			{
+			
+				String name=myRs.getString("artist_name");
+				String imagePath=myRs.getString("image_link");
+				System.out.println(name+" "+imagePath);
+				artists.add(new Artist(name,imagePath));
+			}
+			System.out.println("Query successful");
+			return artists;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {return artists;}
+	}
 
+	
+	public  ArrayList<Album> searchAlbums(String searchString) throws Exception
+	{
+		String s="%"+searchString+"%";
+		PreparedStatement myStmt=null;
+		ResultSet myRs;
+		ArrayList<Album> albums=new ArrayList<Album>();
+		try
+		{
+			myStmt=myConn.prepareStatement("SELECT * FROM 	 albums where album_name like ? ");
+			myStmt.setString(1, s);
+			
+			myRs=myStmt.executeQuery();
+			while(myRs.next())
+			{
+			
+				String name=myRs.getString("album_name");
+				int year=myRs.getInt("year");
+				String genre=myRs.getString("genre");
+				String imagePath=myRs.getString("image_path");
+				float rating=myRs.getFloat("rating");
+				System.out.println(name+" "+year+" "+genre+" "+imagePath+" "+rating);
+				albums.add(new Album(name,year,genre,imagePath,rating));
+			}
+			System.out.println("Query successful");
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {return albums;}
+	}
 
 
 
