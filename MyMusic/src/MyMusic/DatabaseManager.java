@@ -22,10 +22,79 @@ public class DatabaseManager {
 		DatabaseManager d=new DatabaseManager();
 		ArrayList<Artist> artists=d.searchArtists("tri");
 		ArrayList<Album> albums=d.searchAlbums("ter");
+		ArrayList<Track> tracks=d.searchTracks("y");
+		ArrayList<Track> allTracks=d.getAllTracks();
+		ArrayList<Album> allAlbums=d.getAllAlbums();
+
 
 	}
 
-	public void getAllTracks() {}
+	public ArrayList<Track> getAllTracks() {		// to display latest tracks on the homepage
+
+		PreparedStatement myStmt=null;
+		ResultSet myRs;
+		ArrayList<Track> tracks=new ArrayList<>();
+		try
+		{
+			myStmt=myConn.prepareStatement("SELECT * FROM tracks INNER JOIN albums on tracks.album_id=albums.id where year = YEAR(getDate()) ");
+
+
+			myRs=myStmt.executeQuery();
+			while(myRs.next())
+			{
+
+				String name=myRs.getString("track_name");
+				String genre=myRs.getString("genre");
+				String artistName= myRs.getString("artist_name");
+				String albumName= myRs.getString("album_name");
+				int numPlays=myRs.getInt("num_plays");
+				double duration = myRs.getDouble( "duration");
+				System.out.println(name+" "+artistName+" "+albumName+" "+genre+" "+numPlays+" "+duration);
+				tracks.add(new Track(name,genre,artistName,albumName,numPlays,duration));
+			}
+			System.out.println("GetAllTracks successful");
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally {
+			return tracks;
+		}
+
+	}
+
+	public ArrayList<Album> getAllAlbums(){					// to display all the latest albums on the homepage i.e., from this year
+
+		PreparedStatement myStmt=null;
+		ResultSet myRs;
+		ArrayList<Album> albums=new ArrayList<Album>();
+		try
+		{
+			myStmt=myConn.prepareStatement("SELECT * FROM albums where year = YEAR(getDate())");     //can use CURRENT_TIMESTAMP instead of getDate()
+			myRs=myStmt.executeQuery();
+			while(myRs.next())
+			{
+
+				String name=myRs.getString("album_name");
+				int year=myRs.getInt("year");
+				String genre=myRs.getString("genre");
+				String imagePath=myRs.getString("image_path");
+				float rating=myRs.getFloat("rating");
+				System.out.println(name+" "+year+" "+genre+" "+imagePath+" "+rating);
+				albums.add(new Album(name,year,genre,imagePath,rating));
+			}
+			System.out.println("GetAllTracks Query successful");
+
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			return albums;
+		}
+	}
 
 	public void addTrack(Track track)
 	{
@@ -152,6 +221,43 @@ public class DatabaseManager {
 		finally {return albums;}
 	}
 
+	public ArrayList<Track> searchTracks(String searchString) throws Exception{
+		String s="%"+searchString+"%";
+		PreparedStatement myStmt=null;
+		ResultSet myRs;
+		ArrayList<Track> tracks=new ArrayList<>();
+		try
+		{
+			myStmt=myConn.prepareStatement("SELECT * FROM tracks where track_name like ? ");
+			myStmt.setString(1, s);
+
+			myRs=myStmt.executeQuery();
+			while(myRs.next())
+			{
+
+				String name=myRs.getString("track_name");
+				String genre=myRs.getString("genre");
+				String artistName= myRs.getString("artist_name");
+				String albumName= myRs.getString("album_name");
+				int numPlays=myRs.getInt("num_plays");
+				double duration = myRs.getDouble( "duration");
+
+
+
+				System.out.println(name+" "+artistName+" "+albumName+" "+genre+" "+numPlays+" "+duration);
+				tracks.add(new Track(name,genre,artistName,albumName,numPlays,duration));
+			}
+			System.out.println("Search track successful");
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally {
+			return tracks;
+		}
+
+	}
 
 
 	public User getUser(String username, String password) {

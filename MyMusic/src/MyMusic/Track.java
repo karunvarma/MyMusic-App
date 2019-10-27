@@ -21,6 +21,16 @@ public class Track {
 		this.duration=time;
 		this.num_plays=num_plays;
 	}
+
+	public Track(String name,String genre, String artist_name, String album_name,int num_plays, double duration){
+		this.name=name;
+		this.genre=genre;
+		this.artist_name=artist_name;
+		this.album_name=album_name;
+		this.num_plays=num_plays;
+		this.duration=duration;
+
+	}
 	public int getId()
 	{
 		return id;
