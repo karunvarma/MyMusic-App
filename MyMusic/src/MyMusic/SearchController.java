@@ -60,6 +60,12 @@ public class SearchController {
         // Remove any previous search results
         searchResultsBox.getChildren().clear();
 
+        try {
+            DatabaseManager dbManager = new DatabaseManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         ArrayList<Album> albums = new ArrayList<Album>();
         albums.add(new Album("Name", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));

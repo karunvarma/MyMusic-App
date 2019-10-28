@@ -37,6 +37,30 @@ public class ItemBox extends VBox {
         setMaxSize(200,200);
     }
 
+    public ItemBox(Album album, int size) throws FileNotFoundException {
+
+        // Set ImageView
+        imageView = new ImageView();
+        imageView.setFitWidth(size);
+        imageView.setFitHeight(size);
+
+        Image image = new Image("MyMusic/fxml/musical-note.jpg");
+        imageView.setImage(image);
+
+        // Set label 1 (name)
+        label1 = new Label(album.getName());
+
+        // Set label 2 (artist)
+        label2 = new Label(album.getName());
+
+
+        // Add children
+        getChildren().addAll(imageView, label1, label2);
+
+        // Style
+        setMaxSize(size + 100,size + 100);
+    }
+
     public ItemBox(Artist artist) throws FileNotFoundException {
 
         // Set ImageView

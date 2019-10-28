@@ -8,11 +8,11 @@ public class DatabaseManager {
 	private Connection myConn;
 	public DatabaseManager() throws Exception
 	{
-
 		String db_name="MyMusic";
-		String dbUrl="jdbc:mysql://localhost:8889/"+db_name+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+		String dbUrl="jdbc:mysql://localhost:3306/"+db_name+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user="root";
 		String password="root";
+
 		myConn=DriverManager.getConnection(dbUrl,user,password);
 		System.out.println("Database connected sucessfully");
 	}
@@ -271,7 +271,9 @@ public class DatabaseManager {
 
 			if (rs.next()) {
 				String name = rs.getString("name");
-				return new User(name, username, password);
+                Boolean isAdmin = rs.getBoolean("admin");
+				User user = new User(name, username, password, isAdmin);
+				return user;
 			}
 			else {
 				// Result set is empty. Therefore, a user with the given username and password does not exist in the database.

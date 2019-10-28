@@ -50,10 +50,9 @@ public class Album {
 		return this.year;
 	}
 
-	public float getRating()
-	{
-		return this.rating;
-	}
+	public float getRating() { return this.rating; }
+
+	public ArrayList<Track> getTracks() { return this.tracks; }
 
 
 	public void setName(String name)

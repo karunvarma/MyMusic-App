@@ -20,11 +20,10 @@
 
         <HBox spacing="25" prefWidth="175">
             <VBox>
-                <Button text="Tracks" styleClass="yourMusic-btn" prefWidth="175" minHeight="75"></Button>
-                <Button text="Albums" styleClass="yourMusic-btn" prefWidth="175" minHeight="75"></Button>
-                <Button text="Artists" styleClass="yourMusic-btn" prefWidth="175" minHeight="75"></Button>
-                <Button text="Genres" styleClass="yourMusic-btn" prefWidth="175" minHeight="75"></Button>
-                <Button text="Playlists" styleClass="yourMusic-btn" prefWidth="175" minHeight="75"></Button>
+                <Button text="Tracks" styleClass="yourMusic-btn" prefWidth="175" minHeight="75" onAction="#displayTracks"></Button>
+                <Button text="Albums" styleClass="yourMusic-btn" prefWidth="175" minHeight="75" onAction="#displayAlbums"></Button>
+                <Button text="Artists" styleClass="yourMusic-btn" prefWidth="175" minHeight="75" onAction="#displayArtists"></Button>
+                <Button text="Playlists" styleClass="yourMusic-btn" prefWidth="175" minHeight="75" onAction="#displayPlaylists"></Button>
             </VBox>
 
             <ScrollPane prefWidth="1400" prefHeight="850">

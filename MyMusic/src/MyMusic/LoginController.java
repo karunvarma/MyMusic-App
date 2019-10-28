@@ -29,29 +29,31 @@ public class LoginController {
     @FXML
     private void login(ActionEvent event) {
         if (validateLogin()) {
-            // DB query
             String username = usernameField.getText();
             String password = passwordField.getText();
             User user = null;
-            DatabaseManager dbManager= null;
 
+            // Use database manager to get a user, using the username and password input
+            DatabaseManager dbManager= null;
             try {
                 dbManager = new DatabaseManager();
                 user = dbManager.getUser(username, password);
             } catch (Exception e) {
-               //e.printStackTrace();
+               e.printStackTrace();
             }
 
             if (user != null) {
+                // If a user is retrieved login
                 errorLabel.setText("");
-                changePage("fxml/home.fxml");
+                goToHomePage(user);
             }
             else {
-                changePage("fxml/home.fxml");
+                // If no user is returned
                 errorLabel.setText("You have entered an invalid username or password");
             }
         }
         else {
+            // If one or both of username or password fields is empty
             errorLabel.setText("You have entered an invalid username or password");
         }
     }
@@ -77,11 +79,27 @@ public class LoginController {
         return isValid;
     }
 
-    public void changePage(String fxmlPath)  {
+    public void goToHomePage(User user)  {
         try {
             Parent root = null;
-            root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/home.fxml"));
+            root = loader.load();
+
+            // Get the controller of the new root
+            Controller controller = loader.getController();
+
+
+            if (controller == null)
+            {
+                System.out.println("null");
+            }
+
+            // Set user property of the controller
+            controller.setUser(user);
+
+
             Scene scene = usernameField.getScene();
+
             scene.setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
