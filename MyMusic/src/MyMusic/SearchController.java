@@ -68,34 +68,34 @@ public class SearchController {
 
 
         ArrayList<Album> albums = new ArrayList<Album>();
-        albums.add(new Album("Name", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name2", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name3", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name4", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name5", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name6", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name7", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name8", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name9", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name10", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name2", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name3", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name4", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name5", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name6", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name7", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name8", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name9", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name10", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name2", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name3", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name4", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name5", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name6", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name7", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name8", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name9", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name10", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name2", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name3", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name4", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name5", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name6", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name7", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name8", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name9", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name10","artist",  2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name2", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name3", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name4", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name5", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name6", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name7", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name8", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name9", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name10", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name2", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name3", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name4", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name5", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name6", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name7", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name8", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name9", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
+        albums.add(new Album("Name10","artist",  2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
 
 
         ArrayList<Artist> artists = new ArrayList<Artist>();
@@ -114,18 +114,27 @@ public class SearchController {
         track.setGenre("Genre");
         tracks.add(track);
 
-        if (searchByAlbum) {
-            // Select from album table query to get list of albums
-            searchResultsBox.getChildren().add(getAlbumResults(albums));
-        }
-        if (searchByArtist) {
-            // Select from artist table query to get list of artist
-            searchResultsBox.getChildren().add(getArtistResults(artists));
-        }
-        if (searchByTrack) {
-            // Select from track table query to get list of tracks
-            searchResultsBox.getChildren().add(getTrackResults(tracks));
 
+        ArrayList<String> genres = new ArrayList<String>();
+        genres.add("Rock");
+        genres.add("Comedy");
+        try {
+            DatabaseManager databaseManager = new DatabaseManager();
+            if (searchByAlbum) {
+                // Select from album table query to get list of albums
+                ArrayList<Album> albumResults = databaseManager.searchAlbums(searchString, genres);
+                searchResultsBox.getChildren().add(getAlbumResults(albumResults));
+            }
+            if (searchByArtist) {
+                // Select from artist table query to get list of artist
+                searchResultsBox.getChildren().add(getArtistResults(artists));
+            }
+            if (searchByTrack) {
+                // Select from track table query to get list of tracks
+                searchResultsBox.getChildren().add(getTrackResults(tracks));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

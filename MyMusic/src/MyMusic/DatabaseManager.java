@@ -12,11 +12,10 @@ public class DatabaseManager {
 		String dbUrl="jdbc:mysql://localhost:3306/"+db_name+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user="root";
 		String password="root";
-
 		myConn=DriverManager.getConnection(dbUrl,user,password);
 		System.out.println("Database connected sucessfully");
 	}
-
+/*
 	public static void main(String args[])throws Exception
 	{
 		DatabaseManager d=new DatabaseManager();
@@ -25,9 +24,8 @@ public class DatabaseManager {
 		ArrayList<Track> tracks=d.searchTracks("y");
 		ArrayList<Track> allTracks=d.getAllTracks();
 		ArrayList<Album> allAlbums=d.getAllAlbums();
-
-
 	}
+*/
 
 	public ArrayList<Track> getAllTracks() {		// to display latest tracks on the homepage
 
@@ -77,12 +75,13 @@ public class DatabaseManager {
 			{
 
 				String name=myRs.getString("album_name");
+				String artistName=myRs.getString("artist_name");
 				int year=myRs.getInt("year");
 				String genre=myRs.getString("genre");
-				String imagePath=myRs.getString("image_path");
+				String imagePath=myRs.getString("imagePath");
 				float rating=myRs.getFloat("rating");
 				System.out.println(name+" "+year+" "+genre+" "+imagePath+" "+rating);
-				albums.add(new Album(name,year,genre,imagePath,rating));
+				albums.add(new Album(name,artistName,year,genre,imagePath,rating));
 			}
 			System.out.println("GetAllTracks Query successful");
 
@@ -141,7 +140,7 @@ public class DatabaseManager {
 		PreparedStatement myStmt=null;
 		try
 		{
-			myStmt=myConn.prepareStatement("insert into albums (album_name,genre,year,image_path,rating) values (?,?,?,?,?)");
+			myStmt=myConn.prepareStatement("insert into albums (album_name,genre,year,imagePath,rating) values (?,?,?,?,?)");
 			myStmt.setString(1, album.getName());
 			myStmt.setString(2, album.getGenre());
 			myStmt.setInt(3,album.getYear());
@@ -188,28 +187,33 @@ public class DatabaseManager {
 	}
 
 	
-	public  ArrayList<Album> searchAlbums(String searchString) throws Exception
+	public  ArrayList<Album> searchAlbums(String searchString, ArrayList<String> selectedGenres) throws Exception
 	{
-		String s="%"+searchString+"%";
-		PreparedStatement myStmt=null;
+		String s = "%"+searchString+"%";
+		PreparedStatement myStmt = null;
 		ResultSet myRs;
-		ArrayList<Album> albums=new ArrayList<Album>();
+		ArrayList<Album> albums = new ArrayList<Album>();
 		try
 		{
-			myStmt=myConn.prepareStatement("SELECT * FROM 	 albums where album_name like ? ");
+		    myStmt = myConn.prepareStatement(
+		            "SELECT Album.name, Album.imagePath, Album.genre, Album.year, Album.rating, Artist.name as artist_name FROM Album" +
+                    " JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" + " JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id " +
+                    "WHERE Album.name LIKE ? " + GenreSQL(selectedGenres) + ";");
 			myStmt.setString(1, s);
-			
-			myRs=myStmt.executeQuery();
+
+			System.out.println(myStmt.toString());
+
+			myRs = myStmt.executeQuery();
 			while(myRs.next())
 			{
-			
-				String name=myRs.getString("album_name");
-				int year=myRs.getInt("year");
-				String genre=myRs.getString("genre");
-				String imagePath=myRs.getString("image_path");
-				float rating=myRs.getFloat("rating");
-				System.out.println(name+" "+year+" "+genre+" "+imagePath+" "+rating);
-				albums.add(new Album(name,year,genre,imagePath,rating));
+				String name = myRs.getString("name");
+                String imagePath = myRs.getString("imagePath");
+                String artistName = myRs.getString("artist_name");
+				int year = myRs.getInt("year");
+				String genre = myRs.getString("genre");
+				float rating = myRs.getFloat("rating");
+				System.out.println(name+" "+artistName+" "+year+" "+genre+" "+imagePath+" "+rating);
+				albums.add(new Album(name, artistName, year, genre, imagePath, rating));
 			}
 			System.out.println("Query successful");
 			
@@ -234,18 +238,16 @@ public class DatabaseManager {
 			myRs=myStmt.executeQuery();
 			while(myRs.next())
 			{
-
-				String name=myRs.getString("track_name");
-				String genre=myRs.getString("genre");
-				String artistName= myRs.getString("artist_name");
-				String albumName= myRs.getString("album_name");
-				int numPlays=myRs.getInt("num_plays");
+				String name = myRs.getString("track_name");
+				String genre = myRs.getString("genre");
+				String artistName = myRs.getString("artist_name");
+				String albumName = myRs.getString("album_name");
+				int numPlays = myRs.getInt("num_plays");
 				double duration = myRs.getDouble( "duration");
 
 
-
 				System.out.println(name+" "+artistName+" "+albumName+" "+genre+" "+numPlays+" "+duration);
-				tracks.add(new Track(name,genre,artistName,albumName,numPlays,duration));
+				tracks.add(new Track(name, genre, artistName, albumName, numPlays, duration));
 			}
 			System.out.println("Search track successful");
 
@@ -285,4 +287,22 @@ public class DatabaseManager {
 		}
 		return null;
 	}
+
+
+	private String GenreSQL(ArrayList<String> selectedGenres) {
+	    String sql = "";
+	    if (selectedGenres.size() > 0) {
+	        sql += " AND (";
+        }
+        for (int i = 0; i < selectedGenres.size(); i++) {
+            sql += "Album.genre = \'" + selectedGenres.get(i) + "\'";
+            if (i != selectedGenres.size() - 1) {
+                sql += " OR ";
+            }
+            else {
+                sql += ")";
+            }
+        }
+        return sql;
+    }
 }

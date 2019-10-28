@@ -21,13 +21,17 @@ public class ItemBox extends VBox {
         imageView.setFitHeight(135);
 
         Image image = new Image("MyMusic/fxml/musical-note.jpg");
+        System.out.println(album.getImagePath());
+        if (album.getImagePath() != null){
+            image = new Image(album.getImagePath());
+        }
         imageView.setImage(image);
 
         // Set label 1 (name)
         label1 = new Label(album.getName());
 
         // Set label 2 (artist)
-        label2 = new Label(album.getName());
+        label2 = new Label(album.getArtistName());
 
 
         // Add children
@@ -45,13 +49,17 @@ public class ItemBox extends VBox {
         imageView.setFitHeight(size);
 
         Image image = new Image("MyMusic/fxml/musical-note.jpg");
+
+        if (album.getImagePath() != null){
+            image = new Image(album.getImagePath());
+        }
         imageView.setImage(image);
 
         // Set label 1 (name)
         label1 = new Label(album.getName());
 
         // Set label 2 (artist)
-        label2 = new Label(album.getName());
+        label2 = new Label(album.getArtistName());
 
 
         // Add children
@@ -69,6 +77,9 @@ public class ItemBox extends VBox {
         imageView.setFitHeight(135);
 
         Image image = new Image("MyMusic/fxml/musical-note.jpg");
+        if (artist.getImagePath() != null){
+            image = new Image(artist.getImagePath());
+        }
         imageView.setImage(image);
 
         // Set label 1 (name)

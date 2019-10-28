@@ -6,14 +6,16 @@ public class Album {
 	private int id;
 	private String name;
 	private String imagePath;
+	private String artistName;
 	private int year;
 	private String genre;
 	private float rating;
 	private ArrayList<Track> tracks;
 
-	Album(String name, int year, String genre, String imagePath, float rating)
+	Album(String name, String artistName, int year, String genre, String imagePath, float rating)
 	{
 		this.name=name;
+		this.artistName=artistName;
 		this.imagePath=imagePath;
 		this.year=year;
 		this.genre=genre;
@@ -33,6 +35,11 @@ public class Album {
 	public String getName()
 	{
 		return this.name;
+	}
+
+	public String getArtistName()
+	{
+		return this.artistName;
 	}
 
 	public String getImagePath()
@@ -58,6 +65,11 @@ public class Album {
 	public void setName(String name)
 	{
 		this.name=name;
+	}
+
+	public void setArtistName(String artistName)
+	{
+		this.artistName=artistName;
 	}
 
 	public void setImagePath(String imagePath)
