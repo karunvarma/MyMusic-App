@@ -12,6 +12,7 @@ public class DatabaseManager {
 		String dbUrl="jdbc:mysql://localhost:3306/"+db_name+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user="root";
 		String password="root";
+		
 		myConn=DriverManager.getConnection(dbUrl,user,password);
 		System.out.println("Database connected sucessfully");
 	}
@@ -48,7 +49,7 @@ public class DatabaseManager {
 				int numPlays=myRs.getInt("num_plays");
 				double duration = myRs.getDouble( "duration");
 				System.out.println(name+" "+artistName+" "+albumName+" "+genre+" "+numPlays+" "+duration);
-				tracks.add(new Track(name,genre,artistName,albumName,numPlays,duration));
+				//tracks.add(new Track(name,genre,artistName,albumName,numPlays,duration));
 			}
 			System.out.println("GetAllTracks successful");
 
@@ -104,7 +105,7 @@ public class DatabaseManager {
 			myStmt=myConn.prepareStatement("insert into tracks(track_name, album_id, time, num_plays) values (?,?,?,?)");
 			myStmt.setString(1,track.getName());
 			myStmt.setInt(2,track.getAlbumId());
-			myStmt.setDouble(3,track.getDuration());
+			myStmt.setString(3,track.getTime());
 			myStmt.setInt(4,track.getNumPlays());
 			myStmt.executeUpdate();
 			System.out.println("track added successfully");
@@ -156,7 +157,7 @@ public class DatabaseManager {
 	}
 	
 	
-	public  ArrayList<Artist> searchArtists(String searchString) throws Exception
+	public  ArrayList<Artist> searchArtists(String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception
 	{
 		String s="%"+searchString+"%";
 		PreparedStatement myStmt=null;
@@ -164,17 +165,24 @@ public class DatabaseManager {
 		ArrayList<Artist> artists=new ArrayList<Artist>();
 		try
 		{
-			myStmt=myConn.prepareStatement("SELECT * FROM 	 artists where artist_name like ? ");
-			myStmt.setString(1, s);
+			myStmt = myConn.prepareStatement(
+						"SELECT DISTINCT Artist.name, Artist.imagePath, Artist.rating FROM Artist" +
+							" JOIN Album_has_Artist ON Artist.artist_id = Album_has_Artist.artist_id" +
+							" JOIN Album ON Album_has_Artist.album_id = Album.album_id" +
+							" JOIN Track_has_Artist ON Track_has_Artist.artist_id = Artist.artist_id " +
+							" JOIN Track ON Track.track_id = Track_has_Artist.track_id" +
+								FilterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + GenreSQL(selectedGenres, "Track") +
+								" ORDER BY Artist.name ASC;");;
 			
 			myRs=myStmt.executeQuery();
 			while(myRs.next())
 			{
 			
-				String name=myRs.getString("artist_name");
-				String imagePath=myRs.getString("image_link");
-				System.out.println(name+" "+imagePath);
-				artists.add(new Artist(name,imagePath));
+				String name = myRs.getString("name");
+				String imagePath = myRs.getString("imagePath");
+				Float rating = myRs.getFloat("rating");
+				System.out.println(name + " " + imagePath + " " + rating);
+				artists.add(new Artist(name, imagePath, rating));
 			}
 			System.out.println("Query successful");
 			return artists;
@@ -187,7 +195,7 @@ public class DatabaseManager {
 	}
 
 	
-	public  ArrayList<Album> searchAlbums(String searchString, ArrayList<String> selectedGenres) throws Exception
+	public  ArrayList<Album> searchAlbums(String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception
 	{
 		String s = "%"+searchString+"%";
 		PreparedStatement myStmt = null;
@@ -196,10 +204,12 @@ public class DatabaseManager {
 		try
 		{
 		    myStmt = myConn.prepareStatement(
-		            "SELECT Album.name, Album.imagePath, Album.genre, Album.year, Album.rating, Artist.name as artist_name FROM Album" +
-                    " JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" + " JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id " +
-                    "WHERE Album.name LIKE ? " + GenreSQL(selectedGenres) + ";");
-			myStmt.setString(1, s);
+		            	"SELECT DISTINCT Album.name, Album.imagePath, Album.genre, Album.year, Album.rating, Artist.name as artist_name FROM Album" +
+                    		" JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" + " JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
+							" JOIN Track ON Track.album_id = Album.album_id" +
+							FilterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + GenreSQL(selectedGenres, "Album") +
+							" ORDER BY Album.name ASC;");
+
 
 			System.out.println(myStmt.toString());
 
@@ -225,29 +235,32 @@ public class DatabaseManager {
 		finally {return albums;}
 	}
 
-	public ArrayList<Track> searchTracks(String searchString) throws Exception{
-		String s="%"+searchString+"%";
-		PreparedStatement myStmt=null;
+	public ArrayList<Track> searchTracks(String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception {
+		String s = "%"+searchString+"%";
+		PreparedStatement myStmt = null;
 		ResultSet myRs;
-		ArrayList<Track> tracks=new ArrayList<>();
+		ArrayList<Track> tracks = new ArrayList<>();
 		try
 		{
-			myStmt=myConn.prepareStatement("SELECT * FROM tracks where track_name like ? ");
-			myStmt.setString(1, s);
-
-			myRs=myStmt.executeQuery();
+			myStmt = myConn.prepareStatement(
+					"SELECT DISTINCT Track.name, Track.genre, Track.plays, Track.time, Album.name as album_name, Artist.name as artist_name FROM Track" +
+						" JOIN Album ON Album.album_id = Track.album_id" +
+						" JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
+						" JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
+						FilterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + GenreSQL(selectedGenres, "Track") +
+						" ORDER BY Album.name ASC, Track.name ASC;");
+			myRs = myStmt.executeQuery();
 			while(myRs.next())
 			{
-				String name = myRs.getString("track_name");
+				String name = myRs.getString("name");
 				String genre = myRs.getString("genre");
+				int plays = myRs.getInt("plays");
+				String time = myRs.getTime( "time").toString();
 				String artistName = myRs.getString("artist_name");
 				String albumName = myRs.getString("album_name");
-				int numPlays = myRs.getInt("num_plays");
-				double duration = myRs.getDouble( "duration");
 
-
-				System.out.println(name+" "+artistName+" "+albumName+" "+genre+" "+numPlays+" "+duration);
-				tracks.add(new Track(name, genre, artistName, albumName, numPlays, duration));
+				System.out.println(name+" "+genre+" "+plays+" "+time+" "+artistName+" "+albumName);
+				tracks.add(new Track(name, genre, plays, time, artistName, albumName));
 			}
 			System.out.println("Search track successful");
 
@@ -289,13 +302,45 @@ public class DatabaseManager {
 	}
 
 
-	private String GenreSQL(ArrayList<String> selectedGenres) {
+	private String FilterSQL(String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName) {
+		if (!searchByTrackName && !searchByAlbumName && !searchByArtistName) {
+			return " WHERE true";
+		}
+		else {
+			searchString = "\'%"+searchString+"%\'";
+			String sql = "";
+			sql = " WHERE (";
+			if (searchByTrackName) {
+				sql += " Track.name LIKE " + searchString;
+			}
+			if (searchByAlbumName) {
+				if (searchByTrackName) {
+					sql += " OR";
+				}
+				sql += " Album.name LIKE " + searchString;
+			}
+			if (searchByArtistName) {
+				if (searchByTrackName || searchByAlbumName) {
+					sql += " OR";
+				}
+				sql += " Artist.name LIKE " + searchString;
+			}
+			sql += ")";
+			return sql;
+		}
+	}
+
+	private String GenreSQL(ArrayList<String> selectedGenres, String tableName) {
 	    String sql = "";
 	    if (selectedGenres.size() > 0) {
 	        sql += " AND (";
         }
+        else {
+        	return "";
+		}
+
         for (int i = 0; i < selectedGenres.size(); i++) {
-            sql += "Album.genre = \'" + selectedGenres.get(i) + "\'";
+            sql += tableName + ".genre = \'" + selectedGenres.get(i) + "\'";
             if (i != selectedGenres.size() - 1) {
                 sql += " OR ";
             }

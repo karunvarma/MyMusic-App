@@ -5,12 +5,14 @@ public class Artist {
 	private int id;
 	private String name;
 	private String imagePath;
+	private float rating;
 	private ArrayList<Track> tracks;
 
-	Artist(String name, String imagePath)
+	Artist(String name, String imagePath, Float rating)
 	{
-		this.name=name;
-		this.imagePath=imagePath;
+		this.name = name;
+		this.imagePath = imagePath;
+		this.rating = rating;
 		//this.tracks =tracks ;
 	}
 	
@@ -24,16 +26,15 @@ public class Artist {
 	{
 		return this.id;
 	}
-	public String getName()
-	{
-		return this.name;
 
-	}
+	public String getName() { return this.name; }
 
 	public String getImagePath()
 	{
 		return this.imagePath;
 	}
+
+	public float getRating() { return this.rating; }
 
 	public ArrayList<Track> getTracks()
 	{
@@ -54,6 +55,11 @@ public class Artist {
 	public void setImagePath(String imagePath)
 	{
 		this.imagePath=imagePath;
+	}
+
+	public void setRating(float rating)
+	{
+		this.rating=rating;
 	}
 
 }

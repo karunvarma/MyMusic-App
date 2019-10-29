@@ -38,23 +38,7 @@ public class Controller {
         yourMusicContent.getChildren().clear();
         yourMusicContent.setPadding(new Insets(0,10,0,10));
 
-        ArrayList<Track> tracks = new ArrayList<Track>();
-        Track track = new Track();
-        track.setName("Name");
-        track.setAlbumName("Album");
-        track.setArtistName("Artist");
-        track.setNumPlays(0);
-        track.setGenre("Genre");
-        tracks.add(track);
-        Track track2 = new Track();
-        track.setName("Name");
-        track.setAlbumName("Album");
-        track.setArtistName("Artist");
-        track.setNumPlays(0);
-        track.setGenre("Genre");
-        tracks.add(track2);
-
-        setTrackTableView(tracks);
+        //setTrackTableView(tracks);
 
         yourMusicContent.getChildren().add(trackTableView);
     }
@@ -64,37 +48,7 @@ public class Controller {
         yourMusicContent.getChildren().clear();
         yourMusicContent.setPadding(new Insets(0,10,0,10));
 
-        ArrayList<Album> albums = new ArrayList<Album>();
-        albums.add(new Album("Name", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name2", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name3", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name4", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name5", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name6", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name7", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name8", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name9", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name10","artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name2", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name3", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name4", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name5", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name6", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name7", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name8", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name9", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name10", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name2", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name3", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name4", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name5", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name6", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name7", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name8", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name9", "artist",2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name10","artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-
-        setAlbumVBox(albums);
+        //setAlbumVBox(albums);
 
         yourMusicContent.getChildren().add(albumVBox);
     }
@@ -104,14 +58,8 @@ public class Controller {
         yourMusicContent.getChildren().clear();
         yourMusicContent.setPadding(new Insets(0,10,0,10));
 
-        ArrayList<Artist> artists = new ArrayList<Artist>();
-        artists.add(new Artist("Name", "MyMusic/fxml/musical-note.jpg"));
-        artists.add(new Artist("Name1", "MyMusic/fxml/musical-note.jpg"));
-        artists.add(new Artist("Name2", "MyMusic/fxml/musical-note.jpg"));
-        artists.add(new Artist("Name3", "MyMusic/fxml/musical-note.jpg"));
-        artists.add(new Artist("Name4", "MyMusic/fxml/musical-note.jpg"));
 
-        setArtistVBox(artists);
+        //setArtistVBox(artists);
         yourMusicContent.getChildren().add(artistVBox);
     }
 
@@ -137,23 +85,6 @@ public class Controller {
                 HBox albumHBox = new HBox();
                 albumHBox.setSpacing(50);
                 ItemBox albumBox = new ItemBox(albumList.get(i), 500);
-
-                ArrayList<Track> tracks = new ArrayList<Track>();
-                Track track = new Track();
-                track.setName("Name");
-                track.setAlbumName("Album");
-                track.setArtistName("Artist");
-                track.setNumPlays(0);
-                track.setGenre("Genre");
-                tracks.add(track);
-                Track track2 = new Track();
-                track.setName("Name");
-                track.setAlbumName("Album");
-                track.setArtistName("Artist");
-                track.setNumPlays(0);
-                track.setGenre("Genre");
-                tracks.add(track2);
-                TrackTableView trackTableView = new TrackTableView(tracks);
 
                 albumHBox.getChildren().addAll(albumBox, trackTableView);
                 albumVBox.getChildren().add(albumHBox);

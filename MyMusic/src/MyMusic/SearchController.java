@@ -38,7 +38,55 @@ public class SearchController {
     private CheckBox artistCheckBox;
 
     @FXML
+    private CheckBox trackNameCheckBox;
+
+    @FXML
+    private CheckBox albumNameCheckBox;
+
+    @FXML
+    private CheckBox artistNameCheckBox;
+
+    @FXML
     private CheckBox allGenresCheckBox;
+
+    @FXML
+    private CheckBox alternativeCheckBox;
+
+    @FXML
+    private CheckBox bluesCheckBox;
+
+    @FXML
+    private CheckBox classicalCheckBox;
+
+    @FXML
+    private CheckBox comedyCheckBox;
+
+    @FXML
+    private CheckBox countryCheckBox;
+
+    @FXML
+    private CheckBox danceCheckBox;
+
+    @FXML
+    private CheckBox electronicCheckBox;
+
+    @FXML
+    private CheckBox metalCheckBox;
+
+    @FXML
+    private CheckBox popCheckBox;
+
+    @FXML
+    private CheckBox rapCheckBox;
+
+    @FXML
+    private CheckBox reggaeCheckBox;
+
+    @FXML
+    private CheckBox rockCheckBox;
+
+    @FXML
+    private CheckBox soundtrackCheckBox;
 
 
 
@@ -49,10 +97,13 @@ public class SearchController {
         String searchString = searchField.getText();
 
         // Search criteria flags
-        Boolean searchByTrack = trackCheckBox.isSelected();
-        Boolean searchByAlbum = albumCheckBox.isSelected();
-        Boolean searchByArtist = artistCheckBox.isSelected();
-        Boolean searchByAllGenres = allGenresCheckBox.isSelected();
+        Boolean searchTracks = trackCheckBox.isSelected();
+        Boolean searchAlbums = albumCheckBox.isSelected();
+        Boolean searchArtists = artistCheckBox.isSelected();
+        Boolean searchByTrackName = trackNameCheckBox.isSelected();
+        Boolean searchByAlbumName = albumNameCheckBox.isSelected();
+        Boolean searchByArtistName = artistNameCheckBox.isSelected();
+
 
 
         // Use DatabaseManager to send search query and receive results.
@@ -67,71 +118,23 @@ public class SearchController {
         }
 
 
-        ArrayList<Album> albums = new ArrayList<Album>();
-        albums.add(new Album("Name", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name2", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name3", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name4", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name5", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name6", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name7", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name8", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name9", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name10","artist",  2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name2", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name3", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name4", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name5", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name6", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name7", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name8", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name9", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name10", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name2", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name3", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name4", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name5", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name6", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name7", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name8", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name9", "artist", 2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-        albums.add(new Album("Name10","artist",  2019, "Pop", "MyMusic/fxml/musical-note.jpg", 100));
-
-
-        ArrayList<Artist> artists = new ArrayList<Artist>();
-        artists.add(new Artist("Name", "MyMusic/fxml/musical-note.jpg"));
-        artists.add(new Artist("Name1", "MyMusic/fxml/musical-note.jpg"));
-        artists.add(new Artist("Name2", "MyMusic/fxml/musical-note.jpg"));
-        artists.add(new Artist("Name3", "MyMusic/fxml/musical-note.jpg"));
-        artists.add(new Artist("Name4", "MyMusic/fxml/musical-note.jpg"));
-
-        ArrayList<Track> tracks = new ArrayList<Track>();
-        Track track = new Track();
-        track.setName("Name");
-        track.setAlbumName("Album");
-        track.setArtistName("Artist");
-        track.setNumPlays(0);
-        track.setGenre("Genre");
-        tracks.add(track);
-
-
-        ArrayList<String> genres = new ArrayList<String>();
-        genres.add("Rock");
-        genres.add("Comedy");
+        ArrayList<String> genres = getGenreList();
         try {
             DatabaseManager databaseManager = new DatabaseManager();
-            if (searchByAlbum) {
+            if (searchAlbums) {
                 // Select from album table query to get list of albums
-                ArrayList<Album> albumResults = databaseManager.searchAlbums(searchString, genres);
+                ArrayList<Album> albumResults = databaseManager.searchAlbums(searchString, searchByTrackName, searchByAlbumName, searchByArtistName, genres);
                 searchResultsBox.getChildren().add(getAlbumResults(albumResults));
             }
-            if (searchByArtist) {
+            if (searchArtists) {
                 // Select from artist table query to get list of artist
-                searchResultsBox.getChildren().add(getArtistResults(artists));
+                ArrayList<Artist> artistResults = databaseManager.searchArtists(searchString, searchByTrackName, searchByAlbumName, searchByArtistName, genres);
+                searchResultsBox.getChildren().add(getArtistResults(artistResults));
             }
-            if (searchByTrack) {
+            if (searchTracks) {
                 // Select from track table query to get list of tracks
-                searchResultsBox.getChildren().add(getTrackResults(tracks));
+                ArrayList<Track> trackResults = databaseManager.searchTracks(searchString, searchByTrackName, searchByAlbumName, searchByArtistName, genres);
+                searchResultsBox.getChildren().add(getTrackResults(trackResults));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,7 +146,7 @@ public class SearchController {
         // VBox that will contain everything and be returned
         VBox trackResults = new VBox();
         trackResults.setSpacing(5);
-        trackResults.setPadding(new Insets(5,5,5,5));
+        trackResults.setPadding(new Insets(10,5,20,5));
 
         // Label for album results
         Label tracksLabel = new Label("Tracks");
@@ -166,7 +169,7 @@ public class SearchController {
         // VBox that will contain everything and be returned
         VBox albumResults = new VBox();
         albumResults.setSpacing(5);
-        albumResults.setPadding(new Insets(5,5,5,5));
+        albumResults.setPadding(new Insets(10,5,10,5));
 
         // Label for album results
         Label albumsLabel = new Label("Albums");
@@ -219,7 +222,7 @@ public class SearchController {
         // VBox that will contain everything and be returned
         VBox artistResults = new VBox();
         artistResults.setSpacing(5);
-        artistResults.setPadding(new Insets(5,5,5,5));
+        artistResults.setPadding(new Insets(10,5,10,5));
 
         // Label for album results
         Label artistLabel = new Label("Artists");
@@ -230,7 +233,7 @@ public class SearchController {
         ScrollPane artistScrollPane = new ScrollPane();
         artistScrollPane.setMaxHeight(400);
         artistScrollPane.setFitToHeight(true);
-        //artistScrollPane.setFitToWidth(false);
+
 
         // Artist results in a VBox that will be the content of the scroll pane
         VBox artistVBox = new VBox();
@@ -287,6 +290,91 @@ public class SearchController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void toggleGenreCheckBoxes() {
+        if (allGenresCheckBox.isSelected()) {
+            alternativeCheckBox.setSelected(false);
+            bluesCheckBox.setSelected(false);
+            classicalCheckBox.setSelected(false);
+            comedyCheckBox.setSelected(false);
+            countryCheckBox.setSelected(false);
+            danceCheckBox.setSelected(false);
+            electronicCheckBox.setSelected(false);
+            metalCheckBox.setSelected(false);
+            popCheckBox.setSelected(false);
+            rapCheckBox.setSelected(false);
+            reggaeCheckBox.setSelected(false);
+            rockCheckBox.setSelected(false);
+            soundtrackCheckBox.setSelected(false);
+        }
+    }
+
+    public void toggleAllGenresCheckBox() {
+        allGenresCheckBox.setSelected(false);
+    }
+
+    private ArrayList<String> getGenreList() {
+        ArrayList<String> genreList = new ArrayList<String>();
+        Boolean all = false;
+
+        if (allGenresCheckBox.isSelected()) {
+            all = true;
+        }
+
+        if (all || alternativeCheckBox.isSelected()) {
+            genreList.add("Alternative");
+        }
+
+        if (all || bluesCheckBox.isSelected()) {
+            genreList.add("Blues");
+        }
+
+        if (all || classicalCheckBox.isSelected()) {
+            genreList.add("Classical");
+        }
+
+        if (all || comedyCheckBox.isSelected()) {
+            genreList.add("Comedy");
+        }
+
+        if (all || countryCheckBox.isSelected()) {
+            genreList.add("Country");
+        }
+
+        if (all || danceCheckBox.isSelected()) {
+            genreList.add("Dance");
+        }
+
+        if (all || electronicCheckBox.isSelected()) {
+            genreList.add("Electronic");
+        }
+
+        if (all || metalCheckBox.isSelected()) {
+            genreList.add("Metal");
+        }
+
+        if (all || popCheckBox.isSelected()) {
+            genreList.add("Pop");
+        }
+
+        if (all || rapCheckBox.isSelected()) {
+            genreList.add("Rap");
+        }
+
+        if (all || reggaeCheckBox.isSelected()) {
+            genreList.add("Reggae");
+        }
+
+        if (all || rockCheckBox.isSelected()) {
+            genreList.add("Rock");
+        }
+
+        if (all || soundtrackCheckBox.isSelected()) {
+            genreList.add("Soundtrack");
+        }
+
+        return genreList;
     }
 
 }

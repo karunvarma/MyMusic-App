@@ -2,35 +2,26 @@ package MyMusic;
 
 public class Track {
 
-	private String name;
 	private int id;
-	private double duration;
-	private int num_plays;
-	private int album_id;
+	private String name;
+	private String genre;
+	private int plays;
+	private String time;
 	private String artist_name;
 	private String album_name;
-	private String genre;
+	private int album_id;
 
 	public Track() {}
 
-	public Track(String name, int album_id, double time, int num_plays)
-	{
-
-		this.name=name;
-		this.album_id=album_id;
-		this.duration=time;
-		this.num_plays=num_plays;
+	public Track(String name, String genre, int plays, String time, String artist_name, String album_name) {
+		this.name = name;
+		this.genre = genre;
+		this.plays = plays;
+		this.time = time;
+		this.artist_name = artist_name;
+		this.album_name = album_name;
 	}
 
-	public Track(String name,String genre, String artist_name, String album_name,int num_plays, double duration){
-		this.name=name;
-		this.genre=genre;
-		this.artist_name=artist_name;
-		this.album_name=album_name;
-		this.num_plays=num_plays;
-		this.duration=duration;
-
-	}
 	public int getId()
 	{
 		return id;
@@ -47,14 +38,14 @@ public class Track {
 		return this.album_id;
 	}
 
-	public double getDuration()
+	public String getTime()
 	{
-		return this.duration;
+		return this.time;
 	}
 
 	public int getNumPlays()
 	{
-		return this.num_plays;
+		return this.plays;
 	}
 
 	public String getArtistName()
@@ -89,14 +80,14 @@ public class Track {
 		this.album_id=album_id;
 	}
 
-	public void setTime(int duration)
+	public void setTime(String time)
 	{
-		this.duration=duration;
+		this.time = time;
 	}
 
-	public void setNumPlays(int num_plays)
+	public void setPlays(int plays)
 	{
-		 this.num_plays=num_plays;
+		 this.plays = plays;
 	}
 
 	public void setArtistName(String artist_name)
