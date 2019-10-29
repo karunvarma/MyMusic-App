@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchController {
+    private User user;
+
     @FXML
     private VBox genreBox;
 
@@ -87,8 +89,6 @@ public class SearchController {
 
     @FXML
     private CheckBox soundtrackCheckBox;
-
-
 
 
     @FXML
@@ -269,7 +269,6 @@ public class SearchController {
         artistScrollPane.setContent(artistVBox);
         artistResults.getChildren().add(artistScrollPane);
 
-
         return artistResults;
     }
 
@@ -279,12 +278,18 @@ public class SearchController {
     }
 
 
-
-
     public void changePage(String fxmlPath)  {
         try {
             Parent root = null;
-            root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            root = loader.load();
+
+            // Get the controller of the new root
+            Controller controller = loader.getController();
+
+            // Set user property of the controller
+            controller.setUser(user);
+
             Scene scene = searchField.getScene();
             scene.setRoot(root);
         } catch (IOException e) {
@@ -375,6 +380,10 @@ public class SearchController {
         }
 
         return genreList;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

@@ -8,30 +8,29 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import com.sun.javafx.scene.control.skin.TableHeaderRow?>
-<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="MyMusic.Controller" alignment="CENTER">
+<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="MyMusic.PlaylistController" alignment="CENTER">
     <VBox spacing="15">
-        <HBox styleClass="tabBar" alignment="CENTER">
+        <HBox styleClass="tabBar" alignment="CENTER_LEFT">
             <padding><Insets top="10"></Insets></padding>
-            <Button text="Your Music"/>
-            <Button text="Find Music"/>
+            <Button text="Back"></Button>
         </HBox>
 
         <Line startX="-800" endX="800"></Line>
 
 
         <HBox spacing="25">
-            <ImageView fx:id="albumImage" fitWidth="300" fitHeight="300">
+            <ImageView fx:id="playlistImageView" fitWidth="300" fitHeight="300">
                 <image>
                     <Image url="@musical-note.jpg" />
                 </image>
             </ImageView>
             <VBox spacing="10">
-                <Label text="Name" fx:id="albumNameLabel" styleClass="label-l"></Label>
-                <Label text="Artist" fx:id="albumArtistLabel" styleClass="label-m"></Label>
-                <Button text="Add to YourMusic" fx:id="addAlbumBtn" styleClass="add-btn"></Button>
+                <TextField text="My Playlist" fx:id="playlistNameTextField" styleClass="label-l"></TextField>
+                <Button text="Save Playlist" prefWidth="150" prefHeight="50" styleClass="label-s"></Button>
             </VBox>
         </HBox>
 
+        <Button text="Add track to playlist" fx:id="addTrackBtn" styleClass="add-btn"></Button>
         <HBox>
             <TableView minWidth="1600">
                 <columns>

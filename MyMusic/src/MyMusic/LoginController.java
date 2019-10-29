@@ -88,15 +88,8 @@ public class LoginController {
             // Get the controller of the new root
             Controller controller = loader.getController();
 
-
-            if (controller == null)
-            {
-                System.out.println("null");
-            }
-
             // Set user property of the controller
             controller.setUser(user);
-
 
             Scene scene = usernameField.getScene();
 
