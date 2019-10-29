@@ -16,17 +16,6 @@ public class DatabaseManager {
 		myConn=DriverManager.getConnection(dbUrl,user,password);
 		System.out.println("Database connected sucessfully");
 	}
-/*
-	public static void main(String args[])throws Exception
-	{
-		DatabaseManager d=new DatabaseManager();
-		ArrayList<Artist> artists=d.searchArtists("tri");
-		ArrayList<Album> albums=d.searchAlbums("ter");
-		ArrayList<Track> tracks=d.searchTracks("y");
-		ArrayList<Track> allTracks=d.getAllTracks();
-		ArrayList<Album> allAlbums=d.getAllAlbums();
-	}
-*/
 
 	public ArrayList<Track> getAllTracks() {		// to display latest tracks on the homepage
 
@@ -171,7 +160,7 @@ public class DatabaseManager {
 							" JOIN Album ON Album_has_Artist.album_id = Album.album_id" +
 							" JOIN Track_has_Artist ON Track_has_Artist.artist_id = Artist.artist_id " +
 							" JOIN Track ON Track.track_id = Track_has_Artist.track_id" +
-								FilterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + GenreSQL(selectedGenres, "Track") +
+								filterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + genreSQL(selectedGenres, "Track") +
 								" ORDER BY Artist.name ASC;");;
 			
 			myRs=myStmt.executeQuery();
@@ -207,7 +196,7 @@ public class DatabaseManager {
 		            	"SELECT DISTINCT Album.name, Album.imagePath, Album.genre, Album.year, Album.rating, Artist.name as artist_name FROM Album" +
                     		" JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" + " JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
 							" JOIN Track ON Track.album_id = Album.album_id" +
-							FilterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + GenreSQL(selectedGenres, "Album") +
+							filterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + genreSQL(selectedGenres, "Album") +
 							" ORDER BY Album.name ASC;");
 
 
@@ -247,7 +236,7 @@ public class DatabaseManager {
 						" JOIN Album ON Album.album_id = Track.album_id" +
 						" JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
 						" JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
-						FilterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + GenreSQL(selectedGenres, "Track") +
+						filterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + genreSQL(selectedGenres, "Track") +
 						" ORDER BY Album.name ASC, Track.name ASC;");
 			myRs = myStmt.executeQuery();
 			while(myRs.next())
@@ -271,7 +260,6 @@ public class DatabaseManager {
 		finally {
 			return tracks;
 		}
-
 	}
 
 
@@ -285,9 +273,11 @@ public class DatabaseManager {
 			ResultSet rs = loginStmt.executeQuery();
 
 			if (rs.next()) {
+				int userId = rs.getInt("user_id");
 				String name = rs.getString("name");
                 Boolean isAdmin = rs.getBoolean("admin");
-				User user = new User(name, username, password, isAdmin);
+				User user = new User(userId, name, username, password, isAdmin);
+				user.setPlaylists(getPlaylists(userId));
 				return user;
 			}
 			else {
@@ -302,7 +292,81 @@ public class DatabaseManager {
 	}
 
 
-	private String FilterSQL(String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName) {
+	public ArrayList<Playlist> getPlaylists(int userId) {
+		ArrayList<Playlist> playlists = new ArrayList<Playlist>();
+		PreparedStatement myStmt = null;
+		ResultSet myRs;
+		try
+		{
+			myStmt = myConn.prepareStatement("SELECT * From Playlist WHERE user_id = ?");
+			myStmt.setInt(1, userId);
+
+
+
+			myRs = myStmt.executeQuery();
+			int index = 0;
+			while(myRs.next())
+			{
+				int id = myRs.getInt("playlist_id");
+				String name = myRs.getString("name");
+				String imagePath = "MyMusic/fxml/musical-note.jpg";
+				ArrayList<Track> tracks = getTracksInPlaylist(id);
+
+				Playlist playlist = new Playlist(id, name, imagePath, tracks);
+				playlists.add(playlist);
+
+				index++;
+			}
+			System.out.println("Query successful");
+
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {return playlists;}
+	}
+
+	private ArrayList<Track> getTracksInPlaylist(int playlistId) {
+		PreparedStatement myStmt = null;
+		ResultSet myRs;
+		ArrayList<Track> tracks = new ArrayList<>();
+		try
+		{
+			myStmt = myConn.prepareStatement(
+					"SELECT DISTINCT Track.name, Track.genre, Track.plays, Track.time, Album.name as album_name, Artist.name as artist_name FROM Track" +
+							" JOIN Album ON Album.album_id = Track.album_id" +
+							" JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
+							" JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
+							" JOIN Playlist_has_Track on Track.track_id = Playlist_has_Track.track_id" +
+							" WHERE Playlist_has_Track.playlist_id = ?" +
+							" ORDER BY Album.name ASC, Track.name ASC;");
+			myStmt.setInt(1, playlistId);
+			myRs = myStmt.executeQuery();
+			while(myRs.next())
+			{
+				String name = myRs.getString("name");
+				String genre = myRs.getString("genre");
+				int plays = myRs.getInt("plays");
+				String time = myRs.getTime( "time").toString();
+				String artistName = myRs.getString("artist_name");
+				String albumName = myRs.getString("album_name");
+
+				System.out.println(name+" "+genre+" "+plays+" "+time+" "+artistName+" "+albumName);
+				tracks.add(new Track(name, genre, plays, time, artistName, albumName));
+			}
+			System.out.println("Search track successful");
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally {
+			return tracks;
+		}
+	}
+
+	private String filterSQL(String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName) {
 		if (!searchByTrackName && !searchByAlbumName && !searchByArtistName) {
 			return " WHERE true";
 		}
@@ -330,7 +394,7 @@ public class DatabaseManager {
 		}
 	}
 
-	private String GenreSQL(ArrayList<String> selectedGenres, String tableName) {
+	private String genreSQL(ArrayList<String> selectedGenres, String tableName) {
 	    String sql = "";
 	    if (selectedGenres.size() > 0) {
 	        sql += " AND (";

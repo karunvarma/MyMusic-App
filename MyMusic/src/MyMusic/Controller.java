@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
 
+import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,9 +21,10 @@ import java.util.List;
 public class Controller {
     private User user;
 
-    private TrackTableView trackTableView;
-    private VBox albumVBox;
-    private VBox artistVBox;
+    private TrackTableView trackContent;
+    private VBox albumContent;
+    private VBox artistContent;
+    private VBox playlistContent;
 
     @FXML
     VBox yourMusicContent;
@@ -40,7 +42,7 @@ public class Controller {
 
         //setTrackTableView(tracks);
 
-        yourMusicContent.getChildren().add(trackTableView);
+        yourMusicContent.getChildren().add(trackContent);
     }
 
     @FXML
@@ -50,7 +52,7 @@ public class Controller {
 
         //setAlbumVBox(albums);
 
-        yourMusicContent.getChildren().add(albumVBox);
+        yourMusicContent.getChildren().add(albumContent);
     }
 
     @FXML
@@ -60,25 +62,25 @@ public class Controller {
 
 
         //setArtistVBox(artists);
-        yourMusicContent.getChildren().add(artistVBox);
+        yourMusicContent.getChildren().add(artistContent);
     }
 
     @FXML
     private void displayPlaylists() {
         yourMusicContent.getChildren().clear();
         yourMusicContent.setPadding(new Insets(0,10,0,10));
-
+        yourMusicContent.getChildren().add(playlistContent);
     }
 
 
-    public void setTrackTableView(List<Track> trackList) {
-        trackTableView = new TrackTableView(trackList);
+    public void setTrackContent(List<Track> trackList) {
+        trackContent = new TrackTableView(trackList);
     }
 
-    public void setAlbumVBox(List<Album> albumList) {
-        albumVBox = new VBox();
-        albumVBox.setSpacing(5);
-        albumVBox.setPadding(new Insets(5,5,5,5));
+    public void setAlbumContent(List<Album> albumList) {
+        albumContent = new VBox();
+        albumContent.setSpacing(5);
+        albumContent.setPadding(new Insets(5,5,5,5));
 
         for (int i = 0; i <= albumList.size(); i++) {
             try {
@@ -86,18 +88,56 @@ public class Controller {
                 albumHBox.setSpacing(50);
                 ItemBox albumBox = new ItemBox(albumList.get(i), 500);
 
-                albumHBox.getChildren().addAll(albumBox, trackTableView);
-                albumVBox.getChildren().add(albumHBox);
+                albumHBox.getChildren().addAll(albumBox, trackContent);
+                albumContent.getChildren().add(albumHBox);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void setArtistVBox(List<Artist> artistList) {
+    public void setArtistContent(List<Artist> artistList) {
 
     }
 
+
+    public void setPlaylistContent() {
+        VBox content = new VBox();
+
+        // Row of playlist item boxes
+        HBox itemBoxRow = new HBox();
+        itemBoxRow.setPadding(new Insets(15,35,15,35));
+        itemBoxRow.setSpacing(20);
+
+        for (int i = 0; i <= user.getPlaylists().size(); i++) {
+            if (i == user.getPlaylists().size()) {
+                content.getChildren().add(itemBoxRow);
+                break;
+            }
+
+            try {
+                ItemBox itemBox = new ItemBox(user.getPlaylists().get(i));
+                itemBoxRow.getChildren().add(itemBox);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            // Add item HBox row to search results box after every 7th item
+            if ((i + 1) % 7 == 0) {
+                content.getChildren().add(itemBoxRow);
+
+                // Create new item box row
+                itemBoxRow = new HBox();
+                itemBoxRow.setPadding(new Insets(15,35,15,35));
+                itemBoxRow.setSpacing(20);
+            }
+        }
+
+
+
+        playlistContent = content;
+    }
 
 
     public void changePage(String fxmlPath)  {
@@ -114,5 +154,6 @@ public class Controller {
 
     public void setUser(User user) {
         this.user = user;
+        setPlaylistContent();
     }
 }

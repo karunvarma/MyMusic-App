@@ -8,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import com.sun.javafx.scene.control.skin.TableHeaderRow?>
+<?import com.sun.javafx.charts.Legend?>
 <HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="MyMusic.Controller" alignment="CENTER">
     <VBox spacing="15">
         <HBox styleClass="tabBar" alignment="CENTER">
@@ -28,7 +29,6 @@
 
             <ScrollPane prefWidth="1400" prefHeight="850">
                 <VBox fx:id="yourMusicContent">
-
                 </VBox>
             </ScrollPane>
 

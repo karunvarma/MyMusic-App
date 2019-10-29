@@ -91,6 +91,29 @@ public class ItemBox extends VBox {
 
         // Style
         setMaxSize(200,200);
+    }
 
+    public ItemBox(Playlist playlist) throws FileNotFoundException {
+        // Set spacing
+        setSpacing(5);
+
+        // Set ImageView
+        imageView = new ImageView();
+        imageView.setFitWidth(205);
+        imageView.setFitHeight(205);
+
+        Image image = new Image("MyMusic/fxml/musical-note.jpg");
+        if (playlist.getImagePath() != null){
+            image = new Image(playlist.getImagePath());
+        }
+        imageView.setImage(image);
+
+        // Set label 1 (name)
+        label1 = new Label(playlist.getName());
+        label1.getStyleClass().add("label-s");
+
+
+        // Add children
+        getChildren().addAll(imageView, label1);
     }
 }
