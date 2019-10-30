@@ -1,9 +1,13 @@
 package MyMusic;
 
+import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.*;
+import sun.jvm.hotspot.debugger.Page;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -112,7 +116,7 @@ public class ItemBox extends VBox {
         label1 = new Label(playlist.getName());
         label1.getStyleClass().add("label-s");
 
-
+        setCursor(Cursor.HAND);
         // Add children
         getChildren().addAll(imageView, label1);
     }

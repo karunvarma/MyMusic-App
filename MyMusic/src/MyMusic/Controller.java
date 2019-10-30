@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -42,7 +43,7 @@ public class Controller {
 
         //setTrackTableView(tracks);
 
-        yourMusicContent.getChildren().add(trackContent);
+       // yourMusicContent.getChildren().add(trackContent);
     }
 
     @FXML
@@ -52,7 +53,7 @@ public class Controller {
 
         //setAlbumVBox(albums);
 
-        yourMusicContent.getChildren().add(albumContent);
+        //yourMusicContent.getChildren().add(albumContent);
     }
 
     @FXML
@@ -62,7 +63,7 @@ public class Controller {
 
 
         //setArtistVBox(artists);
-        yourMusicContent.getChildren().add(artistContent);
+        //yourMusicContent.getChildren().add(artistContent);
     }
 
     @FXML
@@ -116,7 +117,15 @@ public class Controller {
             }
 
             try {
-                ItemBox itemBox = new ItemBox(user.getPlaylists().get(i));
+                Playlist playlist = user.getPlaylists().get(i);
+                ItemBox itemBox = new ItemBox(playlist);
+                itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        PageChanger pageChanger = new PageChanger();
+                        pageChanger.goToPlaylistPage(yourMusicContent.getScene(), playlist, user);
+                    }
+                });
                 itemBoxRow.getChildren().add(itemBox);
             }
             catch (FileNotFoundException e) {

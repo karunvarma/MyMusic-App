@@ -28,6 +28,7 @@
                 <TextField text="My Playlist" fx:id="playlistNameTextField" styleClass="label-l"></TextField>
                 <TextField text="MyMusic/fxml/musical-note.jpg" fx:id="playlistImagePathTextField" styleClass="label-s"></TextField>
                 <Button text="Save Playlist" prefWidth="150" prefHeight="50" styleClass="label-s" onAction="#savePlaylist"></Button>
+                <Button text="Delete Playlist" prefWidth="150" prefHeight="50" styleClass="label-s" onAction="#deletePlaylist"></Button>
             </VBox>
         </HBox>
 

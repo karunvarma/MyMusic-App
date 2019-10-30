@@ -241,8 +241,6 @@ public class DatabaseManager {
 			myStmt = myConn.prepareStatement("SELECT * From Playlist WHERE user_id = ?");
 			myStmt.setInt(1, userId);
 
-
-
 			myRs = myStmt.executeQuery();
 			int index = 0;
 			while(myRs.next())
@@ -292,7 +290,6 @@ public class DatabaseManager {
 				String artistName = myRs.getString("artist_name");
 				String albumName = myRs.getString("album_name");
 
-				System.out.println(name+" "+genre+" "+plays+" "+time+" "+artistName+" "+albumName);
 				tracks.add(new Track(name, genre, plays, time, artistName, albumName));
 			}
 			System.out.println("Search track successful");
@@ -369,20 +366,77 @@ public class DatabaseManager {
 		}
 	}
 
-	public boolean addPlaylist(Playlist playlist) {
-		Boolean success = false;
+	public void savePlaylist(Playlist playlist) {
+		PreparedStatement myStmt = null;
+		try {
+			if (playlistExists(playlist)) {
+				updatePlaylist(playlist);
+			}
+			else {
+				addPlaylist(playlist);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean playlistExists(Playlist playlist) {
+		PreparedStatement myStmt = null;
+		boolean exists = false;
+		try {
+			myStmt = myConn.prepareStatement("SELECT * FROM Playlist WHERE playlist_id = ?");
+			myStmt.setInt(1, playlist.getId());
+			ResultSet myRs = myStmt.executeQuery();
+			if (myRs.getFetchSize() == 1) {
+				exists = true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	public void updatePlaylist(Playlist playlist) {
+		PreparedStatement myStmt = null;
+		try {
+			myStmt = myConn.prepareStatement("UPDATE Playlist SET name = ?");
+			myStmt.setString(1, playlist.getName());
+			myStmt.executeUpdate();
+			updatePlaylistHasTrack(playlist);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updatePlaylistHasTrack(Playlist playlist) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deleteSQL = "DELETE FROM Playlist_has_Track WHERE playlist_id = " + playlist.getId() + ";";
+			String addSql = addPlaylist_hasTrackSQL(playlist);
+			myStmt.addBatch(deleteSQL);
+			myStmt.addBatch(addSql);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void addPlaylist(Playlist playlist) {
 		PreparedStatement myStmt = null;
 		try {
 			myStmt = myConn.prepareStatement("INSERT INTO Playlist (name, user_id) VALUES (?, ?);");
 			myStmt.setString(1, playlist.getName());
 			myStmt.setInt(2, playlist.getUserId());
 			myStmt.executeUpdate();
-			success = true;
+			addTracksToPlaylist(playlist, playlist.getTracks());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return success;
 	}
 
 	public boolean addTracksToPlaylist(Playlist playlist, ArrayList<Track> tracks) {
@@ -401,6 +455,20 @@ public class DatabaseManager {
 			}
 		}
 		return success;
+	}
+
+	public void deletePlaylist(Playlist playlist) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deletePlaylistSQL = "DELETE FROM Playlist WHERE playlist_id = " + playlist.getId() + ";";
+			String deletePlaylistHasTrackSQL = "DELETE FROM Playlist_has_Track WHERE playlist_id = " + playlist.getId() + ";";
+			myStmt.addBatch(deletePlaylistSQL);
+			myStmt.addBatch(deletePlaylistHasTrackSQL);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	// SQL GENERATION METHODS //
@@ -452,4 +520,13 @@ public class DatabaseManager {
         }
         return sql;
     }
+
+    private String addPlaylist_hasTrackSQL(Playlist playlist) {
+		String sql = "";
+		for (int i = 0; i < playlist.getTracks().size(); i++) {
+			sql += "INSERT INTO Playlist_has_Track Values (" + playlist.getId() + ", " + playlist.getTracks().get(i).getId() + "); ";
+		}
+
+		return sql;
+	}
 }

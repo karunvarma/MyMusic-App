@@ -31,15 +31,31 @@ public class PlaylistController {
     public void savePlaylist() {
         try {
             DatabaseManager databaseManager = new DatabaseManager();
-
             playlist.setName(playlistNameTextField.getText());
             playlist.setImagePath(playlistImagePathTextField.getText());
-            databaseManager.addPlaylist(playlist);
+            databaseManager.savePlaylist(playlist);
+            user.setPlaylists(databaseManager.getPlaylists(user.getUserId()));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
+    @FXML
+    public void deletePlaylist() {
+        try {
+            DatabaseManager databaseManager = new DatabaseManager();
+            databaseManager.deletePlaylist(playlist);
+            user.setPlaylists(databaseManager.getPlaylists(user.getUserId()));
+            goBack();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public void setUp(Playlist playlist, User user) {
         this.playlist = playlist;

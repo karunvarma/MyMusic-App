@@ -41,6 +41,8 @@ public class Playlist {
         return userId;
     }
 
+    public ArrayList<Track> getTracks() { return tracks; }
+
     public void setUserId(int userId) {
         this.userId = userId;
     }
