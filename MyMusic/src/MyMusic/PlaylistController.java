@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 
 public class PlaylistController {
     private Playlist playlist;
+    private User user;
 
     @FXML
     ImageView playlistImageView;
@@ -14,9 +15,16 @@ public class PlaylistController {
     @FXML
     TextField playlistNameTextField;
 
+    @FXML
+    TextField playlistImagePathTextField;
 
 
 
+    @FXML
+    public void goBack() {
+        PageChanger pageChanger = new PageChanger();
+        pageChanger.goToHomePage(playlistImageView.getScene(), user);
+    }
 
 
     @FXML
@@ -24,13 +32,18 @@ public class PlaylistController {
         try {
             DatabaseManager databaseManager = new DatabaseManager();
 
+            playlist.setName(playlistNameTextField.getText());
+            playlist.setImagePath(playlistImagePathTextField.getText());
+            databaseManager.addPlaylist(playlist);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void setPlaylist(Playlist playlist) {
+    public void setUp(Playlist playlist, User user) {
         this.playlist = playlist;
+        this.user = user;
 
         if (playlist != null) {
             Image image = new Image(playlist.getImagePath());

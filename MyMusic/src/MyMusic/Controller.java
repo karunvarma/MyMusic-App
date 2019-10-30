@@ -142,7 +142,8 @@ public class Controller {
             @Override
             public void handle(ActionEvent event) {
                 PageChanger pageChanger = new PageChanger();
-                pageChanger.goToPlaylistPage(yourMusicContent.getScene(), null);
+                Playlist playlist = new Playlist(0, "My Playlist", "MyMusic/fxml/musical-note.jpg", user.getUserId(), new ArrayList<Track>());
+                pageChanger.goToPlaylistPage(yourMusicContent.getScene(), playlist, user);
             }
         });
         buttonRow.getChildren().add(addButton);

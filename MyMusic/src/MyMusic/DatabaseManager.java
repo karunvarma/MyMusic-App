@@ -12,7 +12,7 @@ public class DatabaseManager {
 		String dbUrl="jdbc:mysql://localhost:3306/"+db_name+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user="root";
 		String password="root";
-		password = "VM44Kmy6H&XCM8c";
+		
 		myConn=DriverManager.getConnection(dbUrl,user,password);
 		System.out.println("Database connected sucessfully");
 	}
@@ -252,7 +252,7 @@ public class DatabaseManager {
 				String imagePath = "MyMusic/fxml/musical-note.jpg";
 				ArrayList<Track> tracks = getTracksInPlaylist(id);
 
-				Playlist playlist = new Playlist(id, name, imagePath, tracks);
+				Playlist playlist = new Playlist(id, name, imagePath, userId, tracks);
 				playlists.add(playlist);
 
 				index++;
@@ -369,13 +369,13 @@ public class DatabaseManager {
 		}
 	}
 
-	public boolean addPlaylist(Playlist playlist, User user) {
+	public boolean addPlaylist(Playlist playlist) {
 		Boolean success = false;
 		PreparedStatement myStmt = null;
 		try {
 			myStmt = myConn.prepareStatement("INSERT INTO Playlist (name, user_id) VALUES (?, ?);");
 			myStmt.setString(1, playlist.getName());
-			myStmt.setInt(2, user.getUserId());
+			myStmt.setInt(2, playlist.getUserId());
 			myStmt.executeUpdate();
 			success = true;
 		}

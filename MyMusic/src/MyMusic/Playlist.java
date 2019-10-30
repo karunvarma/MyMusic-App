@@ -6,12 +6,14 @@ public class Playlist {
     private int id;
     private String name;
     private String imagePath;
+    private int userId;
     private ArrayList<Track> tracks;
 
-    public Playlist(int id, String name, String imagePath, ArrayList<Track> tracks) {
+    public Playlist(int id, String name, String imagePath, int userId, ArrayList<Track> tracks) {
         this.id = id;
         this.name = name;
         this.imagePath = imagePath;
+        this.userId = userId;
         this.tracks = tracks;
     }
 
@@ -33,6 +35,14 @@ public class Playlist {
 
     public String getImagePath() {
         return imagePath;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setImagePath(String imagePath) { this.imagePath = imagePath; }

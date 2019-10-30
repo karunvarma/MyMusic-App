@@ -12,7 +12,7 @@
     <VBox spacing="15">
         <HBox styleClass="tabBar" alignment="CENTER_LEFT">
             <padding><Insets top="10"></Insets></padding>
-            <Button text="Back"></Button>
+            <Button text="Back" onAction="#goBack"></Button>
         </HBox>
 
         <Line startX="-800" endX="800"></Line>
@@ -26,7 +26,8 @@
             </ImageView>
             <VBox spacing="10">
                 <TextField text="My Playlist" fx:id="playlistNameTextField" styleClass="label-l"></TextField>
-                <Button text="Save Playlist" prefWidth="150" prefHeight="50" styleClass="label-s"></Button>
+                <TextField text="MyMusic/fxml/musical-note.jpg" fx:id="playlistImagePathTextField" styleClass="label-s"></TextField>
+                <Button text="Save Playlist" prefWidth="150" prefHeight="50" styleClass="label-s" onAction="#savePlaylist"></Button>
             </VBox>
         </HBox>
 
