@@ -1,17 +1,14 @@
 package MyMusic;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.event.ActionEvent;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.Label;
-import java.io.IOException;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
+public class SignUpController {
+    @FXML
+    private TextField nameField;
 
-public class LoginController {
     @FXML
     private TextField usernameField;
 
@@ -21,35 +18,35 @@ public class LoginController {
     @FXML
     private Label errorLabel;
 
-    // Method called when the login button is pressed.
-    // Gets username and password from login.fxml.
-    // Validates user input. If invalid, display error message.
-    // Validates username and password with the database.
-    // If credentials are valid, log user in, else display error message.
+
     @FXML
-    private void login(ActionEvent event) {
+    public void signup() {
         if (validateLogin()) {
+            String name = nameField.getText();
             String username = usernameField.getText();
             String password = passwordField.getText();
-            User user = null;
 
-            // Use database manager to get a user, using the username and password input
+            // Use database manager to check if the entered username exists in the db, using the username and password input
+            // If not add a user to the database
             DatabaseManager dbManager= null;
             try {
                 dbManager = new DatabaseManager();
-                user = dbManager.getUser(username, password);
+                // Check if another user already has the entered username
+                if (dbManager.isUsernameTaken(username)) {
+                    errorLabel.setText("Username is taken");
+                }
+                else {
+                    User user = new User(-1, name, username, password, false);
+                    if (dbManager.addUser(user)) {
+                        new PageChanger().goToLoginPage(usernameField.getScene());
+                    }
+                    else {
+                        errorLabel.setText("Error with database");
+                    }
+                }
             } catch (Exception e) {
-               e.printStackTrace();
-            }
-
-            if (user != null) {
-                // If a user is retrieved login
-                errorLabel.setText("");
-                new PageChanger().goToHomePage(usernameField.getScene(), user);
-            }
-            else {
-                // If no user is returned
-                errorLabel.setText("You have entered an invalid username or password");
+                e.printStackTrace();
+                errorLabel.setText("Error with database");
             }
         }
         else {
@@ -57,6 +54,7 @@ public class LoginController {
             errorLabel.setText("You have entered an invalid username or password");
         }
     }
+
 
     private boolean validateLogin() {
         Boolean isValid = true;
@@ -79,7 +77,7 @@ public class LoginController {
         return isValid;
     }
 
-    public void goToSignUpPage()  {
-       new PageChanger().goToSignUpPage(usernameField.getScene());
+    public void goToLoginPage()  {
+        new PageChanger().goToLoginPage(usernameField.getScene());
     }
 }

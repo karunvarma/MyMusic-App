@@ -1,7 +1,6 @@
 package MyMusic;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -185,5 +183,10 @@ public class Controller {
     public void setUser(User user) {
         this.user = user;
         setPlaylistContent();
+    }
+
+
+    public void logout() {
+        new PageChanger().goToLoginPage(yourMusicContent.getScene());
     }
 }

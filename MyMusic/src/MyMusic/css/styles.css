@@ -11,13 +11,12 @@
     -fx-font-size: 22px;
 }
 
-.login-field {
-
-
-}
-
 .login-btn {
     -fx-font-size: 18px;
+}
+
+.signup-btn {
+    -fx-font-size: 16px;
 }
 
 .login-error {
@@ -70,3 +69,4 @@
 .yourMusic-btn {
     -fx-font-size: 28px;
 }
+

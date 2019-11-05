@@ -6,12 +6,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox fx:controller="MyMusic.LoginController" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
+<HBox fx:controller="MyMusic.SignUpController" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
     <VBox alignment="CENTER" spacing="15">
-        <Label text="Login" styleClass="login-title"/>
+        <Label text="Sign Up" styleClass="login-title"/>
         <VBox id="login-box" spacing="25" minWidth="500" minHeight="500" maxWidth="500" maxHeight="500" alignment="TOP_CENTER">
             <VBox spacing="5">
                 <padding><Insets left="25" right="25" top="50"></Insets></padding>
+                <Label text="Name" styleClass="login-label"/>
+                <TextField fx:id="nameField" styleClass="login-field" minHeight="40"/>
+            </VBox>
+            <VBox spacing="5">
+                <padding><Insets left="25" right="25"></Insets></padding>
                 <Label text="Username" styleClass="login-label"/>
                 <TextField fx:id="usernameField" styleClass="login-field" minHeight="40"/>
             </VBox>
@@ -21,10 +26,9 @@
                 <PasswordField fx:id="passwordField" styleClass="login-field" minHeight="40"/>
             </VBox>
 
-            <Button text="Login" styleClass="login-btn" alignment="CENTER" minWidth="100" minHeight="40" onAction="#login"/>
+            <Button text="Sign Up" styleClass="login-btn" alignment="CENTER" minWidth="100" minHeight="40" onAction="#signup"/>
 
-            <Button text="Sign Up" styleClass="signup-btn" alignment="CENTER" minWidth="75" minHeight="30" onAction="#goToSignUpPage"/>
-
+            <Button text="Back" styleClass="login-btn" alignment="CENTER" minWidth="75" minHeight="30" onAction="#goToLoginPage"/>
 
             <Label fx:id="errorLabel" text="" styleClass="login-error" wrapText="true">
                 <padding><Insets left="25" right="25"></Insets></padding>

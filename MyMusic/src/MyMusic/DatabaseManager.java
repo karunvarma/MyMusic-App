@@ -166,6 +166,29 @@ public class DatabaseManager {
 		return null;
 	}
 
+
+	public boolean isUsernameTaken(String username) {
+		try {
+			// Login SQL Query
+			PreparedStatement loginStmt = myConn.prepareStatement("Select username FROM User WHERE username = ?");
+			loginStmt.setString(1, username);
+
+			ResultSet rs = loginStmt.executeQuery();
+
+			if (rs.next()) {
+				return true;
+			}
+			else {
+				// Result set is empty. Therefore, a user with the given username and password does not exist in the database.
+				return false;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
 	public ArrayList<Track> getAllTracks() {		// to display latest tracks on the homepage
 
 		PreparedStatement myStmt=null;
@@ -306,10 +329,30 @@ public class DatabaseManager {
 
 	// ADD METHODS //
 
+	public boolean addUser(User user) {
+		PreparedStatement myStmt=null;
+		try
+		{
+			myStmt = myConn.prepareStatement("INSERT INTO USER(name, username, password, admin) values (?,?,?,?)");
+			myStmt.setString(1, user.getName());
+			myStmt.setString(2, user.getUsername());
+			myStmt.setString(3, user.getPassword());
+			myStmt.setBoolean(4, user.isAdmin());
+			myStmt.executeUpdate();
+			System.out.println("user added successfully");
+			return true;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return false;
+		}
+	}
+
+
 	public void addTrack(Track track)
 	{
 		PreparedStatement myStmt=null;
-
 		try
 		{
 			myStmt=myConn.prepareStatement("insert into tracks(track_name, album_id, time, num_plays) values (?,?,?,?)");

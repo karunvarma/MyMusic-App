@@ -38,6 +38,10 @@ public class User {
         return password;
     }
 
+    public Boolean isAdmin() {
+        return isAdmin;
+    }
+
     public ArrayList<Playlist> getPlaylists() { return playlists; }
 
     public void setUserId(int userId) {

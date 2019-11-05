@@ -7,13 +7,24 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
+<?import javafx.scene.text.Text?>
 <HBox fx:controller="MyMusic.SearchController" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
     <VBox spacing="15">
-        <HBox styleClass="tabBar" alignment="CENTER">
+        <BorderPane styleClass="tabBar">
             <padding><Insets top="10"></Insets></padding>
-            <Button text="Your Music" onAction="#goToHomePage"/>
-            <Button text="Find Music"/>
-        </HBox>
+            <left>
+                <Text text="Name"/>
+            </left>
+            <center>
+                <HBox alignment="CENTER">
+                    <Button text="Your Music" onAction="#goToHomePage"/>
+                    <Button text="Find Music"/>
+                </HBox>
+            </center>
+            <right>
+                <Button text="Logout" onAction="#logout" />
+            </right>
+        </BorderPane>
 
         <Line startX="-800" endX="800"></Line>
 

@@ -386,4 +386,7 @@ public class SearchController {
         this.user = user;
     }
 
+    public void logout() {
+        new PageChanger().goToLoginPage(searchField.getScene());
+    }
 }

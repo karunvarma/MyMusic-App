@@ -37,8 +37,32 @@ public class PageChanger {
             // Get the controller of the new root
             Controller controller = loader.getController();
 
-            // Set user property of the controller
+            // Set property of the controller
             controller.setUser(user);
+
+            scene.setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void goToSignUpPage(Scene scene) {
+        try {
+            Parent root = null;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/signup.fxml"));
+            root = loader.load();
+
+            scene.setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void goToLoginPage(Scene scene) {
+        try {
+            Parent root = null;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/login.fxml"));
+            root = loader.load();
 
             scene.setRoot(root);
         } catch (IOException e) {
