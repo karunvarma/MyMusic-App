@@ -26,12 +26,10 @@ public class Controller {
     private VBox playlistContent;
 
     @FXML
-    VBox yourMusicContent;
+    private Label nameLabel;
 
     @FXML
-    public void goToSearchPage() {
-        changePage("fxml/search.fxml");
-    }
+    VBox yourMusicContent;
 
 
     @FXML
@@ -120,8 +118,7 @@ public class Controller {
                 itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        PageChanger pageChanger = new PageChanger();
-                        pageChanger.goToPlaylistPage(yourMusicContent.getScene(), playlist, user);
+                        PageChanger.getInstance().goToPlaylistPage(yourMusicContent.getScene(), playlist, user);
                     }
                 });
                 itemBoxRow.getChildren().add(itemBox);
@@ -148,9 +145,8 @@ public class Controller {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                PageChanger pageChanger = new PageChanger();
                 Playlist playlist = new Playlist(0, "My Playlist", "MyMusic/fxml/musical-note.jpg", user.getUserId(), new ArrayList<Track>());
-                pageChanger.goToPlaylistPage(yourMusicContent.getScene(), playlist, user);
+                PageChanger.getInstance().goToPlaylistPage(yourMusicContent.getScene(), playlist, user);
             }
         });
         buttonRow.getChildren().add(addButton);
@@ -182,11 +178,17 @@ public class Controller {
 
     public void setUser(User user) {
         this.user = user;
+        nameLabel.setText(user.getName());
         setPlaylistContent();
     }
 
+    @FXML
+    public void goToSearchPage() {
+        PageChanger.getInstance().goToSearchPage(yourMusicContent.getScene(), user);
+    }
 
+    @FXML
     public void logout() {
-        new PageChanger().goToLoginPage(yourMusicContent.getScene());
+        PageChanger.getInstance().goToLoginPage(yourMusicContent.getScene());
     }
 }

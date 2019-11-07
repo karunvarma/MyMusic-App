@@ -1,6 +1,7 @@
 package MyMusic;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,12 +19,14 @@ public class PlaylistController {
     @FXML
     TextField playlistImagePathTextField;
 
+    @FXML
+    TableView playlistTracksTableView;
+
 
 
     @FXML
     public void goBack() {
-        PageChanger pageChanger = new PageChanger();
-        pageChanger.goToHomePage(playlistImageView.getScene(), user);
+        PageChanger.getInstance().goToHomePage(playlistImageView.getScene(), user);
     }
 
 
@@ -64,8 +67,8 @@ public class PlaylistController {
         if (playlist != null) {
             Image image = new Image(playlist.getImagePath());
             playlistImageView.setImage(image);
-
             playlistNameTextField.setText(playlist.getName());
+            playlistTracksTableView = new TrackTableView(playlist.getTracks());
         }
     }
 }

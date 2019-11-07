@@ -1,5 +1,6 @@
 package MyMusic;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
@@ -20,6 +22,9 @@ import java.util.List;
 
 public class SearchController {
     private User user;
+
+    @FXML
+    private Label nameLabel;
 
     @FXML
     private VBox genreBox;
@@ -196,7 +201,14 @@ public class SearchController {
             }
 
             try {
-                ItemBox itemBox = new ItemBox(albumList.get(i));
+                Album album = albumList.get(i);
+                ItemBox itemBox = new ItemBox(album);
+                itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        PageChanger.getInstance().goToAlbumPage(searchField.getScene(), album, user);
+                    }
+                });
                 itemBoxRow.getChildren().add(itemBox);
 
             } catch (FileNotFoundException e) {
@@ -384,9 +396,11 @@ public class SearchController {
 
     public void setUser(User user) {
         this.user = user;
+        nameLabel.setText(user.getName());
     }
 
+    @FXML
     public void logout() {
-        new PageChanger().goToLoginPage(searchField.getScene());
+        PageChanger.getInstance().goToLoginPage(searchField.getScene());
     }
 }

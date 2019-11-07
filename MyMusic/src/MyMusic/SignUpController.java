@@ -38,7 +38,7 @@ public class SignUpController {
                 else {
                     User user = new User(-1, name, username, password, false);
                     if (dbManager.addUser(user)) {
-                        new PageChanger().goToLoginPage(usernameField.getScene());
+                        PageChanger.getInstance().goToLoginPage(usernameField.getScene());
                     }
                     else {
                         errorLabel.setText("Error with database");
@@ -78,6 +78,6 @@ public class SignUpController {
     }
 
     public void goToLoginPage()  {
-        new PageChanger().goToLoginPage(usernameField.getScene());
+        PageChanger.getInstance().goToLoginPage(usernameField.getScene());
     }
 }

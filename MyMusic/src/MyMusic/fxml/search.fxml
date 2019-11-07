@@ -13,7 +13,7 @@
         <BorderPane styleClass="tabBar">
             <padding><Insets top="10"></Insets></padding>
             <left>
-                <Text text="Name"/>
+                <Label fx:id="nameLabel" text="Name"/>
             </left>
             <center>
                 <HBox alignment="CENTER">

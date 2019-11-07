@@ -51,7 +51,6 @@ public class TrackTableView extends TableView {
         for (int i = 0; i < trackList.size(); i++) {
             getItems().add(trackList.get(i));
         }
-
     }
 
     public class PlayButton extends Button {

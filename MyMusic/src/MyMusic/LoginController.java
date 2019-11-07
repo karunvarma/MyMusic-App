@@ -1,14 +1,10 @@
 package MyMusic;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.event.ActionEvent;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Label;
-import java.io.IOException;
 
 
 public class LoginController {
@@ -45,7 +41,7 @@ public class LoginController {
             if (user != null) {
                 // If a user is retrieved login
                 errorLabel.setText("");
-                new PageChanger().goToHomePage(usernameField.getScene(), user);
+                PageChanger.getInstance().goToHomePage(usernameField.getScene(), user);
             }
             else {
                 // If no user is returned
@@ -80,6 +76,6 @@ public class LoginController {
     }
 
     public void goToSignUpPage()  {
-       new PageChanger().goToSignUpPage(usernameField.getScene());
+        PageChanger.getInstance().goToSignUpPage(usernameField.getScene());
     }
 }

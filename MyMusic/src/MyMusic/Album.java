@@ -12,19 +12,15 @@ public class Album {
 	private float rating;
 	private ArrayList<Track> tracks;
 
-	Album(String name, String artistName, int year, String genre, String imagePath, float rating)
+	Album(int id, String name, String artistName, int year, String genre, String imagePath, float rating)
 	{
-		this.name=name;
-		this.artistName=artistName;
-		this.imagePath=imagePath;
-		this.year=year;
-		this.genre=genre;
-		this.rating=rating;
-	}
-
-	public void addTrack(Track track)
-	{
-		this.tracks.add(track);
+		this.id = id;
+		this.name = name;
+		this.artistName = artistName;
+		this.imagePath = imagePath;
+		this.year = year;
+		this.genre = genre;
+		this.rating = rating;
 	}
 
 	public int  getId()
@@ -90,6 +86,15 @@ public class Album {
 	public void setRating(float rating)
 	{
 		this.rating=rating;
+	}
+
+	public void setTracks(ArrayList<Track> trackList) {
+		tracks = trackList;
+	}
+
+	public void addTrack(Track track)
+	{
+		this.tracks.add(track);
 	}
 
 }

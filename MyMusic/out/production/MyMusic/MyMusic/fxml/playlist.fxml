@@ -34,7 +34,7 @@
 
         <Button text="Add track to playlist" fx:id="addTrackBtn" styleClass="add-btn"></Button>
         <HBox>
-            <TableView minWidth="1600">
+            <TableView fx:id="playlistTracksTableView" minWidth="1600">
                 <columns>
                     <TableColumn text="Play"></TableColumn>
                     <TableColumn text="Name"></TableColumn>

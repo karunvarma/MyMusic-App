@@ -24,6 +24,7 @@ public class ItemBox extends VBox {
         imageView.setFitWidth(135);
         imageView.setFitHeight(135);
 
+        // Set image for image view
         Image image = new Image("MyMusic/fxml/musical-note.jpg");
         System.out.println(album.getImagePath());
         if (album.getImagePath() != null){
@@ -43,6 +44,7 @@ public class ItemBox extends VBox {
 
         // Style
         setMaxSize(200,200);
+        setCursor(Cursor.HAND);
     }
 
     public ItemBox(Album album, int size) throws FileNotFoundException {
@@ -52,8 +54,8 @@ public class ItemBox extends VBox {
         imageView.setFitWidth(size);
         imageView.setFitHeight(size);
 
+        // Set image for image view
         Image image = new Image("MyMusic/fxml/musical-note.jpg");
-
         if (album.getImagePath() != null){
             image = new Image(album.getImagePath());
         }
@@ -71,6 +73,7 @@ public class ItemBox extends VBox {
 
         // Style
         setMaxSize(size + 100,size + 100);
+        setCursor(Cursor.HAND);
     }
 
     public ItemBox(Artist artist) throws FileNotFoundException {
@@ -80,6 +83,7 @@ public class ItemBox extends VBox {
         imageView.setFitWidth(135);
         imageView.setFitHeight(135);
 
+        // Set image for image view
         Image image = new Image("MyMusic/fxml/musical-note.jpg");
         if (artist.getImagePath() != null){
             image = new Image(artist.getImagePath());
@@ -95,6 +99,7 @@ public class ItemBox extends VBox {
 
         // Style
         setMaxSize(200,200);
+        setCursor(Cursor.HAND);
     }
 
     public ItemBox(Playlist playlist) throws FileNotFoundException {

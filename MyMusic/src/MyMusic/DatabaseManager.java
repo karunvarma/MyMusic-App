@@ -12,8 +12,8 @@ public class DatabaseManager {
 		String dbUrl="jdbc:mysql://localhost:3306/"+db_name+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user="root";
 		String password="root";
-		
-		myConn=DriverManager.getConnection(dbUrl,user,password);
+		password = "VM44Kmy6H&XCM8c";
+		myConn=DriverManager.getConnection(dbUrl, user, password);
 		System.out.println("Database connected sucessfully");
 	}
 
@@ -66,7 +66,7 @@ public class DatabaseManager {
 		try
 		{
 		    myStmt = myConn.prepareStatement(
-		            	"SELECT DISTINCT Album.name, Album.imagePath, Album.genre, Album.year, Album.rating, Artist.name as artist_name FROM Album" +
+		            	"SELECT DISTINCT Album.album_id, Album.name, Album.imagePath, Album.genre, Album.year, Album.rating, Artist.name as artist_name FROM Album" +
                     		" JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" + " JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
 							" JOIN Track ON Track.album_id = Album.album_id" +
 							filterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + genreSQL(selectedGenres, "Album") +
@@ -78,6 +78,7 @@ public class DatabaseManager {
 			myRs = myStmt.executeQuery();
 			while(myRs.next())
 			{
+				int id = myRs.getInt("album_id");
 				String name = myRs.getString("name");
                 String imagePath = myRs.getString("imagePath");
                 String artistName = myRs.getString("artist_name");
@@ -85,7 +86,9 @@ public class DatabaseManager {
 				String genre = myRs.getString("genre");
 				float rating = myRs.getFloat("rating");
 				System.out.println(name+" "+artistName+" "+year+" "+genre+" "+imagePath+" "+rating);
-				albums.add(new Album(name, artistName, year, genre, imagePath, rating));
+				Album album = new Album(id, name, artistName, year, genre, imagePath, rating);
+				album.setTracks(getTracksInAlbum(id));
+				albums.add(album);
 			}
 			System.out.println("Query successful");
 			
@@ -166,7 +169,6 @@ public class DatabaseManager {
 		return null;
 	}
 
-
 	public boolean isUsernameTaken(String username) {
 		try {
 			// Login SQL Query
@@ -234,6 +236,7 @@ public class DatabaseManager {
 			while(myRs.next())
 			{
 
+				int id=myRs.getInt("album_id");
 				String name=myRs.getString("album_name");
 				String artistName=myRs.getString("artist_name");
 				int year=myRs.getInt("year");
@@ -241,7 +244,7 @@ public class DatabaseManager {
 				String imagePath=myRs.getString("imagePath");
 				float rating=myRs.getFloat("rating");
 				System.out.println(name+" "+year+" "+genre+" "+imagePath+" "+rating);
-				albums.add(new Album(name,artistName,year,genre,imagePath,rating));
+				albums.add(new Album(id,name,artistName,year,genre,imagePath,rating));
 			}
 			System.out.println("GetAllTracks Query successful");
 
@@ -303,6 +306,41 @@ public class DatabaseManager {
 							" WHERE Playlist_has_Track.playlist_id = ?" +
 							" ORDER BY Album.name ASC, Track.name ASC;");
 			myStmt.setInt(1, playlistId);
+			myRs = myStmt.executeQuery();
+			while(myRs.next())
+			{
+				String name = myRs.getString("name");
+				String genre = myRs.getString("genre");
+				int plays = myRs.getInt("plays");
+				String time = myRs.getTime( "time").toString();
+				String artistName = myRs.getString("artist_name");
+				String albumName = myRs.getString("album_name");
+				tracks.add(new Track(name, genre, plays, time, artistName, albumName));
+			}
+			System.out.println("Search track successful");
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally {
+			return tracks;
+		}
+	}
+
+	public ArrayList<Track> getTracksInAlbum(int albumId) {
+		PreparedStatement myStmt = null;
+		ResultSet myRs;
+		ArrayList<Track> tracks = new ArrayList<>();
+		try
+		{
+			myStmt = myConn.prepareStatement(
+					"SELECT DISTINCT Track.track_id, Track.name, Track.genre, Track.plays, Track.time, Album.name as album_name, Artist.name as artist_name FROM Track" +
+							" JOIN Album ON Album.album_id = Track.album_id" +
+							" JOIN Track_has_Artist ON Track.track_id = Track_has_Artist.track_id" +
+							" JOIN Artist ON Track_has_Artist.artist_id = Artist.artist_id" +
+							" WHERE Track.album_id = " + albumId +
+							" ORDER BY Track.name ASC;");
 			myRs = myStmt.executeQuery();
 			while(myRs.next())
 			{
@@ -499,6 +537,8 @@ public class DatabaseManager {
 		}
 		return success;
 	}
+
+	// DELETE METHODS //
 
 	public void deletePlaylist(Playlist playlist) {
 		try {
