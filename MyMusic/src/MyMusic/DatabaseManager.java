@@ -447,7 +447,65 @@ public class DatabaseManager {
 		}
 	}
 
-	// ADD METHODS //
+	// SAVE & EXISTS METHODS //
+
+	public void saveTrack(Track track) {
+
+	}
+
+	public void saveAlbum(Album album) {
+
+	}
+
+	public void saveArtist(Artist artist) {
+
+	}
+
+	public void savePlaylist(Playlist playlist) {
+		PreparedStatement myStmt = null;
+		try {
+			if (playlistExists(playlist)) {
+				updatePlaylist(playlist);
+			}
+			else {
+				addPlaylist(playlist);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean trackExists(Track track) {
+		return true;
+	}
+
+	public boolean albumExists(Track track) {
+		return true;
+	}
+
+	public boolean artistExists(Track track) {
+		return true;
+	}
+
+	public boolean playlistExists(Playlist playlist) {
+		PreparedStatement myStmt = null;
+		boolean exists = false;
+		try {
+			myStmt = myConn.prepareStatement("SELECT * FROM Playlist WHERE playlist_id = ?");
+			myStmt.setInt(1, playlist.getId());
+			ResultSet myRs = myStmt.executeQuery();
+			if (myRs.getFetchSize() == 1) {
+				exists = true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	// ADD & UPDATE METHODS //
 
 	public boolean addUser(User user) {
 		PreparedStatement myStmt=null;
@@ -469,19 +527,18 @@ public class DatabaseManager {
 		}
 	}
 
-
 	public void addTrack(Track track)
 	{
-		PreparedStatement myStmt=null;
+		PreparedStatement myStmt = null;
 		try
 		{
-			myStmt=myConn.prepareStatement("insert into tracks(track_name, album_id, time, num_plays) values (?,?,?,?)");
-			myStmt.setString(1,track.getName());
-			myStmt.setInt(2,track.getAlbumId());
-			myStmt.setString(3,track.getTime());
-			myStmt.setInt(4,track.getNumPlays());
+			myStmt = myConn.prepareStatement("INSERT INTO Track(name, genre, plays, time) VALUES (?, ?, ?, ?)");
+			myStmt.setString(1, track.getName());
+			myStmt.setString(2, track.getGenre());
+			myStmt.setInt(3, track.getNumPlays());
+			myStmt.setString(4, track.getTime());
 			myStmt.executeUpdate();
-			System.out.println("track added successfully");
+			System.out.println("Track added successfully");
 		}
 		catch(Exception e)
 		{
@@ -492,15 +549,14 @@ public class DatabaseManager {
 	public void addArtist(Artist artist)
 	{
 		PreparedStatement myStmt=null;
-
 		try
 		{
-			myStmt=myConn.prepareStatement("insert into artists (artist_name, image_link) values (?,?)");
-			myStmt.setString(1,artist.getName());
-			myStmt.setString(2,artist.getImagePath());
-
+			myStmt = myConn.prepareStatement("INSERT INTO Artist (name, imagePath, rating) values (?, ?, ?)");
+			myStmt.setString(1, artist.getName());
+			myStmt.setString(2, artist.getImagePath());
+			myStmt.setFloat(3, artist.getRating());
 			myStmt.executeUpdate();
-			System.out.println("artist added successfully");
+			System.out.println("Artist added successfully");
 		}
 		catch(Exception e)
 		{
@@ -514,12 +570,12 @@ public class DatabaseManager {
 		PreparedStatement myStmt=null;
 		try
 		{
-			myStmt=myConn.prepareStatement("insert into albums (album_name,genre,year,imagePath,rating) values (?,?,?,?,?)");
+			myStmt = myConn.prepareStatement("INSERT INTO Album (name, imagePath, genre, year, rating) values (?,?,?,?,?)");
 			myStmt.setString(1, album.getName());
-			myStmt.setString(2, album.getGenre());
-			myStmt.setInt(3,album.getYear());
-			myStmt.setString(4,album.getImagePath());
-			myStmt.setFloat(5,album.getRating());
+			myStmt.setString(2, album.getImagePath());
+			myStmt.setString(3, album.getGenre());
+			myStmt.setInt(4, album.getYear());
+			myStmt.setFloat(5, album.getRating());
 			myStmt.executeUpdate();
 			System.out.println("Album added successfully");
 		}
@@ -529,36 +585,12 @@ public class DatabaseManager {
 		}
 	}
 
-	public void savePlaylist(Playlist playlist) {
-		PreparedStatement myStmt = null;
-		try {
-			if (playlistExists(playlist)) {
-				updatePlaylist(playlist);
-			}
-			else {
-				addPlaylist(playlist);
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void addAlbum_has_Artist() {
+
 	}
 
-	public boolean playlistExists(Playlist playlist) {
-		PreparedStatement myStmt = null;
-		boolean exists = false;
-		try {
-			myStmt = myConn.prepareStatement("SELECT * FROM Playlist WHERE playlist_id = ?");
-			myStmt.setInt(1, playlist.getId());
-			ResultSet myRs = myStmt.executeQuery();
-			if (myRs.getFetchSize() == 1) {
-				exists = true;
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return exists;
+	public void addTrack_has_Artist() {
+
 	}
 
 	public void updatePlaylist(Playlist playlist) {
@@ -621,6 +653,50 @@ public class DatabaseManager {
 	}
 
 	// DELETE METHODS //
+
+	public void deleteArtist(Artist artist) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deleteArtistSQL = "DELETE FROM Artist WHERE artist_id = " + artist.getId() + ";";
+			String deleteTrackHasArtistSQL = "DELETE FROM Track_has_Artist WHERE artist_id = " + artist.getId() + ";";
+			String deleteAlbumHasArtistSQL = "DELETE FROM Album_has_Artist WHERE artist_id = " + artist.getId() + ";";
+			myStmt.addBatch(deleteArtistSQL);
+			myStmt.addBatch(deleteTrackHasArtistSQL);
+			myStmt.addBatch(deleteAlbumHasArtistSQL);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteAlbum(Album album) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deleteAlbumSQL = "DELETE FROM Album WHERE album_id = " + album.getId() + ";";
+			String deleteAlbumHasArtistSQL = "DELETE FROM Album_has_Artist WHERE album_id = " + album.getId() + ";";
+			myStmt.addBatch(deleteAlbumSQL);
+			myStmt.addBatch(deleteAlbumHasArtistSQL);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteTrack(Track track) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deleteTrackSQL = "DELETE FROM Track WHERE track_id = " + track.getId() + ";";
+			String deleteTrackHasArtistSQL = "DELETE FROM Track_has_Artist WHERE track_id = " + track.getId() + ";";
+			myStmt.addBatch(deleteTrackSQL);
+			myStmt.addBatch(deleteTrackHasArtistSQL);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void deletePlaylist(Playlist playlist) {
 		try {
