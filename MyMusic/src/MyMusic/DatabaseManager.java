@@ -12,7 +12,7 @@ public class DatabaseManager {
 		String dbUrl="jdbc:mysql://localhost:3306/"+db_name+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user="root";
 		String password="root";
-		password = "VM44Kmy6H&XCM8c";
+		
 		myConn=DriverManager.getConnection(dbUrl, user, password);
 		System.out.println("Database connected sucessfully");
 	}
@@ -402,10 +402,6 @@ public class DatabaseManager {
 			e.printStackTrace();
 		}
 		finally {
-			System.out.println(albums.size());
-			System.out.println(albums.size());
-			System.out.println(albums.size());
-			System.out.println(albums.size());
 			return albums;
 		}
 	}
@@ -477,15 +473,54 @@ public class DatabaseManager {
 	}
 
 	public boolean trackExists(Track track) {
-		return true;
+		PreparedStatement myStmt = null;
+		boolean exists = false;
+		try {
+			myStmt = myConn.prepareStatement("SELECT * FROM Track WHERE track_id = ?");
+			myStmt.setInt(1, track.getId());
+			ResultSet myRs = myStmt.executeQuery();
+			if (myRs.getFetchSize() == 1) {
+				exists = true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
 	}
 
-	public boolean albumExists(Track track) {
-		return true;
+	public boolean albumExists(Album album) {
+		PreparedStatement myStmt = null;
+		boolean exists = false;
+		try {
+			myStmt = myConn.prepareStatement("SELECT * FROM Album WHERE album_id = ?");
+			myStmt.setInt(1, album.getId());
+			ResultSet myRs = myStmt.executeQuery();
+			if (myRs.getFetchSize() == 1) {
+				exists = true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
 	}
 
-	public boolean artistExists(Track track) {
-		return true;
+	public boolean artistExists(Artist artist) {
+		PreparedStatement myStmt = null;
+		boolean exists = false;
+		try {
+			myStmt = myConn.prepareStatement("SELECT * FROM Track WHERE track_id = ?");
+			myStmt.setInt(1, artist.getId());
+			ResultSet myRs = myStmt.executeQuery();
+			if (myRs.getFetchSize() == 1) {
+				exists = true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
 	}
 
 	public boolean playlistExists(Playlist playlist) {
@@ -585,19 +620,85 @@ public class DatabaseManager {
 		}
 	}
 
-	public void addAlbum_has_Artist() {
+	public void addAlbum_has_Artist(Album album, Artist artist) {
 
 	}
 
-	public void addTrack_has_Artist() {
+	public void addTrack_has_Artist(Track track, Artist artist) {
 
+	}
+
+
+	public void updateTrack(Track track) {
+		PreparedStatement myStmt = null;
+		try {
+			myStmt = myConn.prepareStatement("UPDATE Track SET name = ?, genre = ?, plays = ?, time = ?, album_id = ? WHERE track_id = ?;");
+			myStmt.setString(1, track.getName());
+			myStmt.setString(2, track.getGenre());
+			myStmt.setInt(3, track.getNumPlays());
+			myStmt.setString(4, track.getTime());
+			myStmt.setInt(5, track.getAlbumId());
+			myStmt.setInt(6, track.getId());
+			myStmt.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateTrackPlays(Track track) {
+		PreparedStatement myStmt = null;
+		try {
+			myStmt = myConn.prepareStatement("UPDATE Track SET plays = ? WHERE track_id = ?");
+			myStmt.setInt(1, track.getNumPlays());
+			myStmt.setInt(2, track.getId());
+			myStmt.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateArtist(Artist artist) {
+		PreparedStatement myStmt = null;
+		try {
+			myStmt = myConn.prepareStatement("UPDATE Artist SET name = ?, imagePath = ?, rating = ? WHERE artist_id = ?");
+			myStmt.setString(1, artist.getName());
+			myStmt.setString(2, artist.getImagePath());
+			myStmt.setFloat(3, artist.getRating());
+			myStmt.setInt(4, artist.getId());
+			myStmt.executeUpdate();
+			//updatePlaylistHasTrack(album);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateAlbum(Album album) {
+		PreparedStatement myStmt = null;
+		try {
+			myStmt = myConn.prepareStatement("UPDATE Album SET name = ?, imagePath = ?, genre = ?, year = ?, rating = ? WHERE album_id = ?");
+			myStmt.setString(1, album.getName());
+			myStmt.setString(2, album.getImagePath());
+			myStmt.setString(3, album.getGenre());
+			myStmt.setInt(4, album.getYear());
+			myStmt.setFloat(5, album.getRating());
+			myStmt.setInt(6, album.getId());
+			myStmt.executeUpdate();
+			//updatePlaylistHasTrack(album);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void updatePlaylist(Playlist playlist) {
 		PreparedStatement myStmt = null;
 		try {
-			myStmt = myConn.prepareStatement("UPDATE Playlist SET name = ?");
+			myStmt = myConn.prepareStatement("UPDATE Playlist SET name = ? WHERE playist_id = ?");
 			myStmt.setString(1, playlist.getName());
+			myStmt.setInt(2, playlist.getId());
 			myStmt.executeUpdate();
 			updatePlaylistHasTrack(playlist);
 		}

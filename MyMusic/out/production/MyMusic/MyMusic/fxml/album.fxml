@@ -27,6 +27,12 @@
                 <Label text="Artist" fx:id="albumArtistLabel" styleClass="label-m"></Label>
                 <Label text="" fx:id="albumYearLabel" styleClass="label-s"></Label>
                 <Label text="" fx:id="albumGenreLabel" styleClass="label-s"></Label>
+                <TextField fx:id="albumNameTextField" visible="false" managed="false" styleClass="label-l"></TextField>
+                <TextField fx:id="imagePathTextField" visible="false" managed="false" styleClass="label-s"></TextField>
+                <TextField fx:id="yearTextField" visible="false" managed="false" styleClass="label-s"></TextField>
+                <TextField fx:id="genreTextField" visible="false" managed="false" styleClass="label-s"></TextField>
+                <Button text="Edit" fx:id="editButton" visible="false" managed="false" onAction="#toggleEditMode"></Button>
+                <Button text="Save" fx:id="saveButton" visible="false" managed="false" onAction="#save"></Button>
             </VBox>
         </HBox>
 

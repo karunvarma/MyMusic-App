@@ -4,9 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -19,15 +17,26 @@ import java.util.List;
 public class ArtistController {
     private Artist artist;
     private User user;
+    private boolean inEditMode;
 
     @FXML
     private Label artistNameLabel;
     @FXML
     private ImageView artistImageView;
     @FXML
+    private VBox artistInfoBox;
+    @FXML
     private HBox artistAlbumsBox;
     @FXML
     private HBox artistTracksBox;
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private TextField artistNameTextField;
+    @FXML
+    private TextField imagePathTextField;
 
 
 
@@ -90,6 +99,44 @@ public class ArtistController {
     }
 
     @FXML
+    public void toggleEditMode() {
+        if (inEditMode) {
+            inEditMode = false;
+            artistNameLabel.setManaged(true);
+            artistNameLabel.setVisible(true);
+            editButton.setManaged(true);
+            editButton.setVisible(true);
+            saveButton.setManaged(false);
+            saveButton.setVisible(false);
+            artistNameTextField.setManaged(false);
+            artistNameTextField.setVisible(false);
+            imagePathTextField.setManaged(false);
+            imagePathTextField.setVisible(false);
+        }
+        else {
+            inEditMode = true;
+            artistNameLabel.setManaged(false);
+            artistNameLabel.setVisible(false);
+            editButton.setManaged(true);
+            editButton.setVisible(true);
+            saveButton.setManaged(true);
+            saveButton.setVisible(true);
+            artistNameTextField.setManaged(true);
+            artistNameTextField.setVisible(true);
+            imagePathTextField.setManaged(true);
+            imagePathTextField.setVisible(true);
+
+            artistNameTextField.setText(artist.getName());
+            imagePathTextField.setText(artist.getImagePath());
+        }
+    }
+
+    @FXML
+    private void save() {
+
+    }
+
+    @FXML
     public void goBack() {
         PageChanger.getInstance().goToSearchPage(artistNameLabel.getScene(), user);
     }
@@ -97,6 +144,7 @@ public class ArtistController {
     public void setUp(Artist artist, User user) {
         this.artist = artist;
         this.user = user;
+        inEditMode = false;
 
         if (artist != null) {
             Image image = new Image(artist.getImagePath());
@@ -107,6 +155,16 @@ public class ArtistController {
             TableView tableView = new TrackTableView(artist.getTracks());
             tableView.setMinWidth(1600);
             artistTracksBox.getChildren().add(tableView);
+        }
+
+        // Admin
+        if (user.isAdmin()) {
+            editButton.setVisible(true);
+            editButton.setManaged(true);
+        }
+        else {
+            editButton.setVisible(false);
+            editButton.setManaged(false);
         }
     }
 }

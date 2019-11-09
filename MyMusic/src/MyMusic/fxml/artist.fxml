@@ -21,8 +21,13 @@
                     <Image url="@musical-note.jpg" />
                 </image>
             </ImageView>
-            <VBox spacing="10">
+            <VBox fx:id="aritstInfoBox" spacing="10">
                 <Label text="Name" fx:id="artistNameLabel" styleClass="label-l"></Label>
+                <TextField fx:id="artistNameTextField" visible="false" managed="false" styleClass="label-l"></TextField>
+                <TextField fx:id="imagePathTextField" visible="false" managed="false" styleClass="label-s"></TextField>
+                <Button text="Edit" fx:id="editButton" visible="false" managed="false" onAction="#toggleEditMode"></Button>
+                <Button text="Save" fx:id="saveButton" visible="false" managed="false" onAction="#save"></Button>
+
             </VBox>
         </HBox>
 

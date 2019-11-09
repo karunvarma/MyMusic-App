@@ -1,7 +1,6 @@
 package MyMusic;
 
 public class Track {
-
 	private int id;
 	private String name;
 	private String genre;
@@ -26,7 +25,6 @@ public class Track {
 	{
 		return id;
 	}
-
 
 	public String getName()
 	{
