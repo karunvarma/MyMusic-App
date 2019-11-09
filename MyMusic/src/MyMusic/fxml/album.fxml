@@ -31,7 +31,7 @@
         </HBox>
 
         <HBox fx:id="albumTracksContent">
-            <TableView fx:id="albumTracksTableView" minWidth="1600">
+            <TableView minWidth="1600">
                 <columns>
                     <TableColumn text="Play" prefWidth="200"></TableColumn>
                     <TableColumn text="Name" prefWidth="200"></TableColumn>

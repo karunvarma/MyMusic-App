@@ -9,26 +9,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 public class AlbumController {
-    Album album;
-    User user;
+    private Album album;
+    private User user;
 
     @FXML
-    ImageView albumImageView;
-
+    private ImageView albumImageView;
     @FXML
-    Label albumNameLabel;
-
+    private Label albumNameLabel;
     @FXML
-    Label albumArtistLabel;
-
+    private Label albumArtistLabel;
     @FXML
-    Label albumYearLabel;
-
+    private Label albumYearLabel;
     @FXML
-    Label albumGenreLabel;
-
+    private Label albumGenreLabel;
     @FXML
-    HBox albumTracksContent;
+    private HBox albumTracksContent;
 
     @FXML
     public void goBack() {
@@ -49,7 +44,6 @@ public class AlbumController {
             albumYearLabel.setText(album.getYear()+"");
             albumGenreLabel.setText(album.getGenre());
             albumTracksContent.getChildren().clear();
-            System.out.println((album.getTracks().get(0).getName()));
             TableView tableView = new TrackTableView(album.getTracks());
             tableView.setMinWidth(1600);
             albumTracksContent.getChildren().add(tableView);

@@ -5,6 +5,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
 public class PlaylistController {
     private Playlist playlist;
@@ -20,7 +21,7 @@ public class PlaylistController {
     TextField playlistImagePathTextField;
 
     @FXML
-    TableView playlistTracksTableView;
+    HBox playlistTracksContent;
 
 
 
@@ -68,7 +69,10 @@ public class PlaylistController {
             Image image = new Image(playlist.getImagePath());
             playlistImageView.setImage(image);
             playlistNameTextField.setText(playlist.getName());
-            playlistTracksTableView = new TrackTableView(playlist.getTracks());
+            playlistTracksContent.getChildren().clear();
+            TableView tableView = new TrackTableView(playlist.getTracks());
+            tableView.setMinWidth(1600);
+            playlistTracksContent.getChildren().add(tableView);
         }
     }
 }

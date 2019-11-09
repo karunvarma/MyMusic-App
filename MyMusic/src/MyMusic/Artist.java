@@ -6,60 +6,63 @@ public class Artist {
 	private String name;
 	private String imagePath;
 	private float rating;
+	private ArrayList<Album> albums;
 	private ArrayList<Track> tracks;
 
-	Artist(String name, String imagePath, Float rating)
+	Artist(int id, String name, String imagePath, Float rating)
 	{
+		this.id = id;
 		this.name = name;
 		this.imagePath = imagePath;
 		this.rating = rating;
-		//this.tracks =tracks ;
+		this.tracks = new ArrayList<Track>();
+		this.albums = new ArrayList<Album>();
 	}
-	
-	public void addTrack(Track track)
-	{
-		tracks.add(track);
-	}
-
 
 	public int getId()
 	{
 		return this.id;
 	}
-
 	public String getName() { return this.name; }
-
 	public String getImagePath()
 	{
 		return this.imagePath;
 	}
-
 	public float getRating() { return this.rating; }
-
 	public ArrayList<Track> getTracks()
 	{
 		return this.tracks;
 	}
-
+	public ArrayList<Album> getAlbums()
+	{
+		return this.albums;
+	}
 
 	public void setId(int id)
 	{
 		this.id=id;
 	}
-
 	public void setName(String name)
 	{
 		this.name=name;
 	}
-
 	public void setImagePath(String imagePath)
 	{
 		this.imagePath=imagePath;
 	}
-
 	public void setRating(float rating)
 	{
 		this.rating=rating;
 	}
+	public void setTracks(ArrayList<Track> tracks) { this.tracks = tracks; }
+	public void setAlbums(ArrayList<Album> albums) { this.albums = albums; }
+
+
+	public void addTrack(Track track)
+	{
+		tracks.add(track);
+	}
+	public void addAlbum(Album album) { albums.add(album); }
+
 
 }

@@ -262,7 +262,14 @@ public class SearchController {
             }
 
             try {
-                ItemBox itemBox = new ItemBox(artistList.get(i));
+                Artist artist = artistList.get(i);
+                ItemBox itemBox = new ItemBox(artist);
+                itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        PageChanger.getInstance().goToArtistPage(searchField.getScene(), artist, user);
+                    }
+                });
                 itemBoxRow.getChildren().add(itemBox);
 
             } catch (FileNotFoundException e) {

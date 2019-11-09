@@ -29,7 +29,7 @@ public class DatabaseManager {
 		try
 		{
 			myStmt = myConn.prepareStatement(
-						"SELECT DISTINCT Artist.name, Artist.imagePath, Artist.rating FROM Artist" +
+						"SELECT DISTINCT Artist.artist_id, Artist.name, Artist.imagePath, Artist.rating FROM Artist" +
 							" JOIN Album_has_Artist ON Artist.artist_id = Album_has_Artist.artist_id" +
 							" JOIN Album ON Album_has_Artist.album_id = Album.album_id" +
 							" JOIN Track_has_Artist ON Track_has_Artist.artist_id = Artist.artist_id " +
@@ -40,12 +40,15 @@ public class DatabaseManager {
 			myRs=myStmt.executeQuery();
 			while(myRs.next())
 			{
-			
+				int id = myRs.getInt("artist_id");
 				String name = myRs.getString("name");
 				String imagePath = myRs.getString("imagePath");
 				Float rating = myRs.getFloat("rating");
-				System.out.println(name + " " + imagePath + " " + rating);
-				artists.add(new Artist(name, imagePath, rating));
+
+				Artist artist = new Artist(id, name, imagePath, rating);
+				artist.setAlbums(getAlbumsByArtist(id));
+				artist.setTracks(getTracksByArtist(id));
+				artists.add(artist);
 			}
 			System.out.println("Query successful");
 			return artists;
@@ -300,12 +303,11 @@ public class DatabaseManager {
 			myStmt = myConn.prepareStatement(
 					"SELECT DISTINCT Track.name, Track.genre, Track.plays, Track.time, Album.name as album_name, Artist.name as artist_name FROM Track" +
 							" JOIN Album ON Album.album_id = Track.album_id" +
-							" JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
-							" JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
+							" JOIN Track_has_Artist ON Track.track_id = Track_has_Artist.track_id" +
+							" JOIN Artist ON Track_has_Artist.artist_id = Artist.artist_id" +
 							" JOIN Playlist_has_Track on Track.track_id = Playlist_has_Track.track_id" +
-							" WHERE Playlist_has_Track.playlist_id = ?" +
+							" WHERE Playlist_has_Track.playlist_id = " + playlistId +
 							" ORDER BY Album.name ASC, Track.name ASC;");
-			myStmt.setInt(1, playlistId);
 			myRs = myStmt.executeQuery();
 			while(myRs.next())
 			{
@@ -331,7 +333,7 @@ public class DatabaseManager {
 	public ArrayList<Track> getTracksInAlbum(int albumId) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
-		ArrayList<Track> tracks = new ArrayList<>();
+		ArrayList<Track> tracks = new ArrayList<Track>();
 		try
 		{
 			myStmt = myConn.prepareStatement(
@@ -364,6 +366,86 @@ public class DatabaseManager {
 		}
 	}
 
+	public ArrayList<Album> getAlbumsByArtist(int artistId) {
+		PreparedStatement myStmt = null;
+		ResultSet myRs;
+		ArrayList<Album> albums = new ArrayList<Album>();
+		try
+		{
+			myStmt = myConn.prepareStatement(
+					"SELECT DISTINCT Album.album_id, Album.name, Album.imagePath, Album.genre, Album.year, Album.rating, Artist.name AS artist_name FROM Album" +
+							" JOIN Album_has_Artist ON Album_has_Artist.album_id = Album.album_id" +
+							" JOIN Artist ON Artist.artist_id = Album_has_Artist.artist_id" +
+							" WHERE Artist.artist_id = " + artistId +
+							" ORDER BY Album.name ASC;");
+			myRs = myStmt.executeQuery();
+			while(myRs.next())
+			{
+				int id = myRs.getInt("album_id");
+				String name = myRs.getString("name");
+				String imagePath = myRs.getString("imagePath");
+				String artistName = myRs.getString("artist_name");
+				int year = myRs.getInt("year");
+				String genre = myRs.getString("genre");
+				float rating = myRs.getFloat("rating");
+				System.out.println(name+" "+artistName+" "+year+" "+genre+" "+imagePath+" "+rating);
+				Album album = new Album(id, name, artistName, year, genre, imagePath, rating);
+				album.setTracks(getTracksInAlbum(id));
+				albums.add(album);
+
+				//albums.add(new Track(name, genre, plays, time, artistName, albumName));
+			}
+			System.out.println("Search track successful");
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally {
+			System.out.println(albums.size());
+			System.out.println(albums.size());
+			System.out.println(albums.size());
+			System.out.println(albums.size());
+			return albums;
+		}
+	}
+
+	public ArrayList<Track> getTracksByArtist(int artistId) {
+		PreparedStatement myStmt = null;
+		ResultSet myRs;
+		ArrayList<Track> tracks = new ArrayList<Track>();
+		try
+		{
+			myStmt = myConn.prepareStatement(
+					"SELECT DISTINCT Track.track_id, Track.name, Track.genre, Track.plays, Track.time, Album.name as album_name, Artist.name as artist_name FROM Track" +
+							" JOIN Album ON Album.album_id = Track.album_id" +
+							" JOIN Track_has_Artist ON Track.track_id = Track_has_Artist.track_id" +
+							" JOIN Artist ON Track_has_Artist.artist_id = Artist.artist_id" +
+							" WHERE Track_has_Artist.artist_id = " + artistId +
+							" ORDER BY Track.name ASC;");
+			myRs = myStmt.executeQuery();
+			while(myRs.next())
+			{
+				int id = myRs.getInt("track_id");
+				String name = myRs.getString("name");
+				String genre = myRs.getString("genre");
+				int plays = myRs.getInt("plays");
+				String time = myRs.getTime( "time").toString();
+				String artistName = myRs.getString("artist_name");
+				String albumName = myRs.getString("album_name");
+
+				tracks.add(new Track(name, genre, plays, time, artistName, albumName));
+			}
+			System.out.println("Search track successful");
+
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally {
+			return tracks;
+		}
+	}
 
 	// ADD METHODS //
 

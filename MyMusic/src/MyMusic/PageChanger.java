@@ -17,6 +17,27 @@ public final class PageChanger {
         return INSTANCE;
     }
 
+
+
+    public void goToArtistPage(Scene scene, Artist artist, User user) {
+        try {
+            Parent root = null;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/artist.fxml"));
+            root = loader.load();
+
+            // Get the controller of the new root
+            ArtistController controller = loader.getController();
+
+            // Set property of the controller
+            controller.setUp(artist, user);
+
+            scene.setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void goToAlbumPage(Scene scene, Album album, User user) {
         try {
             Parent root = null;
