@@ -1,10 +1,12 @@
 package MyMusic;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -20,6 +22,8 @@ public class AdminController {
     @FXML
     Button backButton;
     @FXML
+    Button addButton;
+    @FXML
     ScrollPane scrollPane;
 
     VBox tracksBox;
@@ -30,16 +34,38 @@ public class AdminController {
     @FXML
     public void editTracksBtnAction() {
         scrollPane.setContent(tracksBox);
+        addButton.setVisible(true);
+        addButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                tracksBox.getChildren().add(new TrackEditBox());
+            }
+        });
     }
 
     @FXML
     public void editAlbumsBtnAction() {
         scrollPane.setContent(albumsBox);
+        addButton.setVisible(true);
+        addButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                albumsBox.getChildren().add(new AlbumEditBox());
+            }
+        });
     }
 
     @FXML
     public void editArtistsBtnAction() {
         scrollPane.setContent(artistsBox);
+        addButton.setVisible(true);
+        addButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                artistsBox.getChildren().add(new ArtistEditBox());
+
+            }
+        });
     }
 
 

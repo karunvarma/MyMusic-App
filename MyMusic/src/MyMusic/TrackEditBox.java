@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 
 public class TrackEditBox extends HBox {
@@ -17,11 +18,57 @@ public class TrackEditBox extends HBox {
     private TextField timeField;
     private Button saveButton;
     private Button cancelButton;
+    private Button deleteButton;
 
     private Track track;
+    private boolean isNew;
 
+    public TrackEditBox() {
+        isNew = true;
+        this.track = new Track();
+        nameField = new TextField();
+        mediaPathField = new TextField();
+        genreField = new TextField();
+        playsField = new TextField();
+        timeField = new TextField();
+
+        setAlignment(Pos.CENTER);
+        nameField.setPrefWidth(300);
+        mediaPathField.setPrefWidth(400);
+        genreField.setPrefWidth(150);
+        playsField.setPrefWidth(150);
+        timeField.setPrefWidth(150);
+
+        saveButton = new Button("Save");
+        cancelButton = new Button("Cancel");
+        deleteButton = new Button("Delete");
+
+        saveButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                save();
+            }
+        });
+
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                resetChildren();
+            }
+        });
+
+        deleteButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                delete();
+            }
+        });
+
+        getChildren().addAll(nameField, mediaPathField, genreField, playsField, timeField, saveButton, cancelButton, deleteButton);
+    }
 
     public TrackEditBox(Track track) {
+        isNew = false;
         this.track = track;
         nameField = new TextField(track.getName());
         mediaPathField = new TextField(track.getMediaPath());
@@ -38,6 +85,7 @@ public class TrackEditBox extends HBox {
 
         saveButton = new Button("Save");
         cancelButton = new Button("Cancel");
+        deleteButton = new Button("Delete");
 
         saveButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -53,7 +101,14 @@ public class TrackEditBox extends HBox {
             }
         });
 
-        getChildren().addAll(nameField, mediaPathField, genreField, playsField, timeField, saveButton, cancelButton);
+        deleteButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                delete();
+            }
+        });
+
+        getChildren().addAll(nameField, mediaPathField, genreField, playsField, timeField, saveButton, cancelButton, deleteButton);
     }
 
     public Track getTrack() {
@@ -79,20 +134,55 @@ public class TrackEditBox extends HBox {
 
     public void save() {
         DatabaseManager databaseManager = null;
-        try {
-            databaseManager = new DatabaseManager();
-            databaseManager.updateTrack(getTrack());
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (isNew) {
+            try {
+                databaseManager = new DatabaseManager();
+                databaseManager.addTrack(getTrack());
+                isNew = false;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                databaseManager = new DatabaseManager();
+                databaseManager.updateTrack(getTrack());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private void resetChildren() {
-        nameField.setText(track.getName());
-        mediaPathField.setText(track.getMediaPath());
-        genreField.setText(track.getGenre());
-        playsField.setText(track.getNumPlays()+"");
-        timeField.setText(track.getTime());
+        if (isNew) {
+            nameField.setText("");
+            mediaPathField.setText("");
+            genreField.setText("");
+            playsField.setText("");
+            timeField.setText("");
+        }
+        else {
+            nameField.setText(track.getName());
+            mediaPathField.setText(track.getMediaPath());
+            genreField.setText(track.getGenre());
+            playsField.setText(track.getNumPlays() + "");
+            timeField.setText(track.getTime());
+        }
+    }
+
+    private void delete() {
+        if (isNew) {
+            ((VBox) getParent()).getChildren().remove(this);
+        }
+        else {
+            DatabaseManager databaseManager = null;
+            try {
+                databaseManager = new DatabaseManager();
+                databaseManager.deleteTrack(getTrack());
+                ((VBox) getParent()).getChildren().remove(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

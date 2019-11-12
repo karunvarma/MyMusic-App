@@ -36,11 +36,8 @@
             </VBox>
 
             <ScrollPane prefWidth="1400" prefHeight="850">
-                <VBox fx:id="yourMusicContent">
-                </VBox>
+                <VBox fx:id="yourMusicContent"></VBox>
             </ScrollPane>
-
         </HBox>
-
     </VBox>
 </HBox>

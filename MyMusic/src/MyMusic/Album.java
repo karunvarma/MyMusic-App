@@ -11,6 +11,8 @@ public class Album {
 	private float rating;
 	private ArrayList<Track> tracks;
 
+	Album() {}
+
 	Album(int id, String name, String artistName, int year, String genre, String imagePath, float rating)
 	{
 		this.id = id;

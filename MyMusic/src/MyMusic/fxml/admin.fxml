@@ -14,9 +14,6 @@
             <center>
                 <VBox spacing="25">
                     <HBox alignment="CENTER">
-                        <Button text="Add Track" />
-                        <Button text="Add Album" />
-                        <Button text="Add Artist" />
                         <Button text="Edit Tracks" onAction="#editTracksBtnAction"/>
                         <Button text="Edit Albums" onAction="#editAlbumsBtnAction"/>
                         <Button text="Edit Artists" onAction="#editArtistsBtnAction"/>
@@ -29,7 +26,7 @@
 
             </center>
             <right>
-
+                <Button fx:id="addButton" text="Add" visible="false"></Button>
             </right>
         </BorderPane>
 

@@ -30,10 +30,10 @@ public class DatabaseManager {
 		{
 			myStmt = myConn.prepareStatement(
 						"SELECT DISTINCT Artist.artist_id, Artist.name, Artist.imagePath, Artist.rating FROM Artist" +
-							" JOIN Album_has_Artist ON Artist.artist_id = Album_has_Artist.artist_id" +
-							" JOIN Album ON Album_has_Artist.album_id = Album.album_id" +
-							" JOIN Track_has_Artist ON Track_has_Artist.artist_id = Artist.artist_id " +
-							" JOIN Track ON Track.track_id = Track_has_Artist.track_id" +
+							" LEFT JOIN Album_has_Artist ON Artist.artist_id = Album_has_Artist.artist_id" +
+							" LEFT JOIN Album ON Album_has_Artist.album_id = Album.album_id" +
+							" LEFT JOIN Track_has_Artist ON Track_has_Artist.artist_id = Artist.artist_id " +
+							" LEFT JOIN Track ON Track.track_id = Track_has_Artist.track_id" +
 								filterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + genreSQL(selectedGenres, "Track") +
 								" ORDER BY Artist.name ASC;");;
 			
@@ -70,10 +70,10 @@ public class DatabaseManager {
 		{
 		    myStmt = myConn.prepareStatement(
 		            	"SELECT DISTINCT Album.album_id, Album.name, Album.imagePath, Album.genre, Album.year, Album.rating, Artist.name as artist_name FROM Album" +
-                    		" JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
-							" JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
-							" JOIN Album_has_Track ON Album_has_Track.album_id = Album.album_id" +
-							" JOIN Track ON Track.track_id = Album_has_Track.track_id" +
+                    		" LEFT JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
+							" LEFT JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
+							" LEFT JOIN Album_has_Track ON Album_has_Track.album_id = Album.album_id" +
+							" LEFT JOIN Track ON Track.track_id = Album_has_Track.track_id" +
 							filterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + genreSQL(selectedGenres, "Album") +
 							" ORDER BY Album.name ASC;");
 
@@ -113,10 +113,10 @@ public class DatabaseManager {
 		{
 			myStmt = myConn.prepareStatement(
 					"SELECT DISTINCT Track.name, Track.genre, Track.plays, Track.time, Album.name as album_name, Artist.name as artist_name FROM Track" +
-						" JOIN Album_has_Track ON Album_has_Track.track_id = Track.track_id" +
-						" JOIN Album ON Album.album_id = Album_has_Track.album_id" +
-						" JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
-						" JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
+						" LEFT JOIN Album_has_Track ON Album_has_Track.track_id = Track.track_id" +
+						" LEFT JOIN Album ON Album.album_id = Album_has_Track.album_id" +
+						" LEFT JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
+						" LEFT JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
 						filterSQL(searchString, searchByTrackName, searchByAlbumName, searchByArtistName) + genreSQL(selectedGenres, "Track") +
 						" ORDER BY Album.name ASC, Track.name ASC;");
 			myRs = myStmt.executeQuery();
@@ -204,10 +204,10 @@ public class DatabaseManager {
 		{
 			myStmt = myConn.prepareStatement(
 					"SELECT DISTINCT Track.track_id, Track.name, Track.genre, Track.plays, Track.time, Track.mediaPath, Album.name as album_name, Artist.name as artist_name FROM Track" +
-							" JOIN Album_has_Track ON Album_has_Track.track_id = Track.track_id" +
-							" JOIN Album ON Album.album_id = Album_has_Track.album_id" +
-							" JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
-							" JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
+							" LEFT JOIN Album_has_Track ON Album_has_Track.track_id = Track.track_id" +
+							" LEFT JOIN Album ON Album.album_id = Album_has_Track.album_id" +
+							" LEFT JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
+							" LEFT JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
 							" ORDER BY Album.name ASC, Track.name ASC;");
 			myRs = myStmt.executeQuery();
 			while(myRs.next())
@@ -242,9 +242,10 @@ public class DatabaseManager {
 		{
 			myStmt = myConn.prepareStatement(
 					"SELECT DISTINCT Album.album_id, Album.name, Album.imagePath, Album.genre, Album.year, Album.rating, Artist.name as artist_name FROM Album" +
-							" JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" + " JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
-							" JOIN Album_has_Track ON Album_has_Track.album_id = Album.album_id" +
-							" JOIN Track ON Track.track_id = Album_has_Track.track_id" +
+							" LEFT JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
+							" LEFT JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
+							" LEFT JOIN Album_has_Track ON Album_has_Track.album_id = Album.album_id" +
+							" LEFT JOIN Track ON Track.track_id = Album_has_Track.track_id" +
 							" ORDER BY Album.name ASC;");
 			System.out.println(myStmt.toString());
 
@@ -280,10 +281,10 @@ public class DatabaseManager {
 		{
 			myStmt = myConn.prepareStatement(
 					"SELECT DISTINCT Artist.artist_id, Artist.name, Artist.imagePath, Artist.rating FROM Artist" +
-							" JOIN Album_has_Artist ON Artist.artist_id = Album_has_Artist.artist_id" +
-							" JOIN Album ON Album_has_Artist.album_id = Album.album_id" +
-							" JOIN Track_has_Artist ON Track_has_Artist.artist_id = Artist.artist_id " +
-							" JOIN Track ON Track.track_id = Track_has_Artist.track_id" +
+							" LEFT JOIN Album_has_Artist ON Artist.artist_id = Album_has_Artist.artist_id" +
+							" LEFT JOIN Album ON Album_has_Artist.album_id = Album.album_id" +
+							" LEFT JOIN Track_has_Artist ON Track_has_Artist.artist_id = Artist.artist_id " +
+							" LEFT JOIN Track ON Track.track_id = Track_has_Artist.track_id" +
 							" ORDER BY Artist.name ASC;");
 
 			myRs=myStmt.executeQuery();
@@ -495,18 +496,6 @@ public class DatabaseManager {
 
 	// SAVE & EXISTS METHODS //
 
-	public void saveTrack(Track track) {
-
-	}
-
-	public void saveAlbum(Album album) {
-
-	}
-
-	public void saveArtist(Artist artist) {
-
-	}
-
 	public void savePlaylist(Playlist playlist) {
 		PreparedStatement myStmt = null;
 		try {
@@ -672,15 +661,48 @@ public class DatabaseManager {
 	}
 
 	public void addAlbum_has_Artist(Album album, Artist artist) {
-
+		PreparedStatement myStmt=null;
+		try
+		{
+			myStmt = myConn.prepareStatement("INSERT INTO Album_has_Artist values (?,?)");
+			myStmt.setInt(1, album.getId());
+			myStmt.setInt(2, artist.getId());
+			myStmt.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public void addAlbum_has_Track(Album album, Track track) {
-
+		PreparedStatement myStmt=null;
+		try
+		{
+			myStmt = myConn.prepareStatement("INSERT INTO Album_has_Track values (?,?)");
+			myStmt.setInt(1, album.getId());
+			myStmt.setInt(2, track.getId());
+			myStmt.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public void addTrack_has_Artist(Track track, Artist artist) {
-
+		PreparedStatement myStmt=null;
+		try
+		{
+			myStmt = myConn.prepareStatement("INSERT INTO Track_has_Artist values (?,?)");
+			myStmt.setInt(1, track.getId());
+			myStmt.setInt(2, artist.getId());
+			myStmt.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 
@@ -847,7 +869,7 @@ public class DatabaseManager {
 			Statement myStmt = myConn.createStatement();
 			String deleteTrackSQL = "DELETE FROM Track WHERE track_id = " + track.getId() + ";";
 			String deleteAlbumHasTrackSQL = "DELETE FROM Album_has_Track WHERE track_id = " + track.getId() + ";";
-			String deleteTrackHasArtistSQL = "DELETE FROM Track_ha-s_Artist WHERE track_id = " + track.getId() + ";";
+			String deleteTrackHasArtistSQL = "DELETE FROM Track_has_Artist WHERE track_id = " + track.getId() + ";";
 			myStmt.addBatch(deleteTrackSQL);
 			myStmt.addBatch(deleteAlbumHasTrackSQL);
 			myStmt.addBatch(deleteTrackHasArtistSQL);
@@ -865,6 +887,42 @@ public class DatabaseManager {
 			String deletePlaylistHasTrackSQL = "DELETE FROM Playlist_has_Track WHERE playlist_id = " + playlist.getId() + ";";
 			myStmt.addBatch(deletePlaylistSQL);
 			myStmt.addBatch(deletePlaylistHasTrackSQL);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteAlbum_has_Artist(Album album, Artist artist) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deleteSQL = "DELETE FROM Album_has_Artist WHERE album_id = " + album.getId() + "AND artist_id = " + artist.getId() + ";";
+			myStmt.addBatch(deleteSQL);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteAlbum_has_Track(Album album, Track track) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deleteSQL = "DELETE FROM Album_has_Track WHERE album_id = " + album.getId() + "AND track_id = " + track.getId() + ";";
+			myStmt.addBatch(deleteSQL);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteTrack_has_Artist(Track track, Artist artist) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deleteSQL = "DELETE FROM Track_has_Artist WHERE artist_id = " + artist.getId() + "AND track_id = " + track.getId() + ";";
+			myStmt.addBatch(deleteSQL);
 			myStmt.executeBatch();
 		}
 		catch (Exception e) {

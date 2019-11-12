@@ -9,6 +9,8 @@ public class Artist {
 	private ArrayList<Album> albums;
 	private ArrayList<Track> tracks;
 
+	Artist() {}
+
 	Artist(int id, String name, String imagePath, Float rating)
 	{
 		this.id = id;
