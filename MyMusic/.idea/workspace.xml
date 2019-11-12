@@ -15,12 +15,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/MyMusic$Main.ic" NAME="Main Coverage Results" MODIFIED="1571860116040" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/MyMusic$Main.ic" NAME="Main Coverage Results" MODIFIED="1573504257595" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>MyMusic.*</FILTER>
     </SUITE>
   </component>
   <component name="CoverageViewManager">
-    <option name="myElementSize" value="221" />
+    <option name="myElementSize" value="237" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -100,37 +100,37 @@
     <session id="184437262">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="16" />
+          <entry key="project.closed" value="18" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.4" value="2" />
           <entry key="project.open.time.5" value="5" />
-          <entry key="project.open.time.6" value="6" />
-          <entry key="project.open.time.7" value="2" />
-          <entry key="project.opened" value="17" />
+          <entry key="project.open.time.6" value="7" />
+          <entry key="project.open.time.7" value="3" />
+          <entry key="project.opened" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="css" value="862" />
           <entry key="dummy" value="15" />
-          <entry key="fxml" value="5325" />
-          <entry key="java" value="26273" />
+          <entry key="fxml" value="6029" />
+          <entry key="java" value="30279" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="862" />
-          <entry key="JAVA" value="26273" />
+          <entry key="JAVA" value="30279" />
           <entry key="PLAIN_TEXT" value="15" />
-          <entry key="XML" value="5325" />
+          <entry key="XML" value="6029" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="css" value="5" />
-          <entry key="fxml" value="67" />
-          <entry key="java" value="148" />
+          <entry key="fxml" value="82" />
+          <entry key="java" value="189" />
           <entry key="jpg" value="1" />
         </counts>
       </usages-collector>
@@ -138,8 +138,8 @@
         <counts>
           <entry key="CSS" value="5" />
           <entry key="Image" value="1" />
-          <entry key="JAVA" value="148" />
-          <entry key="XML" value="67" />
+          <entry key="JAVA" value="189" />
+          <entry key="XML" value="82" />
         </counts>
       </usages-collector>
     </session>
@@ -155,55 +155,47 @@
             <state relative-caret-position="195">
               <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
               <folding>
-                <element signature="method#searchArtists#0;class#DatabaseManager#0" />
-                <element signature="method#searchAlbums#0;class#DatabaseManager#0" />
-                <element signature="method#searchTracks#0;class#DatabaseManager#0" />
-                <element signature="method#getUser#0;class#DatabaseManager#0" />
-                <element signature="method#isUsernameTaken#0;class#DatabaseManager#0" />
-                <element signature="method#getAllTracks#0;class#DatabaseManager#0" />
-                <element signature="method#getAllAlbums#0;class#DatabaseManager#0" />
-                <element signature="method#getPlaylists#0;class#DatabaseManager#0" />
-                <element signature="method#getTracksInPlaylist#0;class#DatabaseManager#0" />
-                <element signature="method#getTracksInAlbum#0;class#DatabaseManager#0" />
-                <element signature="method#getAlbumsByArtist#0;class#DatabaseManager#0" />
-                <element signature="method#getTracksByArtist#0;class#DatabaseManager#0" />
-                <element signature="method#saveTrack#0;class#DatabaseManager#0" />
-                <element signature="method#saveAlbum#0;class#DatabaseManager#0" />
-                <element signature="method#saveArtist#0;class#DatabaseManager#0" />
-                <element signature="method#savePlaylist#0;class#DatabaseManager#0" />
-                <element signature="method#trackExists#0;class#DatabaseManager#0" />
-                <element signature="method#albumExists#0;class#DatabaseManager#0" />
-                <element signature="method#artistExists#0;class#DatabaseManager#0" />
-                <element signature="method#playlistExists#0;class#DatabaseManager#0" />
-                <element signature="method#addUser#0;class#DatabaseManager#0" />
-                <element signature="method#addTrack#0;class#DatabaseManager#0" />
-                <element signature="method#addArtist#0;class#DatabaseManager#0" />
-                <element signature="method#addAlbum#0;class#DatabaseManager#0" />
-                <element signature="e#19308#19625#0" />
-                <element signature="e#19642#19978#0" />
-                <element signature="e#20244#20828#0" />
-                <element signature="e#20245#20622#0" />
-                <element signature="method#updatePlaylist#0;class#DatabaseManager#0" />
-                <element signature="method#updatePlaylistHasTrack#0;class#DatabaseManager#0" />
-                <element signature="method#addPlaylist#0;class#DatabaseManager#0" />
-                <element signature="method#addTracksToPlaylist#0;class#DatabaseManager#0" />
-                <element signature="method#deleteArtist#0;class#DatabaseManager#0" />
-                <element signature="method#deleteAlbum#0;class#DatabaseManager#0" />
-                <element signature="method#deleteTrack#0;class#DatabaseManager#0" />
-                <element signature="method#deletePlaylist#0;class#DatabaseManager#0" />
-                <element signature="method#filterSQL#0;class#DatabaseManager#0" />
-                <element signature="method#genreSQL#0;class#DatabaseManager#0" />
-                <element signature="method#addPlaylist_hasTrackSQL#0;class#DatabaseManager#0" />
+                <element signature="e#582#2107#0" />
+                <element signature="e#2111#3848#0" />
+                <element signature="e#3851#5406#0" />
+                <element signature="e#5430#6268#0" />
+                <element signature="e#6271#6805#0" />
+                <element signature="e#6808#7966#0" />
+                <element signature="e#7969#9248#0" />
+                <element signature="e#9251#10436#0" />
+                <element signature="e#10439#11257#0" />
+                <element signature="e#11260#12587#0" />
+                <element signature="e#12590#13814#0" />
+                <element signature="e#13817#15247#0" />
+                <element signature="e#15250#16527#0" />
+                <element signature="e#16551#16593#0" />
+                <element signature="e#16603#16643#0" />
+                <element signature="e#16646#16689#0" />
+                <element signature="e#16692#16951#0" />
+                <element signature="e#16954#17357#0" />
+                <element signature="e#17360#17763#0" />
+                <element signature="e#17766#18173#0" />
+                <element signature="e#18176#18597#0" />
+                <element signature="e#18629#19155#0" />
+                <element signature="e#19158#19649#0" />
+                <element signature="e#19652#20110#0" />
+                <element signature="e#20113#20655#0" />
+                <element signature="e#20658#20723#0" />
+                <element signature="e#21277#21341#0" />
+                <element signature="e#20726#20791#0" />
+                <element signature="e#21340#21676#0" />
+                <element signature="e#22755#23141#0" />
+                <element signature="e#23144#23555#0" />
+                <element signature="e#23558#23966#0" />
+                <element signature="e#23969#24470#0" />
+                <element signature="e#24496#25117#0" />
+                <element signature="e#25120#25576#0" />
+                <element signature="e#25579#26035#0" />
+                <element signature="e#26038#26530#0" />
+                <element signature="e#26533#27296#0" />
+                <element signature="e#27299#27839#0" />
+                <element signature="e#27845#28128#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MyMusic/Artist.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -211,12 +203,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MyMusic/ArtistController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
-              <caret line="167" column="9" lean-forward="true" selection-start-line="159" selection-start-column="8" selection-end-line="167" selection-end-column="9" />
+            <state relative-caret-position="472">
+              <caret line="146" column="49" selection-start-line="146" selection-start-column="49" selection-end-line="146" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3378#3379#0" expanded="true" />
-                <element signature="e#3468#3469#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -225,8 +215,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MyMusic/AlbumController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="58" column="49" lean-forward="true" selection-start-line="58" selection-start-column="49" selection-end-line="58" selection-end-column="49" />
+            <state relative-caret-position="162">
+              <caret line="109" column="52" lean-forward="true" selection-start-line="109" selection-start-column="52" selection-end-line="109" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -235,21 +225,84 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/artist.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder" />
+        <entry file="file://$PROJECT_DIR$/src/MyMusic/AlbumEditBox.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="28" selection-end-column="113" />
+            <state relative-caret-position="604">
+              <caret line="53" column="102" selection-start-line="53" selection-start-column="92" selection-end-line="53" selection-end-column="102" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/album.fxml">
+        <entry file="file://$PROJECT_DIR$/src/MyMusic/ArtistEditBox.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="394">
+              <caret line="47" column="93" selection-start-line="47" selection-start-column="93" selection-end-line="47" selection-end-column="93" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MyMusic/TrackEditBox.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="528">
+              <caret line="91" column="8" lean-forward="true" selection-start-line="91" selection-start-column="8" selection-end-line="95" selection-end-column="43" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1366#1367#0" expanded="true" />
+                <element signature="e#1403#1404#0" expanded="true" />
+                <element signature="e#1559#1560#0" expanded="true" />
+                <element signature="e#1597#1598#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MyMusic/TrackTableView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MyMusic/Track.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/admin.fxml">
           <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="29" column="39" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
+            <state relative-caret-position="315">
+              <caret line="21" column="50" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MyMusic/SearchController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="226">
+              <caret line="204" column="51" lean-forward="true" selection-start-line="204" selection-start-column="51" selection-end-line="204" selection-end-column="51" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -266,9 +319,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>size</find>
-      <find>yello</find>
-      <find>image_path</find>
       <find>print</find>
       <find>searc</find>
       <find>filter</find>
@@ -287,11 +337,18 @@
       <find>s</find>
       <find>album</find>
       <find>REMOVE</find>
-      <find>click</find>
       <find>artist</find>
       <find>hei</find>
       <find>println</find>
       <find>visib</find>
+      <find>scroll</find>
+      <find>click</find>
+      <find>getAllT</find>
+      <find>track.album</find>
+      <find>save</find>
+      <find>edit</find>
+      <find>getTime</find>
+      <find>Time</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -317,7 +374,6 @@
         <option value="$PROJECT_DIR$/src/DBManager.java" />
         <option value="$PROJECT_DIR$/src/MyMusic/DBManager.java" />
         <option value="$PROJECT_DIR$/src/MyMusic/ItemLayout.java" />
-        <option value="$PROJECT_DIR$/src/MyMusic/Main.java" />
         <option value="$PROJECT_DIR$/src/MyMusic/PlaylistEditController.java" />
         <option value="$PROJECT_DIR$/src/MyMusic/fxml/playlistEdit.fxml" />
         <option value="$PROJECT_DIR$/src/MyMusic/Playlist.java" />
@@ -328,24 +384,31 @@
         <option value="$PROJECT_DIR$/src/MyMusic/User.java" />
         <option value="$PROJECT_DIR$/src/MyMusic/fxml/signup.fxml" />
         <option value="$PROJECT_DIR$/src/MyMusic/fxml/login.fxml" />
-        <option value="$PROJECT_DIR$/src/MyMusic/fxml/search.fxml" />
-        <option value="$PROJECT_DIR$/src/MyMusic/fxml/home.fxml" />
-        <option value="$PROJECT_DIR$/src/MyMusic/Controller.java" />
         <option value="$PROJECT_DIR$/src/MyMusic/LoginController.java" />
         <option value="$PROJECT_DIR$/src/MyMusic/SignUpController.java" />
-        <option value="$PROJECT_DIR$/src/MyMusic/ItemBox.java" />
-        <option value="$PROJECT_DIR$/src/MyMusic/Album.java" />
-        <option value="$PROJECT_DIR$/src/MyMusic/TrackTableView.java" />
-        <option value="$PROJECT_DIR$/src/MyMusic/PlaylistController.java" />
-        <option value="$PROJECT_DIR$/src/MyMusic/fxml/playlist.fxml" />
-        <option value="$PROJECT_DIR$/src/MyMusic/PageChanger.java" />
-        <option value="$PROJECT_DIR$/src/MyMusic/SearchController.java" />
         <option value="$PROJECT_DIR$/src/MyMusic/Artist.java" />
-        <option value="$PROJECT_DIR$/src/MyMusic/Track.java" />
-        <option value="$PROJECT_DIR$/src/MyMusic/fxml/artist.fxml" />
-        <option value="$PROJECT_DIR$/src/MyMusic/ArtistController.java" />
         <option value="$PROJECT_DIR$/src/MyMusic/fxml/album.fxml" />
+        <option value="$PROJECT_DIR$/src/MyMusic/PageChanger.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/Controller.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/SearchController.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/ItemEditBox.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/fxml/search.fxml" />
+        <option value="$PROJECT_DIR$/src/MyMusic/fxml/playlist.fxml" />
+        <option value="$PROJECT_DIR$/src/MyMusic/fxml/artist.fxml" />
+        <option value="$PROJECT_DIR$/src/MyMusic/Main.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/fxml/home.fxml" />
+        <option value="$PROJECT_DIR$/src/MyMusic/ItemBox.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/AdminController.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/Album.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/PlaylistController.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/Track.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/fxml/admin.fxml" />
+        <option value="$PROJECT_DIR$/src/MyMusic/ArtistController.java" />
         <option value="$PROJECT_DIR$/src/MyMusic/AlbumController.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/TrackTableView.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/TrackEditBox.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/AlbumEditBox.java" />
+        <option value="$PROJECT_DIR$/src/MyMusic/ArtistEditBox.java" />
         <option value="$PROJECT_DIR$/src/MyMusic/DatabaseManager.java" />
       </list>
     </option>
@@ -365,7 +428,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -402,6 +464,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -417,7 +480,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/Michael/GitHub/CS6359001-Course_Project-team8/MyMusic/src/MyMusic/LoginController.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1573331241385" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1573458878270" />
     <property name="create.test.in.the.same.root" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -537,7 +600,7 @@
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.22039072" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.22527473" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -546,7 +609,7 @@
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32959184" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2112245" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2112245" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -593,13 +656,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MyMusic/SearchLayout.java" />
     <entry file="file://$PROJECT_DIR$/src/MyMusic/DBManager.java" />
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="72" selection-start-line="18" selection-start-column="72" selection-end-line="18" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/playlistEdit.fxml" />
     <entry file="file://$PROJECT_DIR$/src/MyMusic/TestRunner.java" />
     <entry file="file://$PROJECT_DIR$/src/MyMusic/css/styles.css">
@@ -609,26 +665,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/signup.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="56" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MyMusic/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
           <caret line="21" column="31" lean-forward="true" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/home.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="9" column="40" lean-forward="true" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -654,33 +694,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/Controller.java">
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/Playlist.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="119" column="52" selection-start-line="119" selection-start-column="52" selection-end-line="119" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="315">
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/ItemBox.java">
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/album.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="75" column="31" selection-start-line="75" selection-start-column="31" selection-end-line="75" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/TrackTableView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="435">
+          <caret line="29" column="39" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -692,27 +717,74 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/signup.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="56" selection-start-line="10" selection-start-column="56" selection-end-line="10" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/playlist.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="15" column="13" lean-forward="true" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/home.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="41" lean-forward="true" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/ItemEditBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/MyMusic/PageChanger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="28" column="40" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
+        <state relative-caret-position="390">
+          <caret line="76" column="53" selection-start-line="76" selection-start-column="53" selection-end-line="76" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#goToArtistPage#0;class#PageChanger#0" />
+            <element signature="method#goToAlbumPage#0;class#PageChanger#0" />
+            <element signature="method#goToPlaylistPage#0;class#PageChanger#0" />
+            <element signature="method#goToHomePage#0;class#PageChanger#0" />
+            <element signature="method#goToSearchPage#0;class#PageChanger#0" />
+            <element signature="method#goToAdminPage#0;class#PageChanger#0" />
+            <element signature="method#goToSignUpPage#0;class#PageChanger#0" />
+            <element signature="method#goToLoginPage#0;class#PageChanger#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/Album.java">
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/artist.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+        <state relative-caret-position="45">
+          <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/SearchController.java">
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/ItemBox.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3720">
-          <caret line="266" column="68" selection-start-line="266" selection-start-column="68" selection-end-line="266" selection-end-column="68" />
+        <state relative-caret-position="139">
+          <caret line="34" column="50" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -722,61 +794,24 @@
     <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/search.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+        <state relative-caret-position="66">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/Playlist.java">
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/PlaylistController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="71" column="56" selection-start-line="71" selection-start-column="56" selection-end-line="71" selection-end-column="56" />
+        <state relative-caret-position="505">
+          <caret line="189" column="41" lean-forward="true" selection-start-line="189" selection-start-column="41" selection-end-line="189" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/Track.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/playlist.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/AlbumController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="58" column="49" lean-forward="true" selection-start-line="58" selection-start-column="49" selection-end-line="58" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/ArtistController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
-          <caret line="167" column="9" lean-forward="true" selection-start-line="159" selection-start-column="8" selection-end-line="167" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3378#3379#0" expanded="true" />
-            <element signature="e#3468#3469#0" expanded="true" />
+            <element signature="method#displayTracks#0;class#Controller#0" />
+            <element signature="method#displayAlbums#0;class#Controller#0" />
+            <element signature="method#displayArtists#0;class#Controller#0" />
+            <element signature="method#displayPlaylists#0;class#Controller#0" />
+            <element signature="method#setAlbumContent#0;class#Controller#0" />
+            <element signature="method#setArtistContent#0;class#Controller#0" />
+            <element signature="method#setPlaylistContent#0;class#Controller#0" />
           </folding>
         </state>
       </provider>
@@ -788,19 +823,121 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/artist.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/Album.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="28" selection-end-column="113" />
+        <state relative-caret-position="330">
+          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/album.fxml">
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/AdminController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="622">
+          <caret line="87" column="53" lean-forward="true" selection-start-line="87" selection-start-column="53" selection-end-line="87" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#557#558#0" expanded="true" />
+            <element signature="e#605#606#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/PlaylistController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="40" column="78" selection-start-line="40" selection-start-column="78" selection-end-line="40" selection-end-column="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/SearchController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="204" column="51" lean-forward="true" selection-start-line="204" selection-start-column="51" selection-end-line="204" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/fxml/admin.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="29" column="39" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
+        <state relative-caret-position="315">
+          <caret line="21" column="50" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/Track.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/ArtistController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="472">
+          <caret line="146" column="49" selection-start-line="146" selection-start-column="49" selection-end-line="146" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/TrackTableView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/TrackEditBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="91" column="8" lean-forward="true" selection-start-line="91" selection-start-column="8" selection-end-line="95" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1366#1367#0" expanded="true" />
+            <element signature="e#1403#1404#0" expanded="true" />
+            <element signature="e#1559#1560#0" expanded="true" />
+            <element signature="e#1597#1598#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/AlbumController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="109" column="52" lean-forward="true" selection-start-line="109" selection-start-column="52" selection-end-line="109" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/AlbumEditBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="604">
+          <caret line="53" column="102" selection-start-line="53" selection-start-column="92" selection-end-line="53" selection-end-column="102" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MyMusic/ArtistEditBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="47" column="93" selection-start-line="47" selection-start-column="93" selection-end-line="47" selection-end-column="93" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -809,45 +946,46 @@
         <state relative-caret-position="195">
           <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
           <folding>
-            <element signature="method#searchArtists#0;class#DatabaseManager#0" />
-            <element signature="method#searchAlbums#0;class#DatabaseManager#0" />
-            <element signature="method#searchTracks#0;class#DatabaseManager#0" />
-            <element signature="method#getUser#0;class#DatabaseManager#0" />
-            <element signature="method#isUsernameTaken#0;class#DatabaseManager#0" />
-            <element signature="method#getAllTracks#0;class#DatabaseManager#0" />
-            <element signature="method#getAllAlbums#0;class#DatabaseManager#0" />
-            <element signature="method#getPlaylists#0;class#DatabaseManager#0" />
-            <element signature="method#getTracksInPlaylist#0;class#DatabaseManager#0" />
-            <element signature="method#getTracksInAlbum#0;class#DatabaseManager#0" />
-            <element signature="method#getAlbumsByArtist#0;class#DatabaseManager#0" />
-            <element signature="method#getTracksByArtist#0;class#DatabaseManager#0" />
-            <element signature="method#saveTrack#0;class#DatabaseManager#0" />
-            <element signature="method#saveAlbum#0;class#DatabaseManager#0" />
-            <element signature="method#saveArtist#0;class#DatabaseManager#0" />
-            <element signature="method#savePlaylist#0;class#DatabaseManager#0" />
-            <element signature="method#trackExists#0;class#DatabaseManager#0" />
-            <element signature="method#albumExists#0;class#DatabaseManager#0" />
-            <element signature="method#artistExists#0;class#DatabaseManager#0" />
-            <element signature="method#playlistExists#0;class#DatabaseManager#0" />
-            <element signature="method#addUser#0;class#DatabaseManager#0" />
-            <element signature="method#addTrack#0;class#DatabaseManager#0" />
-            <element signature="method#addArtist#0;class#DatabaseManager#0" />
-            <element signature="method#addAlbum#0;class#DatabaseManager#0" />
-            <element signature="e#19308#19625#0" />
-            <element signature="e#19642#19978#0" />
-            <element signature="e#20244#20828#0" />
-            <element signature="e#20245#20622#0" />
-            <element signature="method#updatePlaylist#0;class#DatabaseManager#0" />
-            <element signature="method#updatePlaylistHasTrack#0;class#DatabaseManager#0" />
-            <element signature="method#addPlaylist#0;class#DatabaseManager#0" />
-            <element signature="method#addTracksToPlaylist#0;class#DatabaseManager#0" />
-            <element signature="method#deleteArtist#0;class#DatabaseManager#0" />
-            <element signature="method#deleteAlbum#0;class#DatabaseManager#0" />
-            <element signature="method#deleteTrack#0;class#DatabaseManager#0" />
-            <element signature="method#deletePlaylist#0;class#DatabaseManager#0" />
-            <element signature="method#filterSQL#0;class#DatabaseManager#0" />
-            <element signature="method#genreSQL#0;class#DatabaseManager#0" />
-            <element signature="method#addPlaylist_hasTrackSQL#0;class#DatabaseManager#0" />
+            <element signature="e#582#2107#0" />
+            <element signature="e#2111#3848#0" />
+            <element signature="e#3851#5406#0" />
+            <element signature="e#5430#6268#0" />
+            <element signature="e#6271#6805#0" />
+            <element signature="e#6808#7966#0" />
+            <element signature="e#7969#9248#0" />
+            <element signature="e#9251#10436#0" />
+            <element signature="e#10439#11257#0" />
+            <element signature="e#11260#12587#0" />
+            <element signature="e#12590#13814#0" />
+            <element signature="e#13817#15247#0" />
+            <element signature="e#15250#16527#0" />
+            <element signature="e#16551#16593#0" />
+            <element signature="e#16603#16643#0" />
+            <element signature="e#16646#16689#0" />
+            <element signature="e#16692#16951#0" />
+            <element signature="e#16954#17357#0" />
+            <element signature="e#17360#17763#0" />
+            <element signature="e#17766#18173#0" />
+            <element signature="e#18176#18597#0" />
+            <element signature="e#18629#19155#0" />
+            <element signature="e#19158#19649#0" />
+            <element signature="e#19652#20110#0" />
+            <element signature="e#20113#20655#0" />
+            <element signature="e#20658#20723#0" />
+            <element signature="e#21277#21341#0" />
+            <element signature="e#20726#20791#0" />
+            <element signature="e#21340#21676#0" />
+            <element signature="e#22755#23141#0" />
+            <element signature="e#23144#23555#0" />
+            <element signature="e#23558#23966#0" />
+            <element signature="e#23969#24470#0" />
+            <element signature="e#24496#25117#0" />
+            <element signature="e#25120#25576#0" />
+            <element signature="e#25579#26035#0" />
+            <element signature="e#26038#26530#0" />
+            <element signature="e#26533#27296#0" />
+            <element signature="e#27299#27839#0" />
+            <element signature="e#27845#28128#0" />
           </folding>
         </state>
       </provider>

@@ -2,12 +2,11 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<?import com.sun.javafx.scene.control.skin.TableHeaderRow?>
+
 <HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="MyMusic.PlaylistController" alignment="CENTER">
     <VBox spacing="15">
         <HBox styleClass="tabBar" alignment="CENTER_LEFT">

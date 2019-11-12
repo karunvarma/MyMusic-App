@@ -84,7 +84,7 @@ public final class PageChanger {
             Controller controller = loader.getController();
 
             // Set property of the controller
-            controller.setUser(user);
+            controller.setUp(user);
 
             scene.setRoot(root);
         } catch (IOException e) {
@@ -103,6 +103,24 @@ public final class PageChanger {
 
             // Set property of the controller
             controller.setUser(user);
+
+            scene.setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void goToAdminPage(Scene scene, User user) {
+        try {
+            Parent root = null;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/admin.fxml"));
+            root = loader.load();
+
+            // Get the controller of the new root
+            AdminController controller = loader.getController();
+
+            // Set property of the controller
+            controller.setUp(user);
 
             scene.setRoot(root);
         } catch (IOException e) {

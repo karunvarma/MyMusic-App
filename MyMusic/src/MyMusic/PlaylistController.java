@@ -39,7 +39,6 @@ public class PlaylistController {
             playlist.setImagePath(playlistImagePathTextField.getText());
             databaseManager.savePlaylist(playlist);
             user.setPlaylists(databaseManager.getPlaylists(user.getUserId()));
-
         } catch (Exception e) {
             e.printStackTrace();
         }

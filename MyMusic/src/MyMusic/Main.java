@@ -22,7 +22,7 @@ public class Main extends Application {
         primaryStage.setTitle("My Music");
 
         // Initialize the scene
-        scene = new Scene(root, Screen.getPrimary().getBounds().getMaxX(), Screen.getPrimary().getBounds().getMaxY());
+        scene = new Scene(root, Screen.getPrimary().getBounds().getMaxX(), Screen.getPrimary().getBounds().getMaxY() - 100);
 
         // Set the initial scene
         primaryStage.setScene(scene);

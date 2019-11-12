@@ -29,7 +29,10 @@ public class Controller {
     private Label nameLabel;
 
     @FXML
-    VBox yourMusicContent;
+    private Button adminButton;
+
+    @FXML
+    private VBox yourMusicContent;
 
 
     @FXML
@@ -96,7 +99,6 @@ public class Controller {
     public void setArtistContent(List<Artist> artistList) {
 
     }
-
 
     public void setPlaylistContent() {
         VBox content = new VBox();
@@ -175,11 +177,18 @@ public class Controller {
         }
     }
 
+    public void adminBtnAction() {
+        PageChanger.getInstance().goToAdminPage(nameLabel.getScene(), user);
+    }
 
-    public void setUser(User user) {
+    public void setUp(User user) {
         this.user = user;
         nameLabel.setText(user.getName());
         setPlaylistContent();
+
+        if (user.isAdmin()) {
+            adminButton.setVisible(true);
+        }
     }
 
     @FXML

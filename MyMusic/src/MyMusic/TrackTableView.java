@@ -23,7 +23,7 @@ public class TrackTableView extends TableView {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
 
         TableColumn timeCol = new TableColumn("Time");
-        timeCol.setCellValueFactory(new PropertyValueFactory<>("Duration"));
+        timeCol.setCellValueFactory(new PropertyValueFactory<>("Time"));
 
         TableColumn artistCol = new TableColumn("Artist");
         artistCol.setPrefWidth(200);

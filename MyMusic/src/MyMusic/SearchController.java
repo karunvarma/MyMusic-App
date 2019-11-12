@@ -307,7 +307,7 @@ public class SearchController {
             Controller controller = loader.getController();
 
             // Set user property of the controller
-            controller.setUser(user);
+            controller.setUp(user);
 
             Scene scene = searchField.getScene();
             scene.setRoot(root);

@@ -133,7 +133,21 @@ public class ArtistController {
 
     @FXML
     private void save() {
+        DatabaseManager databaseManager = null;
+        try {
+            databaseManager = new DatabaseManager();
 
+            artist.setName(artistNameTextField.getText());
+            artist.setImagePath(imagePathTextField.getText());
+
+            artistNameLabel.setText(artist.getName());
+            Image image = new Image(artist.getImagePath());
+            artistImageView.setImage(image);
+
+            databaseManager.updateArtist(artist);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

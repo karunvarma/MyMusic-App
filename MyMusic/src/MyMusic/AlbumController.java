@@ -98,7 +98,26 @@ public class AlbumController {
 
     @FXML
     private void save() {
+        DatabaseManager databaseManager = null;
+        try {
+            databaseManager = new DatabaseManager();
 
+            album.setName(albumNameTextField.getText());
+            album.setImagePath(imagePathTextField.getText());
+            album.setYear(Integer.parseInt(yearTextField.getText()));
+            album.setGenre(genreTextField.getText());
+
+            albumNameLabel.setText(album.getName());
+            Image image = new Image(album.getImagePath());
+            albumImageView.setImage(image);
+            albumYearLabel.setText(album.getYear()+"");
+            albumGenreLabel.setText(album.getGenre());
+
+            databaseManager.updateAlbum(album);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

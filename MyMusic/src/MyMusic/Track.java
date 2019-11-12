@@ -8,6 +8,7 @@ public class Track {
 	private String time;
 	private String artist_name;
 	private String album_name;
+	private String mediaPath;
 	private int album_id;
 
 	public Track() {}
@@ -19,6 +20,17 @@ public class Track {
 		this.time = time;
 		this.artist_name = artist_name;
 		this.album_name = album_name;
+	}
+
+	public Track(int id, String name, String genre, int plays, String time, String artist_name, String album_name, String mediaPath) {
+		this.id = id;
+		this.name = name;
+		this.genre = genre;
+		this.plays = plays;
+		this.time = time;
+		this.artist_name = artist_name;
+		this.album_name = album_name;
+		this.mediaPath = mediaPath;
 	}
 
 	public int getId()
@@ -61,6 +73,11 @@ public class Track {
 		return genre;
 	}
 
+	public String getMediaPath()
+	{
+		return mediaPath;
+	}
+
 
 
 	public void setId(int id)
@@ -101,5 +118,10 @@ public class Track {
 	public void setGenre(String genre)
 	{
 		this.genre=genre;
+	}
+
+	public void setMediaPath(String mediaPath)
+	{
+		this.mediaPath=mediaPath;
 	}
 }
