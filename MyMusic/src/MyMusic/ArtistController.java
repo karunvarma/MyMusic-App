@@ -37,7 +37,8 @@ public class ArtistController {
     private TextField artistNameTextField;
     @FXML
     private TextField imagePathTextField;
-
+    @FXML
+    private CheckBox yoursCheckBox;
 
 
     private Node getAlbumResults(List<Album> albumList) {
@@ -96,6 +97,24 @@ public class ArtistController {
         }
 
         return albumResults;
+    }
+
+
+    @FXML
+    private void markAsYours() {
+        try {
+            DatabaseManager databaseManager = new DatabaseManager();
+            if (yoursCheckBox.isSelected()) {
+                databaseManager.addUser_has_Artist(user, artist);
+                artist.setIsYours(true);
+            }
+            else {
+                databaseManager.deleteUser_has_Artist(user, artist);
+                artist.setIsYours(false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -166,9 +185,13 @@ public class ArtistController {
             artistNameLabel.setText(artist.getName());
             artistAlbumsBox.getChildren().add(getAlbumResults(artist.getAlbums()));
 
-            TableView tableView = new TrackTableView(artist.getTracks());
+            TableView tableView = new TrackTableView(artist.getTracks(), user);
             tableView.setMinWidth(1600);
             artistTracksBox.getChildren().add(tableView);
+
+            if (artist.isYours()) {
+                yoursCheckBox.setSelected(true);
+            }
         }
 
         // Admin

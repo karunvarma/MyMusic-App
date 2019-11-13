@@ -1,5 +1,7 @@
 package MyMusic;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 public class Track {
 	private int id;
 	private String name;
@@ -10,6 +12,7 @@ public class Track {
 	private String album_name;
 	private String mediaPath;
 	private int album_id;
+	private boolean isYours;
 
 	public Track() {}
 
@@ -31,6 +34,7 @@ public class Track {
 		this.artist_name = artist_name;
 		this.album_name = album_name;
 		this.mediaPath = mediaPath;
+		this.isYours = false;
 	}
 
 	public int getId()
@@ -78,6 +82,11 @@ public class Track {
 		return mediaPath;
 	}
 
+	public Boolean isYours()
+	{
+		return isYours;
+	}
+
 
 
 	public void setId(int id)
@@ -123,5 +132,25 @@ public class Track {
 	public void setMediaPath(String mediaPath)
 	{
 		this.mediaPath=mediaPath;
+	}
+
+	public void setIsYours(boolean isYours)
+	{
+		this.isYours=isYours;
+	}
+
+
+
+
+	public void play() {
+		System.out.println("Play Track");
+	}
+
+	public void pause() {
+		System.out.println("Pause Track");
+	}
+
+	public void stop() {
+		System.out.println("Stop Track");
 	}
 }

@@ -9,14 +9,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class TrackTableView extends TableView {
-    public TrackTableView(List<Track> trackList) {
+    public TrackTableView(List<Track> trackList, User user) {
         setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);
         setPrefWidth(1380);
 
-        // Instantiate table columns
-        TableColumn<PlayButton, PlayButton> playBtnCol = new TableColumn();
-        playBtnCol.setPrefWidth(100);
 
+        // Instantiate table columns
+
+        TableColumn playCol = new TableColumn("Play");
+        playCol.setPrefWidth(50);
+        playCol.setCellValueFactory(new PropertyValueFactory<>("PlayBtn"));
 
         TableColumn nameCol = new TableColumn("Name");
         nameCol.setPrefWidth(200);
@@ -41,15 +43,17 @@ public class TrackTableView extends TableView {
         playCountCol.setPrefWidth(100);
         playCountCol.setCellValueFactory(new PropertyValueFactory<>("NumPlays"));
 
-        TableColumn<CheckBox, CheckBox> yoursCol = new TableColumn("Yours");
+        TableColumn yoursCol = new TableColumn("Yours");
         yoursCol.setPrefWidth(100);
+        yoursCol.setCellValueFactory(new PropertyValueFactory<>("YoursCheckBox"));
 
 
         // Add table columns
-        getColumns().addAll(playBtnCol, nameCol, timeCol, artistCol, albumCol, genreCol, playCountCol, yoursCol);
+        getColumns().addAll(playCol, nameCol, timeCol, artistCol, albumCol, genreCol, playCountCol, yoursCol);
+
 
         for (int i = 0; i < trackList.size(); i++) {
-            getItems().add(trackList.get(i));
+            getItems().add(new TrackRowData(user, trackList.get(i)));
         }
     }
 

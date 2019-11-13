@@ -74,7 +74,7 @@ public class Controller {
 
 
     public void setTrackContent(List<Track> trackList) {
-        trackContent = new TrackTableView(trackList);
+        trackContent = new TrackTableView(trackList, user);
     }
 
     public void setAlbumContent(List<Album> albumList) {

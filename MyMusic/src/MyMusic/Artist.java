@@ -8,6 +8,7 @@ public class Artist {
 	private float rating;
 	private ArrayList<Album> albums;
 	private ArrayList<Track> tracks;
+	private boolean isYours;
 
 	Artist() {}
 
@@ -19,6 +20,7 @@ public class Artist {
 		this.rating = rating;
 		this.tracks = new ArrayList<Track>();
 		this.albums = new ArrayList<Album>();
+		this.isYours = false;
 	}
 
 	public int getId()
@@ -39,6 +41,10 @@ public class Artist {
 	{
 		return this.albums;
 	}
+	public Boolean isYours()
+	{
+		return isYours;
+	}
 
 	public void setId(int id)
 	{
@@ -58,6 +64,10 @@ public class Artist {
 	}
 	public void setTracks(ArrayList<Track> tracks) { this.tracks = tracks; }
 	public void setAlbums(ArrayList<Album> albums) { this.albums = albums; }
+	public void setIsYours(boolean isYours)
+	{
+		this.isYours=isYours;
+	}
 
 
 	public void addTrack(Track track)

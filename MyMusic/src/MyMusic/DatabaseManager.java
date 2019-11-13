@@ -20,7 +20,7 @@ public class DatabaseManager {
 
 	// SEARCH METHODS //
 
-	public  ArrayList<Artist> searchArtists(String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception
+	public  ArrayList<Artist> searchArtists(User user, String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception
 	{
 		String s="%"+searchString+"%";
 		PreparedStatement myStmt=null;
@@ -46,8 +46,9 @@ public class DatabaseManager {
 				Float rating = myRs.getFloat("rating");
 
 				Artist artist = new Artist(id, name, imagePath, rating);
-				artist.setAlbums(getAlbumsByArtist(id));
-				artist.setTracks(getTracksByArtist(id));
+				artist.setIsYours(userHasArtist(user, artist));
+				artist.setAlbums(getAlbumsByArtist(user, id));
+				artist.setTracks(getTracksByArtist(user, id));
 				artists.add(artist);
 			}
 			System.out.println("Query successful");
@@ -60,7 +61,7 @@ public class DatabaseManager {
 		finally {return artists;}
 	}
 	
-	public  ArrayList<Album> searchAlbums(String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception
+	public  ArrayList<Album> searchAlbums(User user, String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception
 	{
 		String s = "%"+searchString+"%";
 		PreparedStatement myStmt = null;
@@ -90,9 +91,10 @@ public class DatabaseManager {
 				int year = myRs.getInt("year");
 				String genre = myRs.getString("genre");
 				float rating = myRs.getFloat("rating");
-				System.out.println(name+" "+artistName+" "+year+" "+genre+" "+imagePath+" "+rating);
+
 				Album album = new Album(id, name, artistName, year, genre, imagePath, rating);
-				album.setTracks(getTracksInAlbum(id));
+				album.setIsYours(userHasAlbum(user, album));
+				album.setTracks(getTracksInAlbum(user, id));
 				albums.add(album);
 			}
 			System.out.println("Query successful");
@@ -104,7 +106,7 @@ public class DatabaseManager {
 		finally {return albums;}
 	}
 
-	public ArrayList<Track> searchTracks(String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception {
+	public ArrayList<Track> searchTracks(User user, String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception {
 		String s = "%"+searchString+"%";
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
@@ -112,7 +114,7 @@ public class DatabaseManager {
 		try
 		{
 			myStmt = myConn.prepareStatement(
-					"SELECT DISTINCT Track.name, Track.genre, Track.plays, Track.time, Album.name as album_name, Artist.name as artist_name FROM Track" +
+					"SELECT DISTINCT Track.track_id, Track.name, Track.genre, Track.plays, Track.time, Track.mediaPath, Album.name as album_name, Artist.name as artist_name FROM Track" +
 						" LEFT JOIN Album_has_Track ON Album_has_Track.track_id = Track.track_id" +
 						" LEFT JOIN Album ON Album.album_id = Album_has_Track.album_id" +
 						" LEFT JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
@@ -122,15 +124,18 @@ public class DatabaseManager {
 			myRs = myStmt.executeQuery();
 			while(myRs.next())
 			{
+				int id = myRs.getInt("track_id");
 				String name = myRs.getString("name");
 				String genre = myRs.getString("genre");
 				int plays = myRs.getInt("plays");
 				String time = myRs.getString( "time");
+				String mediaPath = myRs.getString("mediaPath");
 				String artistName = myRs.getString("artist_name");
 				String albumName = myRs.getString("album_name");
 
-				System.out.println(name+" "+genre+" "+plays+" "+time+" "+artistName+" "+albumName);
-				tracks.add(new Track(name, genre, plays, time, artistName, albumName));
+				Track track = new Track(id, name, genre, plays, time, artistName, albumName, mediaPath);
+				track.setIsYours(userHasTrack(user, track));
+				tracks.add(track);
 			}
 			System.out.println("Search track successful");
 
@@ -160,7 +165,7 @@ public class DatabaseManager {
 				String name = rs.getString("name");
                 Boolean isAdmin = rs.getBoolean("admin");
 				User user = new User(userId, name, username, password, isAdmin);
-				user.setPlaylists(getPlaylists(userId));
+				user.setPlaylists(getPlaylists(user));
 				return user;
 			}
 			else {
@@ -196,7 +201,7 @@ public class DatabaseManager {
 		return true;
 	}
 
-	public ArrayList<Track> getAllTracks() {
+	public ArrayList<Track> getAllTracks(User user) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
 		ArrayList<Track> tracks = new ArrayList<>();
@@ -221,7 +226,9 @@ public class DatabaseManager {
 				String artistName = myRs.getString("artist_name");
 				String albumName = myRs.getString("album_name");
 
-				tracks.add(new Track(id, name, genre, plays, time, artistName, albumName, mediaPath));
+				Track track = new Track(id, name, genre, plays, time, artistName, albumName, mediaPath);
+				track.setIsYours(userHasTrack(user, track));
+				tracks.add(track);
 			}
 			System.out.println("Search track successful");
 
@@ -234,7 +241,7 @@ public class DatabaseManager {
 		}
 	}
 
-	public ArrayList<Album> getAllAlbums() {
+	public ArrayList<Album> getAllAlbums(User user) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
 		ArrayList<Album> albums = new ArrayList<Album>();
@@ -261,7 +268,8 @@ public class DatabaseManager {
 				float rating = myRs.getFloat("rating");
 
 				Album album = new Album(id, name, artistName, year, genre, imagePath, rating);
-				album.setTracks(getTracksInAlbum(id));
+				album.setIsYours(userHasAlbum(user, album));
+				album.setTracks(getTracksInAlbum(user, id));
 				albums.add(album);
 			}
 			System.out.println("Query successful");
@@ -273,7 +281,7 @@ public class DatabaseManager {
 		finally {return albums;}
 	}
 
-	public ArrayList<Artist> getAllArtists() {
+	public ArrayList<Artist> getAllArtists(User user) {
 		PreparedStatement myStmt=null;
 		ResultSet myRs;
 		ArrayList<Artist> artists=new ArrayList<Artist>();
@@ -296,8 +304,9 @@ public class DatabaseManager {
 				Float rating = myRs.getFloat("rating");
 
 				Artist artist = new Artist(id, name, imagePath, rating);
-				artist.setAlbums(getAlbumsByArtist(id));
-				artist.setTracks(getTracksByArtist(id));
+				artist.setIsYours(userHasArtist(user, artist));
+				artist.setAlbums(getAlbumsByArtist(user, id));
+				artist.setTracks(getTracksByArtist(user, id));
 				artists.add(artist);
 			}
 			System.out.println("Query successful");
@@ -309,14 +318,14 @@ public class DatabaseManager {
 		finally {return artists;}
 	}
 
-	public ArrayList<Playlist> getPlaylists(int userId) {
+	public ArrayList<Playlist> getPlaylists(User user) {
 		ArrayList<Playlist> playlists = new ArrayList<Playlist>();
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
 		try
 		{
 			myStmt = myConn.prepareStatement("SELECT * From Playlist WHERE user_id = ?");
-			myStmt.setInt(1, userId);
+			myStmt.setInt(1, user.getUserId());
 
 			myRs = myStmt.executeQuery();
 			int index = 0;
@@ -325,9 +334,9 @@ public class DatabaseManager {
 				int id = myRs.getInt("playlist_id");
 				String name = myRs.getString("name");
 				String imagePath = "MyMusic/fxml/musical-note.jpg";
-				ArrayList<Track> tracks = getTracksInPlaylist(id);
+				ArrayList<Track> tracks = getTracksInPlaylist(user, id);
 
-				Playlist playlist = new Playlist(id, name, imagePath, userId, tracks);
+				Playlist playlist = new Playlist(id, name, imagePath, user.getUserId(), tracks);
 				playlists.add(playlist);
 
 				index++;
@@ -342,14 +351,14 @@ public class DatabaseManager {
 		finally {return playlists;}
 	}
 
-	public ArrayList<Track> getTracksInPlaylist(int playlistId) {
+	public ArrayList<Track> getTracksInPlaylist(User user, int playlistId) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
 		ArrayList<Track> tracks = new ArrayList<>();
 		try
 		{
 			myStmt = myConn.prepareStatement(
-					"SELECT DISTINCT Track.name, Track.genre, Track.plays, Track.time, Album.name as album_name, Artist.name as artist_name FROM Track" +
+					"SELECT DISTINCT Track.track_id, Track.name, Track.genre, Track.plays, Track.time, Track.mediaPath, Album.name as album_name, Artist.name as artist_name FROM Track" +
 							" JOIN Album_has_Track ON Album_has_Track.track_id = Track.track_id" +
 							" JOIN Album ON Album.album_id = Album_has_Track.album_id" +
 							" JOIN Track_has_Artist ON Track.track_id = Track_has_Artist.track_id" +
@@ -360,13 +369,19 @@ public class DatabaseManager {
 			myRs = myStmt.executeQuery();
 			while(myRs.next())
 			{
+				int id = myRs.getInt("track_id");
 				String name = myRs.getString("name");
 				String genre = myRs.getString("genre");
 				int plays = myRs.getInt("plays");
 				String time = myRs.getString( "time");
+				String mediaPath = myRs.getString("mediaPath");
 				String artistName = myRs.getString("artist_name");
 				String albumName = myRs.getString("album_name");
-				tracks.add(new Track(name, genre, plays, time, artistName, albumName));
+
+				Track track = new Track(id, name, genre, plays, time, artistName, albumName, mediaPath);
+				track.setIsYours(userHasTrack(user, track));
+				tracks.add(track);
+
 			}
 			System.out.println("Search track successful");
 
@@ -379,14 +394,14 @@ public class DatabaseManager {
 		}
 	}
 
-	public ArrayList<Track> getTracksInAlbum(int albumId) {
+	public ArrayList<Track> getTracksInAlbum(User user, int albumId) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
 		ArrayList<Track> tracks = new ArrayList<Track>();
 		try
 		{
 			myStmt = myConn.prepareStatement(
-					"SELECT DISTINCT Track.track_id, Track.name, Track.genre, Track.plays, Track.time, Album.name as album_name, Artist.name as artist_name FROM Track" +
+					"SELECT DISTINCT Track.track_id, Track.name, Track.genre, Track.plays, Track.time, Track.mediaPath, Album.name as album_name, Artist.name as artist_name FROM Track" +
 							" JOIN Album_has_Track ON Album_has_Track.track_id = Track.track_id" +
 							" JOIN Album ON Album.album_id = Album_has_Track.album_id" +
 							" JOIN Track_has_Artist ON Track.track_id = Track_has_Artist.track_id" +
@@ -396,14 +411,18 @@ public class DatabaseManager {
 			myRs = myStmt.executeQuery();
 			while(myRs.next())
 			{
+				int id = myRs.getInt("track_id");
 				String name = myRs.getString("name");
 				String genre = myRs.getString("genre");
 				int plays = myRs.getInt("plays");
 				String time = myRs.getString( "time");
+				String mediaPath = myRs.getString("mediaPath");
 				String artistName = myRs.getString("artist_name");
 				String albumName = myRs.getString("album_name");
 
-				tracks.add(new Track(name, genre, plays, time, artistName, albumName));
+				Track track = new Track(id, name, genre, plays, time, artistName, albumName, mediaPath);
+				track.setIsYours(userHasTrack(user, track));
+				tracks.add(track);
 			}
 			System.out.println("Search track successful");
 
@@ -416,7 +435,7 @@ public class DatabaseManager {
 		}
 	}
 
-	public ArrayList<Album> getAlbumsByArtist(int artistId) {
+	public ArrayList<Album> getAlbumsByArtist(User user, int artistId) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
 		ArrayList<Album> albums = new ArrayList<Album>();
@@ -438,12 +457,11 @@ public class DatabaseManager {
 				int year = myRs.getInt("year");
 				String genre = myRs.getString("genre");
 				float rating = myRs.getFloat("rating");
-				System.out.println(name+" "+artistName+" "+year+" "+genre+" "+imagePath+" "+rating);
-				Album album = new Album(id, name, artistName, year, genre, imagePath, rating);
-				album.setTracks(getTracksInAlbum(id));
-				albums.add(album);
 
-				//albums.add(new Track(name, genre, plays, time, artistName, albumName));
+				Album album = new Album(id, name, artistName, year, genre, imagePath, rating);
+				album.setIsYours(userHasAlbum(user, album));
+				album.setTracks(getTracksInAlbum(user, id));
+				albums.add(album);
 			}
 			System.out.println("Search track successful");
 
@@ -456,14 +474,14 @@ public class DatabaseManager {
 		}
 	}
 
-	public ArrayList<Track> getTracksByArtist(int artistId) {
+	public ArrayList<Track> getTracksByArtist(User user, int artistId) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
 		ArrayList<Track> tracks = new ArrayList<Track>();
 		try
 		{
 			myStmt = myConn.prepareStatement(
-					"SELECT DISTINCT Track.track_id, Track.name, Track.genre, Track.plays, Track.time, Album.name as album_name, Artist.name as artist_name FROM Track" +
+					"SELECT DISTINCT Track.track_id, Track.name, Track.genre, Track.plays, Track.time, Track.mediaPath, Album.name as album_name, Artist.name as artist_name FROM Track" +
 							" JOIN Album_has_Track ON Album_has_Track.track_id = Track.track_id" +
 							" JOIN Album ON Album.album_id = Album_has_Track.album_id" +
 							" JOIN Track_has_Artist ON Track.track_id = Track_has_Artist.track_id" +
@@ -478,10 +496,13 @@ public class DatabaseManager {
 				String genre = myRs.getString("genre");
 				int plays = myRs.getInt("plays");
 				String time = myRs.getString( "time");
+				String mediaPath = myRs.getString("mediaPath");
 				String artistName = myRs.getString("artist_name");
 				String albumName = myRs.getString("album_name");
 
-				tracks.add(new Track(name, genre, plays, time, artistName, albumName));
+				Track track = new Track(id, name, genre, plays, time, artistName, albumName, mediaPath);
+				track.setIsYours(userHasTrack(user, track));
+				tracks.add(track);
 			}
 			System.out.println("Search track successful");
 
@@ -493,6 +514,7 @@ public class DatabaseManager {
 			return tracks;
 		}
 	}
+
 
 	// SAVE & EXISTS METHODS //
 
@@ -518,7 +540,7 @@ public class DatabaseManager {
 			myStmt = myConn.prepareStatement("SELECT * FROM Track WHERE track_id = ?");
 			myStmt.setInt(1, track.getId());
 			ResultSet myRs = myStmt.executeQuery();
-			if (myRs.getFetchSize() == 1) {
+			if (myRs.next()) {
 				exists = true;
 			}
 		}
@@ -535,7 +557,7 @@ public class DatabaseManager {
 			myStmt = myConn.prepareStatement("SELECT * FROM Album WHERE album_id = ?");
 			myStmt.setInt(1, album.getId());
 			ResultSet myRs = myStmt.executeQuery();
-			if (myRs.getFetchSize() == 1) {
+			if (myRs.next()) {
 				exists = true;
 			}
 		}
@@ -552,7 +574,7 @@ public class DatabaseManager {
 			myStmt = myConn.prepareStatement("SELECT * FROM Track WHERE track_id = ?");
 			myStmt.setInt(1, artist.getId());
 			ResultSet myRs = myStmt.executeQuery();
-			if (myRs.getFetchSize() == 1) {
+			if (myRs.next()) {
 				exists = true;
 			}
 		}
@@ -569,7 +591,7 @@ public class DatabaseManager {
 			myStmt = myConn.prepareStatement("SELECT * FROM Playlist WHERE playlist_id = ?");
 			myStmt.setInt(1, playlist.getId());
 			ResultSet myRs = myStmt.executeQuery();
-			if (myRs.getFetchSize() == 1) {
+			if (myRs.next()) {
 				exists = true;
 			}
 		}
@@ -578,6 +600,62 @@ public class DatabaseManager {
 		}
 		return exists;
 	}
+
+	public boolean userHasTrack(User user, Track track) {
+		PreparedStatement myStmt = null;
+		boolean exists = false;
+		try {
+			myStmt = myConn.prepareStatement("SELECT * FROM User_has_Track WHERE user_id = ? AND track_id = ?");
+			myStmt.setInt(1, user.getUserId());
+			myStmt.setInt(2, track.getId());
+			ResultSet myRs = myStmt.executeQuery();
+
+			if (myRs.next()) {
+				exists = true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	public boolean userHasAlbum(User user, Album album) {
+		PreparedStatement myStmt = null;
+		boolean exists = false;
+		try {
+			myStmt = myConn.prepareStatement("SELECT * FROM User_has_Album WHERE user_id = ? AND album_id = ?");
+			myStmt.setInt(1, user.getUserId());
+			myStmt.setInt(2, album.getId());
+			ResultSet myRs = myStmt.executeQuery();
+			if (myRs.next()) {
+				exists = true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	public boolean userHasArtist(User user, Artist artist) {
+		PreparedStatement myStmt = null;
+		boolean exists = false;
+		try {
+			myStmt = myConn.prepareStatement("SELECT * FROM User_has_Artist WHERE user_id = ? AND artist_id = ?");
+			myStmt.setInt(1, user.getUserId());
+			myStmt.setInt(2, artist.getId());
+			ResultSet myRs = myStmt.executeQuery();
+			if (myRs.next()) {
+				exists = true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
 
 	// ADD & UPDATE METHODS //
 
@@ -705,7 +783,6 @@ public class DatabaseManager {
 		}
 	}
 
-
 	public void updateTrack(Track track) {
 		PreparedStatement myStmt = null;
 		try {
@@ -801,7 +878,7 @@ public class DatabaseManager {
 	public void addPlaylist(Playlist playlist) {
 		PreparedStatement myStmt = null;
 		try {
-			myStmt = myConn.prepareStatement("INSERT INTO Playlist (name, user_id) VALUES (?, ?);");
+			myStmt = myConn.prepareStatement("INSERT INTO Playlist (name, user_id) values (?, ?);");
 			myStmt.setString(1, playlist.getName());
 			myStmt.setInt(2, playlist.getUserId());
 			myStmt.executeUpdate();
@@ -817,7 +894,7 @@ public class DatabaseManager {
 		for (int i = 0; i < tracks.size(); i++) {
 			PreparedStatement myStmt = null;
 			try {
-				myStmt = myConn.prepareStatement("INSERT INTO Playlist_has_Track VALUES (?, ?);");
+				myStmt = myConn.prepareStatement("INSERT INTO Playlist_has_Track values (?, ?);");
 				myStmt.setInt(1, playlist.getId());
 				myStmt.setInt(2, tracks.get(i).getId());
 				myStmt.executeUpdate();
@@ -830,6 +907,52 @@ public class DatabaseManager {
 		return success;
 	}
 
+	public void addUser_has_Track(User user, Track track) {
+		PreparedStatement myStmt=null;
+		try
+		{
+			myStmt = myConn.prepareStatement("INSERT INTO User_has_Track values (?, ?)");
+			myStmt.setInt(1, track.getId());
+			myStmt.setInt(2, user.getUserId());
+			myStmt.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public void addUser_has_Album(User user, Album album) {
+		PreparedStatement myStmt=null;
+		try
+		{
+			myStmt = myConn.prepareStatement("INSERT INTO User_has_Album values (?, ?)");
+			myStmt.setInt(1, user.getUserId());
+			myStmt.setInt(2, album.getId());
+			myStmt.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public void addUser_has_Artist(User user, Artist artist) {
+		PreparedStatement myStmt=null;
+		try
+		{
+			myStmt = myConn.prepareStatement("INSERT INTO User_has_Artist values (?, ?)");
+			myStmt.setInt(1, user.getUserId());
+			myStmt.setInt(2, artist.getId());
+			myStmt.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+
 	// DELETE METHODS //
 
 	public void deleteArtist(Artist artist) {
@@ -838,9 +961,11 @@ public class DatabaseManager {
 			String deleteArtistSQL = "DELETE FROM Artist WHERE artist_id = " + artist.getId() + ";";
 			String deleteTrackHasArtistSQL = "DELETE FROM Track_has_Artist WHERE artist_id = " + artist.getId() + ";";
 			String deleteAlbumHasArtistSQL = "DELETE FROM Album_has_Artist WHERE artist_id = " + artist.getId() + ";";
+			String deleteUserHasArtistSQL = "DELETE FROM User_has_Artist WHERE artist_id = " + artist.getId() + ";";
 			myStmt.addBatch(deleteArtistSQL);
 			myStmt.addBatch(deleteTrackHasArtistSQL);
 			myStmt.addBatch(deleteAlbumHasArtistSQL);
+			myStmt.addBatch(deleteUserHasArtistSQL);
 			myStmt.executeBatch();
 		}
 		catch (Exception e) {
@@ -854,9 +979,11 @@ public class DatabaseManager {
 			String deleteAlbumSQL = "DELETE FROM Album WHERE album_id = " + album.getId() + ";";
 			String deleteAlbumHasTrackSQL = "DELETE FROM Album_has_Track WHERE album_id = " + album.getId() + ";";
 			String deleteAlbumHasArtistSQL = "DELETE FROM Album_has_Artist WHERE album_id = " + album.getId() + ";";
+			String deleteUserHasAlbumSQL = "DELETE FROM User_has_Album WHERE album_id = " + album.getId() + ";";
 			myStmt.addBatch(deleteAlbumSQL);
 			myStmt.addBatch(deleteAlbumHasTrackSQL);
 			myStmt.addBatch(deleteAlbumHasArtistSQL);
+			myStmt.addBatch(deleteUserHasAlbumSQL);
 			myStmt.executeBatch();
 		}
 		catch (Exception e) {
@@ -870,9 +997,11 @@ public class DatabaseManager {
 			String deleteTrackSQL = "DELETE FROM Track WHERE track_id = " + track.getId() + ";";
 			String deleteAlbumHasTrackSQL = "DELETE FROM Album_has_Track WHERE track_id = " + track.getId() + ";";
 			String deleteTrackHasArtistSQL = "DELETE FROM Track_has_Artist WHERE track_id = " + track.getId() + ";";
+			String deleteUserHasTrackSQL = "DELETE FROM User_has_Track WHERE track_id = " + track.getId() + ";";
 			myStmt.addBatch(deleteTrackSQL);
 			myStmt.addBatch(deleteAlbumHasTrackSQL);
 			myStmt.addBatch(deleteTrackHasArtistSQL);
+			myStmt.addBatch(deleteUserHasTrackSQL);
 			myStmt.executeBatch();
 		}
 		catch (Exception e) {
@@ -897,7 +1026,7 @@ public class DatabaseManager {
 	public void deleteAlbum_has_Artist(Album album, Artist artist) {
 		try {
 			Statement myStmt = myConn.createStatement();
-			String deleteSQL = "DELETE FROM Album_has_Artist WHERE album_id = " + album.getId() + "AND artist_id = " + artist.getId() + ";";
+			String deleteSQL = "DELETE FROM Album_has_Artist WHERE album_id = " + album.getId() + " AND artist_id = " + artist.getId() + ";";
 			myStmt.addBatch(deleteSQL);
 			myStmt.executeBatch();
 		}
@@ -909,7 +1038,7 @@ public class DatabaseManager {
 	public void deleteAlbum_has_Track(Album album, Track track) {
 		try {
 			Statement myStmt = myConn.createStatement();
-			String deleteSQL = "DELETE FROM Album_has_Track WHERE album_id = " + album.getId() + "AND track_id = " + track.getId() + ";";
+			String deleteSQL = "DELETE FROM Album_has_Track WHERE album_id = " + album.getId() + " AND track_id = " + track.getId() + ";";
 			myStmt.addBatch(deleteSQL);
 			myStmt.executeBatch();
 		}
@@ -921,7 +1050,7 @@ public class DatabaseManager {
 	public void deleteTrack_has_Artist(Track track, Artist artist) {
 		try {
 			Statement myStmt = myConn.createStatement();
-			String deleteSQL = "DELETE FROM Track_has_Artist WHERE artist_id = " + artist.getId() + "AND track_id = " + track.getId() + ";";
+			String deleteSQL = "DELETE FROM Track_has_Artist WHERE artist_id = " + artist.getId() + " AND track_id = " + track.getId() + ";";
 			myStmt.addBatch(deleteSQL);
 			myStmt.executeBatch();
 		}
@@ -929,6 +1058,43 @@ public class DatabaseManager {
 			e.printStackTrace();
 		}
 	}
+
+	public void deleteUser_has_Track(User user, Track track) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deleteSQL = "DELETE FROM User_has_Track WHERE user_id = " + user.getUserId() + " AND track_id = " + track.getId() + ";";
+			myStmt.addBatch(deleteSQL);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteUser_has_Album(User user, Album album) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deleteSQL = "DELETE FROM User_has_Album  WHERE user_id = " + user.getUserId() + " AND album_id = " + album.getId() + ";";
+			myStmt.addBatch(deleteSQL);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteUser_has_Artist(User user, Artist artist) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deleteSQL = "DELETE FROM User_has_Artist WHERE user_id = " + user.getUserId() + " AND artist_id = " + artist.getId() + ";";
+			myStmt.addBatch(deleteSQL);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	// SQL GENERATION METHODS //
 	private String filterSQL(String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName) {

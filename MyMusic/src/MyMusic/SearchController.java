@@ -128,17 +128,17 @@ public class SearchController {
             DatabaseManager databaseManager = new DatabaseManager();
             if (searchAlbums) {
                 // Select from album table query to get list of albums
-                ArrayList<Album> albumResults = databaseManager.searchAlbums(searchString, searchByTrackName, searchByAlbumName, searchByArtistName, genres);
+                ArrayList<Album> albumResults = databaseManager.searchAlbums(user, searchString, searchByTrackName, searchByAlbumName, searchByArtistName, genres);
                 searchResultsBox.getChildren().add(getAlbumResults(albumResults));
             }
             if (searchArtists) {
                 // Select from artist table query to get list of artist
-                ArrayList<Artist> artistResults = databaseManager.searchArtists(searchString, searchByTrackName, searchByAlbumName, searchByArtistName, genres);
+                ArrayList<Artist> artistResults = databaseManager.searchArtists(user, searchString, searchByTrackName, searchByAlbumName, searchByArtistName, genres);
                 searchResultsBox.getChildren().add(getArtistResults(artistResults));
             }
             if (searchTracks) {
                 // Select from track table query to get list of tracks
-                ArrayList<Track> trackResults = databaseManager.searchTracks(searchString, searchByTrackName, searchByAlbumName, searchByArtistName, genres);
+                ArrayList<Track> trackResults = databaseManager.searchTracks(user, searchString, searchByTrackName, searchByAlbumName, searchByArtistName, genres);
                 searchResultsBox.getChildren().add(getTrackResults(trackResults));
             }
         } catch (Exception e) {
@@ -164,7 +164,7 @@ public class SearchController {
         trackScrollPane.setFitToHeight(true);
 
 
-        trackScrollPane.setContent(new TrackTableView(trackList));
+        trackScrollPane.setContent(new TrackTableView(trackList, user));
         trackResults.getChildren().add(trackScrollPane);
 
         return trackResults;

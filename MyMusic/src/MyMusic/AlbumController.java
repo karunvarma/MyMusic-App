@@ -1,10 +1,7 @@
 package MyMusic;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -38,7 +35,26 @@ public class AlbumController {
     private TextField yearTextField;
     @FXML
     private TextField genreTextField;
+    @FXML
+    private CheckBox yoursCheckBox;
 
+
+    @FXML
+    private void markAsYours() {
+        try {
+            DatabaseManager databaseManager = new DatabaseManager();
+            if (yoursCheckBox.isSelected()) {
+                databaseManager.addUser_has_Album(user, album);
+                album.setIsYours(true);
+            }
+            else {
+                databaseManager.deleteUser_has_Album(user, album);
+                album.setIsYours(false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     public void toggleEditMode() {
@@ -96,6 +112,7 @@ public class AlbumController {
         }
     }
 
+
     @FXML
     private void save() {
         DatabaseManager databaseManager = null;
@@ -139,9 +156,13 @@ public class AlbumController {
             albumYearLabel.setText(album.getYear()+"");
             albumGenreLabel.setText(album.getGenre());
             albumTracksContent.getChildren().clear();
-            TableView tableView = new TrackTableView(album.getTracks());
+            TableView tableView = new TrackTableView(album.getTracks(), user);
             tableView.setMinWidth(1600);
             albumTracksContent.getChildren().add(tableView);
+
+            if (album.isYours()) {
+                yoursCheckBox.setSelected(true);
+            }
         }
 
         // Admin

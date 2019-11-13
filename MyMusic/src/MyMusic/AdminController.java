@@ -78,9 +78,9 @@ public class AdminController {
     public void setUp(User user) {
         this.user = user;
         try {
-            tracks = new DatabaseManager().getAllTracks();
-            albums = new DatabaseManager().getAllAlbums();
-            artists = new DatabaseManager().getAllArtists();
+            tracks = new DatabaseManager().getAllTracks(user);
+            albums = new DatabaseManager().getAllAlbums(user);
+            artists = new DatabaseManager().getAllArtists(user);
 
             tracksBox = new VBox();
             albumsBox = new VBox();

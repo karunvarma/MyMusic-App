@@ -38,7 +38,7 @@ public class PlaylistController {
             playlist.setName(playlistNameTextField.getText());
             playlist.setImagePath(playlistImagePathTextField.getText());
             databaseManager.savePlaylist(playlist);
-            user.setPlaylists(databaseManager.getPlaylists(user.getUserId()));
+            user.setPlaylists(databaseManager.getPlaylists(user));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class PlaylistController {
         try {
             DatabaseManager databaseManager = new DatabaseManager();
             databaseManager.deletePlaylist(playlist);
-            user.setPlaylists(databaseManager.getPlaylists(user.getUserId()));
+            user.setPlaylists(databaseManager.getPlaylists(user));
             goBack();
 
         } catch (Exception e) {
@@ -69,7 +69,7 @@ public class PlaylistController {
             playlistImageView.setImage(image);
             playlistNameTextField.setText(playlist.getName());
             playlistTracksContent.getChildren().clear();
-            TableView tableView = new TrackTableView(playlist.getTracks());
+            TableView tableView = new TrackTableView(playlist.getTracks(), user);
             tableView.setMinWidth(1600);
             playlistTracksContent.getChildren().add(tableView);
         }

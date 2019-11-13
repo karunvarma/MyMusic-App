@@ -10,6 +10,7 @@ public class Album {
 	private String genre;
 	private float rating;
 	private ArrayList<Track> tracks;
+	private boolean isYours;
 
 	Album() {}
 
@@ -22,6 +23,7 @@ public class Album {
 		this.year = year;
 		this.genre = genre;
 		this.rating = rating;
+		this.isYours = false;
 	}
 
 	public int  getId()
@@ -58,6 +60,11 @@ public class Album {
 
 	public ArrayList<Track> getTracks() { return this.tracks; }
 
+	public Boolean isYours()
+	{
+		return isYours;
+	}
+
 
 	public void setName(String name)
 	{
@@ -92,6 +99,12 @@ public class Album {
 	public void setTracks(ArrayList<Track> trackList) {
 		tracks = trackList;
 	}
+
+	public void setIsYours(boolean isYours)
+	{
+		this.isYours=isYours;
+	}
+
 
 	public void addTrack(Track track)
 	{
