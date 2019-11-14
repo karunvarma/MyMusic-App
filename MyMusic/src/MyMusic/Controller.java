@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,30 +40,21 @@ public class Controller {
     private void displayTracks() {
         yourMusicContent.getChildren().clear();
         yourMusicContent.setPadding(new Insets(0,10,0,10));
-
-        //setTrackTableView(tracks);
-
-       // yourMusicContent.getChildren().add(trackContent);
+        yourMusicContent.getChildren().add(trackContent);
     }
 
     @FXML
     private void displayAlbums() {
         yourMusicContent.getChildren().clear();
         yourMusicContent.setPadding(new Insets(0,10,0,10));
-
-        //setAlbumVBox(albums);
-
-        //yourMusicContent.getChildren().add(albumContent);
+        yourMusicContent.getChildren().add(albumContent);
     }
 
     @FXML
     private void displayArtists() {
         yourMusicContent.getChildren().clear();
         yourMusicContent.setPadding(new Insets(0,10,0,10));
-
-
-        //setArtistVBox(artists);
-        //yourMusicContent.getChildren().add(artistContent);
+        yourMusicContent.getChildren().add(artistContent);
     }
 
     @FXML
@@ -80,24 +72,85 @@ public class Controller {
     public void setAlbumContent(List<Album> albumList) {
         albumContent = new VBox();
         albumContent.setSpacing(5);
-        albumContent.setPadding(new Insets(5,5,5,5));
+        //albumContent.setPadding(new Insets(5,5,5,5));
+
+        HBox itemBoxRow = new HBox();
+        itemBoxRow.setPadding(new Insets(15,35,15,35));
+        itemBoxRow.setSpacing(20);
 
         for (int i = 0; i <= albumList.size(); i++) {
-            try {
-                HBox albumHBox = new HBox();
-                albumHBox.setSpacing(50);
-                ItemBox albumBox = new ItemBox(albumList.get(i), 500);
+            if (i == albumList.size()) {
+                albumContent.getChildren().add(itemBoxRow);
+                break;
+            }
 
-                albumHBox.getChildren().addAll(albumBox, trackContent);
-                albumContent.getChildren().add(albumHBox);
-            } catch (FileNotFoundException e) {
+            try {
+                Album album = albumList.get(i);
+                ItemBox itemBox = new ItemBox(album);
+                itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        PageChanger.getInstance().goToAlbumPage(yourMusicContent.getScene(), album, user);
+                    }
+                });
+                itemBoxRow.getChildren().add(itemBox);
+            }
+            catch (FileNotFoundException e) {
                 e.printStackTrace();
+            }
+
+            // Add item HBox row to search results box after every 7th item
+            if ((i + 1) % 7 == 0) {
+                albumContent.getChildren().add(itemBoxRow);
+
+                // Create new item box row
+                itemBoxRow = new HBox();
+                itemBoxRow.setPadding(new Insets(15,35,15,35));
+                itemBoxRow.setSpacing(20);
             }
         }
     }
 
     public void setArtistContent(List<Artist> artistList) {
+        artistContent = new VBox();
+        artistContent.setSpacing(5);
+        //artistContent.setPadding(new Insets(5,5,5,5));
 
+        HBox itemBoxRow = new HBox();
+        itemBoxRow.setPadding(new Insets(15,35,15,35));
+        itemBoxRow.setSpacing(20);
+
+        for (int i = 0; i <= artistList.size(); i++) {
+            if (i == artistList.size()) {
+                artistContent.getChildren().add(itemBoxRow);
+                break;
+            }
+
+            try {
+                Artist artist = artistList.get(i);
+                ItemBox itemBox = new ItemBox(artist);
+                itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        PageChanger.getInstance().goToArtistPage(yourMusicContent.getScene(), artist, user);
+                    }
+                });
+                itemBoxRow.getChildren().add(itemBox);
+            }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            // Add item HBox row to search results box after every 7th item
+            if ((i + 1) % 7 == 0) {
+                artistContent.getChildren().add(itemBoxRow);
+
+                // Create new item box row
+                itemBoxRow = new HBox();
+                itemBoxRow.setPadding(new Insets(15,35,15,35));
+                itemBoxRow.setSpacing(20);
+            }
+        }
     }
 
     public void setPlaylistContent() {
@@ -158,25 +211,6 @@ public class Controller {
     }
 
 
-    public void changePage(String fxmlPath)  {
-        try {
-            Parent root = null;
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            root = loader.load();
-
-            // Get the controller of the new root
-            SearchController controller = loader.getController();
-
-            // Set user property of the controller
-            controller.setUser(user);
-
-            Scene scene = yourMusicContent.getScene();
-            scene.setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void adminBtnAction() {
         PageChanger.getInstance().goToAdminPage(nameLabel.getScene(), user);
     }
@@ -184,6 +218,15 @@ public class Controller {
     public void setUp(User user) {
         this.user = user;
         nameLabel.setText(user.getName());
+        try {
+            DatabaseManager databaseManager = new DatabaseManager();
+            setTrackContent(databaseManager.getUsersTracks(user));
+            trackContent.setPrefHeight(1000);
+            setAlbumContent(databaseManager.getUsersAlbums(user));
+            setArtistContent(databaseManager.getUsersArtists(user));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setPlaylistContent();
 
         if (user.isAdmin()) {

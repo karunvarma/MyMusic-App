@@ -1,4 +1,8 @@
 package MyMusic;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class Album {
@@ -11,6 +15,8 @@ public class Album {
 	private float rating;
 	private ArrayList<Track> tracks;
 	private boolean isYours;
+	private MediaPlayer player;
+	private int playIndex = 0;
 
 	Album() {}
 
@@ -109,6 +115,31 @@ public class Album {
 	public void addTrack(Track track)
 	{
 		this.tracks.add(track);
+	}
+
+	public void play() {
+		if (playIndex < tracks.size()) {
+			File f = new File(tracks.get(playIndex).getMediaPath());
+			Media m = new Media(f.toURI().toString());
+			player = new MediaPlayer(m);
+			player.play();
+			player.setOnEndOfMedia(new Runnable() {
+				@Override
+				public void run() {
+					player.stop();
+					playIndex++;
+					play();
+				}
+			});
+		}
+	}
+
+	public void pause() {
+		player.pause();
+	}
+
+	public void stop() {
+		player.stop();
 	}
 
 }

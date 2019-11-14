@@ -5,6 +5,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.shape.Line?>
 
+<?import javafx.scene.media.MediaView?>
 <HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="MyMusic.Controller" alignment="CENTER">
     <VBox spacing="15">
         <BorderPane styleClass="tabBar">
@@ -26,6 +27,11 @@
 
         <Line startX="-800" endX="800"></Line>
 
+        <MediaView>
+            <mediaPlayer>
+
+            </mediaPlayer>
+        </MediaView>
         <HBox spacing="25" prefWidth="175">
             <VBox>
                 <Button text="Tracks" styleClass="yourMusic-btn" prefWidth="175" minHeight="75" onAction="#displayTracks"></Button>

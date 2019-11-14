@@ -318,6 +318,129 @@ public class DatabaseManager {
 		finally {return artists;}
 	}
 
+	public ArrayList<Track> getUsersTracks(User user) {
+		PreparedStatement myStmt = null;
+		ResultSet myRs;
+		ArrayList<Track> tracks = new ArrayList<>();
+		try
+		{
+			myStmt = myConn.prepareStatement(
+					"SELECT DISTINCT Track.track_id, Track.name, Track.genre, Track.plays, Track.time, Track.mediaPath, Album.name as album_name, Artist.name as artist_name FROM Track" +
+							" LEFT JOIN Album_has_Track ON Album_has_Track.track_id = Track.track_id" +
+							" LEFT JOIN Album ON Album.album_id = Album_has_Track.album_id" +
+							" LEFT JOIN Track_has_Artist ON Track.track_id = Track_has_Artist.track_id" +
+							" LEFT JOIN Artist ON Track_has_Artist.artist_id = Artist.artist_id" +
+							" ORDER BY Album.name ASC, Track.name ASC;");
+			myRs = myStmt.executeQuery();
+			while(myRs.next())
+			{
+				int id = myRs.getInt("track_id");
+				String name = myRs.getString("name");
+				String genre = myRs.getString("genre");
+				int plays = myRs.getInt("plays");
+				String time = myRs.getString( "time");
+				String mediaPath = myRs.getString("mediaPath");
+				String artistName = myRs.getString("artist_name");
+				String albumName = myRs.getString("album_name");
+
+				Track track = new Track(id, name, genre, plays, time, artistName, albumName, mediaPath);
+				track.setIsYours(userHasTrack(user, track));
+				if (track.isYours()) {
+					tracks.add(track);
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally {
+			return tracks;
+		}
+	}
+
+	public ArrayList<Album> getUsersAlbums(User user) {
+		PreparedStatement myStmt = null;
+		ResultSet myRs;
+		ArrayList<Album> albums = new ArrayList<Album>();
+		try
+		{
+			myStmt = myConn.prepareStatement(
+					"SELECT DISTINCT Album.album_id, Album.name, Album.imagePath, Album.genre, Album.year, Album.rating, Artist.name as artist_name FROM Album" +
+							" LEFT JOIN Album_has_Artist ON Album.album_id = Album_has_Artist.album_id" +
+							" LEFT JOIN Artist ON Album_has_Artist.artist_id = Artist.artist_id" +
+							" LEFT JOIN Album_has_Track ON Album_has_Track.album_id = Album.album_id" +
+							" LEFT JOIN Track ON Track.track_id = Album_has_Track.track_id" +
+							" ORDER BY Album.name ASC;");
+			System.out.println(myStmt.toString());
+
+			myRs = myStmt.executeQuery();
+			while(myRs.next())
+			{
+				int id = myRs.getInt("album_id");
+				String name = myRs.getString("name");
+				String imagePath = myRs.getString("imagePath");
+				String artistName = myRs.getString("artist_name");
+				int year = myRs.getInt("year");
+				String genre = myRs.getString("genre");
+				float rating = myRs.getFloat("rating");
+
+
+				Album album = new Album(id, name, artistName, year, genre, imagePath, rating);
+				album.setIsYours(userHasAlbum(user, album));
+				if (album.isYours()) {
+					album.setTracks(getTracksInAlbum(user, id));
+					albums.add(album);
+				}
+			}
+			System.out.println("Query successful");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {return albums;}
+	}
+
+	public ArrayList<Artist> getUsersArtists(User user) {
+		PreparedStatement myStmt=null;
+		ResultSet myRs;
+		ArrayList<Artist> artists=new ArrayList<Artist>();
+		try
+		{
+			myStmt = myConn.prepareStatement(
+					"SELECT DISTINCT Artist.artist_id, Artist.name, Artist.imagePath, Artist.rating FROM Artist" +
+							" LEFT JOIN Album_has_Artist ON Artist.artist_id = Album_has_Artist.artist_id" +
+							" LEFT JOIN Album ON Album_has_Artist.album_id = Album.album_id" +
+							" LEFT JOIN Track_has_Artist ON Track_has_Artist.artist_id = Artist.artist_id " +
+							" LEFT JOIN Track ON Track.track_id = Track_has_Artist.track_id" +
+							" ORDER BY Artist.name ASC;");
+
+			myRs=myStmt.executeQuery();
+			while(myRs.next())
+			{
+				int id = myRs.getInt("artist_id");
+				String name = myRs.getString("name");
+				String imagePath = myRs.getString("imagePath");
+				Float rating = myRs.getFloat("rating");
+
+				Artist artist = new Artist(id, name, imagePath, rating);
+				artist.setIsYours(userHasArtist(user, artist));
+				if (artist.isYours()) {
+					artist.setAlbums(getAlbumsByArtist(user, id));
+					artist.setTracks(getTracksByArtist(user, id));
+					artists.add(artist);
+				}
+			}
+			System.out.println("Query successful");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {return artists;}
+	}
+
+
 	public ArrayList<Playlist> getPlaylists(User user) {
 		ArrayList<Playlist> playlists = new ArrayList<Playlist>();
 		PreparedStatement myStmt = null;
@@ -359,11 +482,11 @@ public class DatabaseManager {
 		{
 			myStmt = myConn.prepareStatement(
 					"SELECT DISTINCT Track.track_id, Track.name, Track.genre, Track.plays, Track.time, Track.mediaPath, Album.name as album_name, Artist.name as artist_name FROM Track" +
-							" JOIN Album_has_Track ON Album_has_Track.track_id = Track.track_id" +
-							" JOIN Album ON Album.album_id = Album_has_Track.album_id" +
-							" JOIN Track_has_Artist ON Track.track_id = Track_has_Artist.track_id" +
-							" JOIN Artist ON Track_has_Artist.artist_id = Artist.artist_id" +
-							" JOIN Playlist_has_Track on Track.track_id = Playlist_has_Track.track_id" +
+							" LEFT JOIN Album_has_Track ON Album_has_Track.track_id = Track.track_id" +
+							" LEFT JOIN Album ON Album.album_id = Album_has_Track.album_id" +
+							" LEFT JOIN Track_has_Artist ON Track.track_id = Track_has_Artist.track_id" +
+							" LEFT JOIN Artist ON Track_has_Artist.artist_id = Artist.artist_id" +
+							" LEFT JOIN Playlist_has_Track on Track.track_id = Playlist_has_Track.track_id" +
 							" WHERE Playlist_has_Track.playlist_id = " + playlistId +
 							" ORDER BY Album.name ASC, Track.name ASC;");
 			myRs = myStmt.executeQuery();
@@ -381,7 +504,6 @@ public class DatabaseManager {
 				Track track = new Track(id, name, genre, plays, time, artistName, albumName, mediaPath);
 				track.setIsYours(userHasTrack(user, track));
 				tracks.add(track);
-
 			}
 			System.out.println("Search track successful");
 

@@ -1,6 +1,9 @@
 package MyMusic;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.io.File;
 
 public class Track {
 	private int id;
@@ -13,8 +16,9 @@ public class Track {
 	private String mediaPath;
 	private int album_id;
 	private boolean isYours;
+    private MediaPlayer player;
 
-	public Track() {}
+    public Track() {}
 
 	public Track(String name, String genre, int plays, String time, String artist_name, String album_name) {
 		this.name = name;
@@ -143,14 +147,14 @@ public class Track {
 
 
 	public void play() {
-		System.out.println("Play Track");
+        MediaPlayerManager.playTrack(this);
 	}
 
 	public void pause() {
-		System.out.println("Pause Track");
-	}
+        MediaPlayerManager.pause();
+    }
 
-	public void stop() {
-		System.out.println("Stop Track");
-	}
+    public void stop() {
+        MediaPlayerManager.stop();
+    }
 }
