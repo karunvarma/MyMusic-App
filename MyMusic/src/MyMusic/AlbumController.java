@@ -10,6 +10,7 @@ public class AlbumController {
     private Album album;
     private User user;
     boolean inEditMode;
+    String prevPage;
 
     @FXML
     private ImageView albumImageView;
@@ -42,7 +43,7 @@ public class AlbumController {
     @FXML
     private void markAsYours() {
         try {
-            DatabaseManager databaseManager = new DatabaseManager();
+            DatabaseManager databaseManager = DatabaseManager.getInstance();
             if (yoursCheckBox.isSelected()) {
                 databaseManager.addUser_has_Album(user, album);
                 album.setIsYours(true);
@@ -117,7 +118,7 @@ public class AlbumController {
     private void save() {
         DatabaseManager databaseManager = null;
         try {
-            databaseManager = new DatabaseManager();
+            databaseManager = DatabaseManager.getInstance();
 
             album.setName(albumNameTextField.getText());
             album.setImagePath(imagePathTextField.getText());
@@ -140,13 +141,19 @@ public class AlbumController {
 
     @FXML
     public void goBack() {
-        PageChanger.getInstance().goToSearchPage(albumNameLabel.getScene(), user);
+        if (prevPage.equals("home")) {
+            PageChanger.getInstance().goToHomePage(albumNameLabel.getScene(), user, "album");
+        }
+        else if (prevPage.equals("search")) {
+            PageChanger.getInstance().goToSearchPage(albumNameLabel.getScene(), user);
+        }
     }
 
-    public void setUp(Album album, User user) {
+    public void setUp(Album album, User user, String prevPage) {
         this.album = album;
         this.user = user;
         inEditMode = false;
+        this.prevPage = prevPage;
 
         if (album != null) {
             Image image = new Image(album.getImagePath());

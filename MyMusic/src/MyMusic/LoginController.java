@@ -30,9 +30,8 @@ public class LoginController {
             User user = null;
 
             // Use database manager to get a user, using the username and password input
-            DatabaseManager dbManager= null;
+            DatabaseManager dbManager= DatabaseManager.getInstance();
             try {
-                dbManager = new DatabaseManager();
                 user = dbManager.getUser(username, password);
             } catch (Exception e) {
                e.printStackTrace();
@@ -41,7 +40,7 @@ public class LoginController {
             if (user != null) {
                 // If a user is retrieved login
                 errorLabel.setText("");
-                PageChanger.getInstance().goToHomePage(usernameField.getScene(), user);
+                PageChanger.getInstance().goToHomePage(usernameField.getScene(), user, "");
             }
             else {
                 // If no user is returned

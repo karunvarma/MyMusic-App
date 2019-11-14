@@ -2,7 +2,6 @@ package MyMusic;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -10,7 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 
 public class AdminController {
@@ -71,16 +69,17 @@ public class AdminController {
 
     @FXML
     public void goBack() {
-        PageChanger.getInstance().goToHomePage(backButton.getScene(), user);
+        PageChanger.getInstance().goToHomePage(backButton.getScene(), user, "");
     }
 
     @FXML
     public void setUp(User user) {
         this.user = user;
         try {
-            tracks = new DatabaseManager().getAllTracks(user);
-            albums = new DatabaseManager().getAllAlbums(user);
-            artists = new DatabaseManager().getAllArtists(user);
+            DatabaseManager databaseManager = DatabaseManager.getInstance();
+            tracks = databaseManager.getAllTracks(user);
+            albums = databaseManager.getAllAlbums(user);
+            artists = databaseManager.getAllArtists(user);
 
             tracksBox = new VBox();
             albumsBox = new VBox();

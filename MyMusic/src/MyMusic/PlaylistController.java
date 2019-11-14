@@ -27,14 +27,14 @@ public class PlaylistController {
 
     @FXML
     public void goBack() {
-        PageChanger.getInstance().goToHomePage(playlistImageView.getScene(), user);
+        PageChanger.getInstance().goToHomePage(playlistImageView.getScene(), user, "playlist");
     }
 
 
     @FXML
     public void savePlaylist() {
         try {
-            DatabaseManager databaseManager = new DatabaseManager();
+            DatabaseManager databaseManager = DatabaseManager.getInstance();
             playlist.setName(playlistNameTextField.getText());
             playlist.setImagePath(playlistImagePathTextField.getText());
             databaseManager.savePlaylist(playlist);
@@ -48,7 +48,7 @@ public class PlaylistController {
     @FXML
     public void deletePlaylist() {
         try {
-            DatabaseManager databaseManager = new DatabaseManager();
+            DatabaseManager databaseManager = DatabaseManager.getInstance();
             databaseManager.deletePlaylist(playlist);
             user.setPlaylists(databaseManager.getPlaylists(user));
             goBack();
@@ -69,7 +69,7 @@ public class PlaylistController {
             playlistImageView.setImage(image);
             playlistNameTextField.setText(playlist.getName());
             playlistTracksContent.getChildren().clear();
-            TableView tableView = new TrackTableView(playlist.getTracks(), user);
+            TableView tableView = new TrackTableView(playlist.getTracks(), user, playlist);
             tableView.setMinWidth(1600);
             playlistTracksContent.getChildren().add(tableView);
         }

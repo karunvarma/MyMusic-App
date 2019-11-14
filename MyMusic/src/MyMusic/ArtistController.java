@@ -18,6 +18,7 @@ public class ArtistController {
     private Artist artist;
     private User user;
     private boolean inEditMode;
+    private String prevPage;
 
     @FXML
     private Label artistNameLabel;
@@ -74,7 +75,7 @@ public class ArtistController {
                     itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            PageChanger.getInstance().goToAlbumPage(artistNameLabel.getScene(), album, user);
+                            PageChanger.getInstance().goToAlbumPage(artistNameLabel.getScene(), album, user, prevPage);
                         }
                     });
                     itemBoxRow.getChildren().add(itemBox);
@@ -103,7 +104,7 @@ public class ArtistController {
     @FXML
     private void markAsYours() {
         try {
-            DatabaseManager databaseManager = new DatabaseManager();
+            DatabaseManager databaseManager = DatabaseManager.getInstance();
             if (yoursCheckBox.isSelected()) {
                 databaseManager.addUser_has_Artist(user, artist);
                 artist.setIsYours(true);
@@ -152,10 +153,8 @@ public class ArtistController {
 
     @FXML
     private void save() {
-        DatabaseManager databaseManager = null;
+        DatabaseManager databaseManager = DatabaseManager.getInstance();
         try {
-            databaseManager = new DatabaseManager();
-
             artist.setName(artistNameTextField.getText());
             artist.setImagePath(imagePathTextField.getText());
 
@@ -171,13 +170,19 @@ public class ArtistController {
 
     @FXML
     public void goBack() {
-        PageChanger.getInstance().goToSearchPage(artistNameLabel.getScene(), user);
+        if (prevPage.equals("home")) {
+            PageChanger.getInstance().goToHomePage(artistNameLabel.getScene(), user, "artist");
+        }
+        else if (prevPage.equals("search")){
+            PageChanger.getInstance().goToSearchPage(artistNameLabel.getScene(), user);
+        }
     }
 
-    public void setUp(Artist artist, User user) {
+    public void setUp(Artist artist, User user, String prevPage) {
         this.artist = artist;
         this.user = user;
         inEditMode = false;
+        this.prevPage = prevPage;
 
         if (artist != null) {
             Image image = new Image(artist.getImagePath());

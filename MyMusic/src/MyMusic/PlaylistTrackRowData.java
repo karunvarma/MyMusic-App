@@ -1,15 +1,15 @@
 package MyMusic;
 
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-public class TrackRowData {
+public class PlaylistTrackRowData {
     private User user;
     private Track track;
+    private Playlist playlist;
     private Button playBtn;
     private CheckBox yoursCheckBox;
     private VBox playlistBox;
@@ -17,14 +17,16 @@ public class TrackRowData {
     private TextField playlistTextField;
 
 
-    public TrackRowData(User user, Track track) {
+
+    public PlaylistTrackRowData(User user, Track track, Playlist playlist) {
         this.user = user;
         this.track = track;
+        this.playlist = playlist;
         playBtn = new Button("Play");
         yoursCheckBox = new CheckBox();
         yoursCheckBox.setSelected(track.isYours());
 
-        playlistBtn = new Button("Add to Playlist");
+        playlistBtn = new Button("Remove");
         playlistTextField = new TextField();
         playlistTextField.setVisible(false);
         playlistTextField.setManaged(false);
@@ -65,25 +67,12 @@ public class TrackRowData {
         playlistBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (!playlistTextField.isVisible()) {
-                    playlistTextField.setVisible(true);
-                    playlistTextField.setManaged(true);
-                    playlistBtn.setText("Add");
-                }
-                else {
-                    String playlistName = playlistTextField.getText();
-                    Playlist playlist = DatabaseManager.getInstance().getPlaylistByName(user, playlistName);
-                    if (playlist != null) {
-                        DatabaseManager.getInstance().addTrackToPlaylist(playlist, track);
-                        user.setPlaylists(DatabaseManager.getInstance().getPlaylists(user));
-                    }
-                    else {
-                        // Message to user
-                    }
-                    playlistBtn.setText("Add to Playlist");
-                    playlistTextField.setVisible(false);
-                    playlistTextField.setManaged(false);
-                }
+                DatabaseManager.getInstance().removeTrackFromPlaylist(playlist, track);
+                user.setPlaylists(DatabaseManager.getInstance().getPlaylists(user));
+
+                TableRow parentRow = (TableRow) playlistBtn.getParent().getParent().getParent();
+                TableView tableView = parentRow.getTableView();
+                tableView.getItems().remove(tableView.getSelectionModel().getSelectedItem());
             }
         });
     }

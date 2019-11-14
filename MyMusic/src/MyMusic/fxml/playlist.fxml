@@ -31,7 +31,6 @@
             </VBox>
         </HBox>
 
-        <Button text="Add track to playlist" fx:id="addTrackBtn" styleClass="add-btn"></Button>
         <HBox fx:id="playlistTracksContent">
         </HBox>
 

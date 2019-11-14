@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
+import sun.jvm.hotspot.debugger.Page;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -117,7 +118,7 @@ public class SearchController {
         searchResultsBox.getChildren().clear();
 
         try {
-            DatabaseManager dbManager = new DatabaseManager();
+            DatabaseManager dbManager = DatabaseManager.getInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,7 +126,7 @@ public class SearchController {
 
         ArrayList<String> genres = getGenreList();
         try {
-            DatabaseManager databaseManager = new DatabaseManager();
+            DatabaseManager databaseManager = DatabaseManager.getInstance();
             if (searchAlbums) {
                 // Select from album table query to get list of albums
                 ArrayList<Album> albumResults = databaseManager.searchAlbums(user, searchString, searchByTrackName, searchByAlbumName, searchByArtistName, genres);
@@ -206,7 +207,7 @@ public class SearchController {
                 itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        PageChanger.getInstance().goToAlbumPage(searchField.getScene(), album, user);
+                        PageChanger.getInstance().goToAlbumPage(searchField.getScene(), album, user, "search");
                     }
                 });
                 itemBoxRow.getChildren().add(itemBox);
@@ -267,7 +268,7 @@ public class SearchController {
                 itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        PageChanger.getInstance().goToArtistPage(searchField.getScene(), artist, user);
+                        PageChanger.getInstance().goToArtistPage(searchField.getScene(), artist, user, "search");
                     }
                 });
                 itemBoxRow.getChildren().add(itemBox);
@@ -293,27 +294,7 @@ public class SearchController {
 
     @FXML
     public void goToHomePage() {
-        changePage("fxml/home.fxml");
-    }
-
-
-    public void changePage(String fxmlPath)  {
-        try {
-            Parent root = null;
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            root = loader.load();
-
-            // Get the controller of the new root
-            Controller controller = loader.getController();
-
-            // Set user property of the controller
-            controller.setUp(user);
-
-            Scene scene = searchField.getScene();
-            scene.setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        PageChanger.getInstance().goToHomePage(searchField.getScene(), user, "");
     }
 
     public void toggleGenreCheckBoxes() {
@@ -401,7 +382,7 @@ public class SearchController {
         return genreList;
     }
 
-    public void setUser(User user) {
+    public void setUp(User user) {
         this.user = user;
         nameLabel.setText(user.getName());
     }

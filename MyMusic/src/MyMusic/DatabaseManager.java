@@ -3,18 +3,27 @@ package MyMusic;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DatabaseManager {
+public final class DatabaseManager {
 
+	private static final DatabaseManager INSTANCE = new DatabaseManager();
 	private Connection myConn;
-	public DatabaseManager() throws Exception
+	public DatabaseManager()
 	{
 		String db_name="MyMusic";
 		String dbUrl="jdbc:mysql://localhost:3306/"+db_name+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user="root";
 		String password="root";
 		
-		myConn=DriverManager.getConnection(dbUrl, user, password);
-		System.out.println("Database connected sucessfully");
+		try {
+			myConn=DriverManager.getConnection(dbUrl, user, password);
+			System.out.println("Database connected sucessfully");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static DatabaseManager getInstance() {
+		return INSTANCE;
 	}
 
 
@@ -638,6 +647,29 @@ public class DatabaseManager {
 	}
 
 
+	public Playlist getPlaylistByName(User user, String playlistName) {
+		PreparedStatement myStmt = null;
+		Playlist playlist = null;
+		try {
+			myStmt = myConn.prepareStatement("SELECT * FROM Playlist WHERE user_id = ? AND name = ?");
+			myStmt.setInt(1, user.getUserId());
+			myStmt.setString(2, playlistName);
+			ResultSet myRs = myStmt.executeQuery();
+			if (myRs.next()) {
+				int id = myRs.getInt("playlist_id");
+				String name = myRs.getString("name");
+				String imagePath = "MyMusic/fxml/musical-note.jpg";
+				ArrayList<Track> tracks = getTracksInPlaylist(user, id);
+
+				playlist = new Playlist(id, name, imagePath, user.getUserId(), tracks);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return playlist;
+	}
+
 	// SAVE & EXISTS METHODS //
 
 	public void savePlaylist(Playlist playlist) {
@@ -881,6 +913,21 @@ public class DatabaseManager {
 		{
 			myStmt = myConn.prepareStatement("INSERT INTO Album_has_Track values (?,?)");
 			myStmt.setInt(1, album.getId());
+			myStmt.setInt(2, track.getId());
+			myStmt.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public void addTrackToPlaylist(Playlist playlist, Track track) {
+		PreparedStatement myStmt=null;
+		try
+		{
+			myStmt = myConn.prepareStatement("INSERT INTO Playlist_has_Track values (?,?)");
+			myStmt.setInt(1, playlist.getId());
 			myStmt.setInt(2, track.getId());
 			myStmt.executeUpdate();
 		}
@@ -1173,6 +1220,18 @@ public class DatabaseManager {
 		try {
 			Statement myStmt = myConn.createStatement();
 			String deleteSQL = "DELETE FROM Track_has_Artist WHERE artist_id = " + artist.getId() + " AND track_id = " + track.getId() + ";";
+			myStmt.addBatch(deleteSQL);
+			myStmt.executeBatch();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void removeTrackFromPlaylist(Playlist playlist, Track track) {
+		try {
+			Statement myStmt = myConn.createStatement();
+			String deleteSQL = "DELETE FROM Playlist_has_Track WHERE playlist_id = " + playlist.getId() + " AND track_id = " + track.getId() + ";";
 			myStmt.addBatch(deleteSQL);
 			myStmt.executeBatch();
 		}

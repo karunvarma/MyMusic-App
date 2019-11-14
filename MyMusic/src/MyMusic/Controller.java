@@ -3,18 +3,13 @@ package MyMusic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +85,7 @@ public class Controller {
                 itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        PageChanger.getInstance().goToAlbumPage(yourMusicContent.getScene(), album, user);
+                        PageChanger.getInstance().goToAlbumPage(yourMusicContent.getScene(), album, user, "home");
                     }
                 });
                 itemBoxRow.getChildren().add(itemBox);
@@ -132,7 +127,7 @@ public class Controller {
                 itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        PageChanger.getInstance().goToArtistPage(yourMusicContent.getScene(), artist, user);
+                        PageChanger.getInstance().goToArtistPage(yourMusicContent.getScene(), artist, user, "home");
                     }
                 });
                 itemBoxRow.getChildren().add(itemBox);
@@ -215,19 +210,32 @@ public class Controller {
         PageChanger.getInstance().goToAdminPage(nameLabel.getScene(), user);
     }
 
-    public void setUp(User user) {
+    public void setUp(User user, String tab) {
         this.user = user;
         nameLabel.setText(user.getName());
         try {
-            DatabaseManager databaseManager = new DatabaseManager();
+            DatabaseManager databaseManager = DatabaseManager.getInstance();
             setTrackContent(databaseManager.getUsersTracks(user));
             trackContent.setPrefHeight(1000);
             setAlbumContent(databaseManager.getUsersAlbums(user));
             setArtistContent(databaseManager.getUsersArtists(user));
+            setPlaylistContent();
+
+            if (tab.equals("track")) {
+                displayTracks();
+            }
+            else if (tab.equals("album")) {
+                displayAlbums();
+            }
+            else if (tab.equals("artist")) {
+                displayArtists();
+            }
+            else if (tab.equals("playlist")) {
+                displayPlaylists();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setPlaylistContent();
 
         if (user.isAdmin()) {
             adminButton.setVisible(true);

@@ -18,8 +18,7 @@ public final class PageChanger {
     }
 
 
-
-    public void goToArtistPage(Scene scene, Artist artist, User user) {
+    public void goToArtistPage(Scene scene, Artist artist, User user, String prevPage) {
         try {
             Parent root = null;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/artist.fxml"));
@@ -29,7 +28,7 @@ public final class PageChanger {
             ArtistController controller = loader.getController();
 
             // Set property of the controller
-            controller.setUp(artist, user);
+            controller.setUp(artist, user, prevPage);
 
             scene.setRoot(root);
         } catch (IOException e) {
@@ -37,8 +36,7 @@ public final class PageChanger {
         }
     }
 
-
-    public void goToAlbumPage(Scene scene, Album album, User user) {
+    public void goToAlbumPage(Scene scene, Album album, User user, String prevPage) {
         try {
             Parent root = null;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/album.fxml"));
@@ -48,7 +46,7 @@ public final class PageChanger {
             AlbumController controller = loader.getController();
 
             // Set property of the controller
-            controller.setUp(album, user);
+            controller.setUp(album, user, prevPage);
 
             scene.setRoot(root);
         } catch (IOException e) {
@@ -74,7 +72,7 @@ public final class PageChanger {
         }
     }
 
-    public void goToHomePage(Scene scene, User user) {
+    public void goToHomePage(Scene scene, User user, String tab) {
         try {
             Parent root = null;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/home.fxml"));
@@ -84,7 +82,7 @@ public final class PageChanger {
             Controller controller = loader.getController();
 
             // Set property of the controller
-            controller.setUp(user);
+            controller.setUp(user, tab);
 
             scene.setRoot(root);
         } catch (IOException e) {
@@ -102,7 +100,7 @@ public final class PageChanger {
             SearchController controller = loader.getController();
 
             // Set property of the controller
-            controller.setUser(user);
+            controller.setUp(user);
 
             scene.setRoot(root);
         } catch (IOException e) {

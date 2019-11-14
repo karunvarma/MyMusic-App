@@ -108,10 +108,9 @@ public class ArtistEditBox extends HBox {
     }
 
     public void save() {
-        DatabaseManager databaseManager = null;
+        DatabaseManager databaseManager = DatabaseManager.getInstance();
         if (isNew) {
             try {
-                databaseManager = new DatabaseManager();
                 databaseManager.addArtist(getArtist());
                 isNew = false;
             } catch (Exception e) {
@@ -120,7 +119,6 @@ public class ArtistEditBox extends HBox {
         }
         else {
             try {
-                databaseManager = new DatabaseManager();
                 databaseManager.updateArtist(getArtist());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -142,13 +140,12 @@ public class ArtistEditBox extends HBox {
     }
 
     private void delete() {
-        DatabaseManager databaseManager = null;
+        DatabaseManager databaseManager = DatabaseManager.getInstance();;
         if (isNew) {
             ((VBox) getParent()).getChildren().remove(this);
         }
         else {
             try {
-                databaseManager = new DatabaseManager();
                 databaseManager.deleteArtist(getArtist());
                 ((VBox) getParent()).getChildren().remove(this);
             } catch (Exception e) {

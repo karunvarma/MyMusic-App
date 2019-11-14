@@ -133,10 +133,9 @@ public class TrackEditBox extends HBox {
     }
 
     public void save() {
-        DatabaseManager databaseManager = null;
+        DatabaseManager databaseManager = DatabaseManager.getInstance();
         if (isNew) {
             try {
-                databaseManager = new DatabaseManager();
                 databaseManager.addTrack(getTrack());
                 isNew = false;
             } catch (Exception e) {
@@ -145,7 +144,6 @@ public class TrackEditBox extends HBox {
         }
         else {
             try {
-                databaseManager = new DatabaseManager();
                 databaseManager.updateTrack(getTrack());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -175,9 +173,8 @@ public class TrackEditBox extends HBox {
             ((VBox) getParent()).getChildren().remove(this);
         }
         else {
-            DatabaseManager databaseManager = null;
+            DatabaseManager databaseManager = DatabaseManager.getInstance();
             try {
-                databaseManager = new DatabaseManager();
                 databaseManager.deleteTrack(getTrack());
                 ((VBox) getParent()).getChildren().remove(this);
             } catch (Exception e) {
