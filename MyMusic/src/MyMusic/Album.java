@@ -1,4 +1,5 @@
 package MyMusic;
+import javafx.scene.control.Button;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -117,29 +118,20 @@ public class Album {
 		this.tracks.add(track);
 	}
 
-	public void play() {
-		if (playIndex < tracks.size()) {
-			File f = new File(tracks.get(playIndex).getMediaPath());
-			Media m = new Media(f.toURI().toString());
-			player = new MediaPlayer(m);
-			player.play();
-			player.setOnEndOfMedia(new Runnable() {
-				@Override
-				public void run() {
-					player.stop();
-					playIndex++;
-					play();
-				}
-			});
-		}
+	public void play(Button playButton) {
+		MediaPlayerManager.playAlbum(this, playButton);
 	}
 
 	public void pause() {
-		player.pause();
+		MediaPlayerManager.pause();
+	}
+
+	public void continuePlaying() {
+		MediaPlayerManager.continuePlaying();
 	}
 
 	public void stop() {
-		player.stop();
+		MediaPlayerManager.stop();
 	}
 
 }

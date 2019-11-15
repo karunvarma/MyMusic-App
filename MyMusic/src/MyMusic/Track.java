@@ -1,5 +1,6 @@
 package MyMusic;
 
+import javafx.scene.control.Button;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -16,7 +17,8 @@ public class Track {
 	private String mediaPath;
 	private int album_id;
 	private boolean isYours;
-    private MediaPlayer player;
+    private boolean isActiveTrack;
+
 
     public Track() {}
 
@@ -39,6 +41,7 @@ public class Track {
 		this.album_name = album_name;
 		this.mediaPath = mediaPath;
 		this.isYours = false;
+		isActiveTrack = false;
 	}
 
 	public int getId()
@@ -89,6 +92,11 @@ public class Track {
 	public Boolean isYours()
 	{
 		return isYours;
+	}
+
+	public Boolean isActiveTrack()
+	{
+		return isActiveTrack;
 	}
 
 
@@ -143,11 +151,16 @@ public class Track {
 		this.isYours=isYours;
 	}
 
+	public void setIsActiveTrack(boolean isActiveTrack)
+	{
+		this.isActiveTrack=isActiveTrack;
+	}
 
 
 
-	public void play() {
-        MediaPlayerManager.playTrack(this);
+
+	public void play(Button playButton) {
+        MediaPlayerManager.playTrack(this, playButton);
 	}
 
 	public void pause() {

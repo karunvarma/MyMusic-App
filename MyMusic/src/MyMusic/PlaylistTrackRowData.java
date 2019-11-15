@@ -36,7 +36,12 @@ public class PlaylistTrackRowData {
         playBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                track.play();
+                if (playBtn.getText().equals("Play")) {
+                    track.play(playBtn);
+                }
+                else if (playBtn.getText().equals("Pause")){
+                    track.pause();
+                }
             }
         });
 

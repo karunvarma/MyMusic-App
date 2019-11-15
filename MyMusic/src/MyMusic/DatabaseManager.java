@@ -3,17 +3,25 @@ package MyMusic;
 import java.sql.*;
 import java.util.ArrayList;
 
+/*
+// DatabaseManager:
+// Creates a connection to the database
+// Uses methods that search, insert, update, and/or delete from the database
+// Singleton
+ */
 public final class DatabaseManager {
 
 	private static final DatabaseManager INSTANCE = new DatabaseManager();
 	private Connection myConn;
+
 	public DatabaseManager()
 	{
+		// Database details/credentials
 		String db_name="MyMusic";
 		String dbUrl="jdbc:mysql://localhost:3306/"+db_name+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user="root";
 		String password="root";
-		
+
 		try {
 			myConn=DriverManager.getConnection(dbUrl, user, password);
 			System.out.println("Database connected sucessfully");
@@ -22,6 +30,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Singleton
 	public static DatabaseManager getInstance() {
 		return INSTANCE;
 	}
@@ -29,6 +38,7 @@ public final class DatabaseManager {
 
 	// SEARCH METHODS //
 
+	// Search for artists based on a search string, flags for table to search on, and flags for genres to search on
 	public  ArrayList<Artist> searchArtists(User user, String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception
 	{
 		String s="%"+searchString+"%";
@@ -69,7 +79,8 @@ public final class DatabaseManager {
 		}
 		finally {return artists;}
 	}
-	
+
+	// Search for albums based on a search string, flags for table to search on, and flags for genres to search on
 	public  ArrayList<Album> searchAlbums(User user, String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception
 	{
 		String s = "%"+searchString+"%";
@@ -115,6 +126,7 @@ public final class DatabaseManager {
 		finally {return albums;}
 	}
 
+	// Search for tracks based on a search string, flags for table to search on, and flags for genres to search on
 	public ArrayList<Track> searchTracks(User user, String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName, ArrayList<String> selectedGenres) throws Exception {
 		String s = "%"+searchString+"%";
 		PreparedStatement myStmt = null;
@@ -160,6 +172,8 @@ public final class DatabaseManager {
 
 	// GET METHODS //
 
+	// Get a user by searching for a entry in the User table with the given username and password
+	// Used for logging in
 	public User getUser(String username, String password) {
 		try {
 			// Login SQL Query
@@ -188,6 +202,7 @@ public final class DatabaseManager {
 		return null;
 	}
 
+	// Checks if a user with the given username exists in the database
 	public boolean isUsernameTaken(String username) {
 		try {
 			// Login SQL Query
@@ -210,6 +225,7 @@ public final class DatabaseManager {
 		return true;
 	}
 
+	// Get all tracks in the database. Used to display list of tracks that an admin can edit
 	public ArrayList<Track> getAllTracks(User user) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
@@ -250,6 +266,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Get all albums in the database. Used to display list of albums that an admin can edit
 	public ArrayList<Album> getAllAlbums(User user) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
@@ -290,6 +307,7 @@ public final class DatabaseManager {
 		finally {return albums;}
 	}
 
+	// Get all artists in the database. Used to display list of artists that an admin can edit
 	public ArrayList<Artist> getAllArtists(User user) {
 		PreparedStatement myStmt=null;
 		ResultSet myRs;
@@ -327,6 +345,7 @@ public final class DatabaseManager {
 		finally {return artists;}
 	}
 
+	// Get tracks that a user has in their library
 	public ArrayList<Track> getUsersTracks(User user) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
@@ -367,6 +386,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Get albums that a user has in their library
 	public ArrayList<Album> getUsersAlbums(User user) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
@@ -410,6 +430,7 @@ public final class DatabaseManager {
 		finally {return albums;}
 	}
 
+	// Get artists that a user has in their library
 	public ArrayList<Artist> getUsersArtists(User user) {
 		PreparedStatement myStmt=null;
 		ResultSet myRs;
@@ -450,6 +471,7 @@ public final class DatabaseManager {
 	}
 
 
+	// Get playlists that a user has created
 	public ArrayList<Playlist> getPlaylists(User user) {
 		ArrayList<Playlist> playlists = new ArrayList<Playlist>();
 		PreparedStatement myStmt = null;
@@ -483,6 +505,7 @@ public final class DatabaseManager {
 		finally {return playlists;}
 	}
 
+	// Get tracks in a playlist
 	public ArrayList<Track> getTracksInPlaylist(User user, int playlistId) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
@@ -525,6 +548,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Get tracks in an album
 	public ArrayList<Track> getTracksInAlbum(User user, int albumId) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
@@ -566,6 +590,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Get albums by an artist
 	public ArrayList<Album> getAlbumsByArtist(User user, int artistId) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
@@ -605,6 +630,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Get tracks by an artist
 	public ArrayList<Track> getTracksByArtist(User user, int artistId) {
 		PreparedStatement myStmt = null;
 		ResultSet myRs;
@@ -646,7 +672,7 @@ public final class DatabaseManager {
 		}
 	}
 
-
+	// Get a playlist by its name and user
 	public Playlist getPlaylistByName(User user, String playlistName) {
 		PreparedStatement myStmt = null;
 		Playlist playlist = null;
@@ -672,6 +698,7 @@ public final class DatabaseManager {
 
 	// SAVE & EXISTS METHODS //
 
+	// Save a playlist
 	public void savePlaylist(Playlist playlist) {
 		PreparedStatement myStmt = null;
 		try {
@@ -687,57 +714,7 @@ public final class DatabaseManager {
 		}
 	}
 
-	public boolean trackExists(Track track) {
-		PreparedStatement myStmt = null;
-		boolean exists = false;
-		try {
-			myStmt = myConn.prepareStatement("SELECT * FROM Track WHERE track_id = ?");
-			myStmt.setInt(1, track.getId());
-			ResultSet myRs = myStmt.executeQuery();
-			if (myRs.next()) {
-				exists = true;
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return exists;
-	}
-
-	public boolean albumExists(Album album) {
-		PreparedStatement myStmt = null;
-		boolean exists = false;
-		try {
-			myStmt = myConn.prepareStatement("SELECT * FROM Album WHERE album_id = ?");
-			myStmt.setInt(1, album.getId());
-			ResultSet myRs = myStmt.executeQuery();
-			if (myRs.next()) {
-				exists = true;
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return exists;
-	}
-
-	public boolean artistExists(Artist artist) {
-		PreparedStatement myStmt = null;
-		boolean exists = false;
-		try {
-			myStmt = myConn.prepareStatement("SELECT * FROM Track WHERE track_id = ?");
-			myStmt.setInt(1, artist.getId());
-			ResultSet myRs = myStmt.executeQuery();
-			if (myRs.next()) {
-				exists = true;
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return exists;
-	}
-
+	// Check if a playlist already exists
 	public boolean playlistExists(Playlist playlist) {
 		PreparedStatement myStmt = null;
 		boolean exists = false;
@@ -755,6 +732,7 @@ public final class DatabaseManager {
 		return exists;
 	}
 
+	// Check if a user has a particular track in their library
 	public boolean userHasTrack(User user, Track track) {
 		PreparedStatement myStmt = null;
 		boolean exists = false;
@@ -774,6 +752,7 @@ public final class DatabaseManager {
 		return exists;
 	}
 
+	// Check if a user has a particular album in their library
 	public boolean userHasAlbum(User user, Album album) {
 		PreparedStatement myStmt = null;
 		boolean exists = false;
@@ -792,6 +771,7 @@ public final class DatabaseManager {
 		return exists;
 	}
 
+	// Check if a user has a particular artist in their library
 	public boolean userHasArtist(User user, Artist artist) {
 		PreparedStatement myStmt = null;
 		boolean exists = false;
@@ -813,6 +793,7 @@ public final class DatabaseManager {
 
 	// ADD & UPDATE METHODS //
 
+	// Add a user to the database. Used on sign up
 	public boolean addUser(User user) {
 		PreparedStatement myStmt=null;
 		try
@@ -833,6 +814,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Add a new track to the database
 	public void addTrack(Track track)
 	{
 		PreparedStatement myStmt = null;
@@ -853,6 +835,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Add a new artist to the database
 	public void addArtist(Artist artist)
 	{
 		PreparedStatement myStmt=null;
@@ -872,6 +855,7 @@ public final class DatabaseManager {
 
 	}
 
+	// Add a new album to the database
 	public void addAlbum(Album album)
 	{
 		PreparedStatement myStmt=null;
@@ -892,6 +876,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Add an artist to an album
 	public void addAlbum_has_Artist(Album album, Artist artist) {
 		PreparedStatement myStmt=null;
 		try
@@ -907,6 +892,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Add an track to an album
 	public void addAlbum_has_Track(Album album, Track track) {
 		PreparedStatement myStmt=null;
 		try
@@ -922,6 +908,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Add an track to a playlist
 	public void addTrackToPlaylist(Playlist playlist, Track track) {
 		PreparedStatement myStmt=null;
 		try
@@ -937,6 +924,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Add an track to an artist
 	public void addTrack_has_Artist(Track track, Artist artist) {
 		PreparedStatement myStmt=null;
 		try
@@ -952,6 +940,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Update a track
 	public void updateTrack(Track track) {
 		PreparedStatement myStmt = null;
 		try {
@@ -969,6 +958,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Update a track's play count
 	public void updateTrackPlays(Track track) {
 		PreparedStatement myStmt = null;
 		try {
@@ -982,6 +972,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Updatte an artist
 	public void updateArtist(Artist artist) {
 		PreparedStatement myStmt = null;
 		try {
@@ -998,6 +989,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Update an album
 	public void updateAlbum(Album album) {
 		PreparedStatement myStmt = null;
 		try {
@@ -1016,6 +1008,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Update a playlist
 	public void updatePlaylist(Playlist playlist) {
 		PreparedStatement myStmt = null;
 		try {
@@ -1030,6 +1023,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Add & Remove tracks in a playlist
 	public void updatePlaylistHasTrack(Playlist playlist) {
 		try {
 			Statement myStmt = myConn.createStatement();
@@ -1044,6 +1038,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Create a new playlistt
 	public void addPlaylist(Playlist playlist) {
 		PreparedStatement myStmt = null;
 		try {
@@ -1058,6 +1053,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Add tracks to a playlist
 	public boolean addTracksToPlaylist(Playlist playlist, ArrayList<Track> tracks) {
 		Boolean success = true;
 		for (int i = 0; i < tracks.size(); i++) {
@@ -1076,6 +1072,7 @@ public final class DatabaseManager {
 		return success;
 	}
 
+	// Add track to a user's library
 	public void addUser_has_Track(User user, Track track) {
 		PreparedStatement myStmt=null;
 		try
@@ -1091,6 +1088,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Add album to a user's library
 	public void addUser_has_Album(User user, Album album) {
 		PreparedStatement myStmt=null;
 		try
@@ -1106,6 +1104,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Add artist to a user's library
 	public void addUser_has_Artist(User user, Artist artist) {
 		PreparedStatement myStmt=null;
 		try
@@ -1124,6 +1123,7 @@ public final class DatabaseManager {
 
 	// DELETE METHODS //
 
+	// Delete an artist
 	public void deleteArtist(Artist artist) {
 		try {
 			Statement myStmt = myConn.createStatement();
@@ -1142,6 +1142,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Delete an album
 	public void deleteAlbum(Album album) {
 		try {
 			Statement myStmt = myConn.createStatement();
@@ -1178,6 +1179,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Delete a playlist
 	public void deletePlaylist(Playlist playlist) {
 		try {
 			Statement myStmt = myConn.createStatement();
@@ -1192,6 +1194,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Delete/Remove an artist from an album
 	public void deleteAlbum_has_Artist(Album album, Artist artist) {
 		try {
 			Statement myStmt = myConn.createStatement();
@@ -1204,6 +1207,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Delete/Remove an track from an album
 	public void deleteAlbum_has_Track(Album album, Track track) {
 		try {
 			Statement myStmt = myConn.createStatement();
@@ -1216,6 +1220,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Delete/Remove an track from an album
 	public void deleteTrack_has_Artist(Track track, Artist artist) {
 		try {
 			Statement myStmt = myConn.createStatement();
@@ -1228,6 +1233,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Delete/Remove an track from a playlist
 	public void removeTrackFromPlaylist(Playlist playlist, Track track) {
 		try {
 			Statement myStmt = myConn.createStatement();
@@ -1240,6 +1246,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Delete/Remove a track from a user's library
 	public void deleteUser_has_Track(User user, Track track) {
 		try {
 			Statement myStmt = myConn.createStatement();
@@ -1252,6 +1259,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Delete/Remove an album from a user's library
 	public void deleteUser_has_Album(User user, Album album) {
 		try {
 			Statement myStmt = myConn.createStatement();
@@ -1264,6 +1272,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Delete/Remove an artist from a user's library
 	public void deleteUser_has_Artist(User user, Artist artist) {
 		try {
 			Statement myStmt = myConn.createStatement();
@@ -1278,6 +1287,8 @@ public final class DatabaseManager {
 
 
 	// SQL GENERATION METHODS //
+
+	// Method to create a WHERE clause in SQL for filtering search results by a search string
 	private String filterSQL(String searchString, boolean searchByTrackName, boolean searchByAlbumName, boolean searchByArtistName) {
 		if (!searchByTrackName && !searchByAlbumName && !searchByArtistName) {
 			return " WHERE true";
@@ -1306,6 +1317,7 @@ public final class DatabaseManager {
 		}
 	}
 
+	// Method to create a part of a WHERE clause in SQL for filtering search results by genres
 	private String genreSQL(ArrayList<String> selectedGenres, String tableName) {
 	    String sql = "";
 	    if (selectedGenres.size() > 0) {
@@ -1327,6 +1339,7 @@ public final class DatabaseManager {
         return sql;
     }
 
+	// Method to create a series of SQL inserts for inerting tracks into a playlist
     private String addPlaylist_hasTrackSQL(Playlist playlist) {
 		String sql = "";
 		for (int i = 0; i < playlist.getTracks().size(); i++) {

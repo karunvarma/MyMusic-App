@@ -23,7 +23,10 @@
                 </image>
             </ImageView>
             <VBox spacing="10">
-                <Label text="Name" fx:id="albumNameLabel" styleClass="label-l"></Label>
+                <HBox spacing="20">
+                    <Label text="Name" fx:id="albumNameLabel" styleClass="label-l"></Label>
+                    <Button fx:id="playButton" text="Play" styleClass="label-s" onAction="#play"></Button>
+                </HBox>
                 <Label text="Artist" fx:id="albumArtistLabel" styleClass="label-m"></Label>
                 <Label text="" fx:id="albumYearLabel" styleClass="label-s"></Label>
                 <Label text="" fx:id="albumGenreLabel" styleClass="label-s"></Label>

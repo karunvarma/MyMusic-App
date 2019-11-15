@@ -13,6 +13,8 @@ public class AlbumController {
     String prevPage;
 
     @FXML
+    private Button playButton;
+    @FXML
     private ImageView albumImageView;
     @FXML
     private Label albumNameLabel;
@@ -38,6 +40,8 @@ public class AlbumController {
     private TextField genreTextField;
     @FXML
     private CheckBox yoursCheckBox;
+
+    private TableView trackTableView;
 
 
     @FXML
@@ -149,6 +153,17 @@ public class AlbumController {
         }
     }
 
+    @FXML
+    public void play() {
+        if (playButton.getText().equals("Play")) {
+            album.play(playButton);
+        }
+        else {
+            album.pause();
+        }
+
+    }
+
     public void setUp(Album album, User user, String prevPage) {
         this.album = album;
         this.user = user;
@@ -163,9 +178,9 @@ public class AlbumController {
             albumYearLabel.setText(album.getYear()+"");
             albumGenreLabel.setText(album.getGenre());
             albumTracksContent.getChildren().clear();
-            TableView tableView = new TrackTableView(album.getTracks(), user);
-            tableView.setMinWidth(1600);
-            albumTracksContent.getChildren().add(tableView);
+            trackTableView = new TrackTableView(album.getTracks(), user);
+            trackTableView.setMinWidth(1600);
+            albumTracksContent.getChildren().add(trackTableView);
 
             if (album.isYours()) {
                 yoursCheckBox.setSelected(true);
