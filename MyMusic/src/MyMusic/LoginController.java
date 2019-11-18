@@ -7,6 +7,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.Label;
 
 
+/*
+// Controller for login.fxml
+*/
 public class LoginController {
     @FXML
     private TextField usernameField;
@@ -53,6 +56,8 @@ public class LoginController {
         }
     }
 
+    // Check if the text entered in the username and password fields is valid
+    // If the input is invalid return false
     private boolean validateLogin() {
         Boolean isValid = true;
         if (usernameField.getText().equals("")) {

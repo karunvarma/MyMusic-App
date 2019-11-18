@@ -7,6 +7,8 @@ import java.io.IOException;
 
 
 // Singleton class
+// Responsible for changing the root of the scene ("changing the page")
+// goTo methods set an fxml file as the root of the scene, change the controller to match the fxml file, and call the new controller's setUp method
 public final class PageChanger {
 
     private static final PageChanger INSTANCE = new PageChanger();

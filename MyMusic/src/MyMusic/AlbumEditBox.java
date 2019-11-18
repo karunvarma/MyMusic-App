@@ -8,7 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-
+// UI element for editing and adding albums in the admin tab
 public class AlbumEditBox extends HBox {
     private TextField nameField;
     private TextField imagePathField;
@@ -20,8 +20,9 @@ public class AlbumEditBox extends HBox {
     private Button deleteButton;
 
     private Album album;
-    private boolean isNew;
+    private boolean isNew; // was added to layout using the add button
 
+    // No params when adding an album
     public AlbumEditBox() {
         isNew = true;
         this.album = new Album();
@@ -131,8 +132,11 @@ public class AlbumEditBox extends HBox {
         return isValid;
     }
 
+    // Save the album
     private void save() {
         DatabaseManager databaseManager = DatabaseManager.getInstance();
+
+        // If new insert, else update
         if (isNew) {
             try {
                 databaseManager.addAlbum(getAlbum());
@@ -150,6 +154,7 @@ public class AlbumEditBox extends HBox {
         }
     }
 
+    // Reset any changes
     private void resetChildren() {
         if (isNew) {
             nameField.setText("");
@@ -167,9 +172,11 @@ public class AlbumEditBox extends HBox {
         }
     }
 
+    // Delete the album
     private void delete() {
         DatabaseManager databaseManager = DatabaseManager.getInstance();
         if (isNew) {
+            // Don't need to use DatabaseManager if was a new album, so just remove self from parent
             ((VBox) getParent()).getChildren().remove(this);
         }
         else {

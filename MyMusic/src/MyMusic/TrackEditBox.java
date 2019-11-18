@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
+// UI element for editing and adding tracks in the admin tab
 public class TrackEditBox extends HBox {
     private TextField nameField;
     private TextField mediaPathField;
@@ -21,8 +22,9 @@ public class TrackEditBox extends HBox {
     private Button deleteButton;
 
     private Track track;
-    private boolean isNew;
+    private boolean isNew; // was added to layout using the add button
 
+    // No params when adding a new track
     public TrackEditBox() {
         isNew = true;
         this.track = new Track();
@@ -132,8 +134,11 @@ public class TrackEditBox extends HBox {
         return isValid;
     }
 
+    // Save the track
     public void save() {
         DatabaseManager databaseManager = DatabaseManager.getInstance();
+
+        // If new insert, else update
         if (isNew) {
             try {
                 databaseManager.addTrack(getTrack());
@@ -151,6 +156,7 @@ public class TrackEditBox extends HBox {
         }
     }
 
+    // Redo any changes
     private void resetChildren() {
         if (isNew) {
             nameField.setText("");
@@ -168,8 +174,10 @@ public class TrackEditBox extends HBox {
         }
     }
 
+    // Delete the track
     private void delete() {
         if (isNew) {
+            // Don't need to use DatabaseManager if was a new track, so just remove self from parent
             ((VBox) getParent()).getChildren().remove(this);
         }
         else {

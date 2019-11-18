@@ -21,7 +21,7 @@ public final class DatabaseManager {
 		String dbUrl="jdbc:mysql://localhost:3306/"+db_name+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user="root";
 		String password="root";
-
+		
 		try {
 			myConn=DriverManager.getConnection(dbUrl, user, password);
 			System.out.println("Database connected sucessfully");

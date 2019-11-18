@@ -2,12 +2,12 @@ package MyMusic;
 
 import java.util.List;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+
+// Table view UI element for tracks
 public class TrackTableView extends TableView {
     public TrackTableView(List<Track> trackList, User user) {
         setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY);

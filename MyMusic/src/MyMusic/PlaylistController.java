@@ -7,6 +7,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+
+/*
+// Controller for playlist.fxml
+*/
 public class PlaylistController {
     private Playlist playlist;
     private User user;
@@ -31,6 +35,8 @@ public class PlaylistController {
     }
 
 
+    // Method called when the save button is clicked
+    // Calls the savePlaylist method of the DatabaseManager and updates the playlist
     @FXML
     public void savePlaylist() {
         try {
@@ -45,6 +51,8 @@ public class PlaylistController {
     }
 
 
+    // Method called when the delete button is clicked
+    // Calls the deletePlaylist method of the DatabaseManager and updates the use object's playlist list
     @FXML
     public void deletePlaylist() {
         try {
@@ -59,7 +67,8 @@ public class PlaylistController {
 
     }
 
-
+    // Set up method called when 'page' is changed to playlist.fxml
+    // Sets up the UI elements of playlist.fxml with the proper values
     public void setUp(Playlist playlist, User user) {
         this.playlist = playlist;
         this.user = user;

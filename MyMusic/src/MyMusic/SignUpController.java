@@ -5,6 +5,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/*
+// Controller for signup.fxml
+*/
 public class SignUpController {
     @FXML
     private TextField nameField;
@@ -36,8 +39,10 @@ public class SignUpController {
                     errorLabel.setText("Username is taken");
                 }
                 else {
+                    // Add user to the database if the username and password are valid
                     User user = new User(-1, name, username, password, false);
                     if (dbManager.addUser(user)) {
+                        // Go back to login page on successful sign up
                         PageChanger.getInstance().goToLoginPage(usernameField.getScene());
                     }
                     else {
@@ -55,7 +60,8 @@ public class SignUpController {
         }
     }
 
-
+    // Check if the text entered in the username and password fields is valid
+    // If the input is invalid return false
     private boolean validateLogin() {
         Boolean isValid = true;
         if (usernameField.getText().equals("")) {
@@ -77,6 +83,7 @@ public class SignUpController {
         return isValid;
     }
 
+    // Go back to login page when cancel/back button is clicked or when sign up is successful
     public void goToLoginPage()  {
         PageChanger.getInstance().goToLoginPage(usernameField.getScene());
     }

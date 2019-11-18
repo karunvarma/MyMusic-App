@@ -6,6 +6,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+/*
+// Controller for album.fxml
+*/
 public class AlbumController {
     private Album album;
     private User user;
@@ -44,6 +47,7 @@ public class AlbumController {
     private TableView trackTableView;
 
 
+    // When check mark box is clicked either add album or remove album from the current user's library
     @FXML
     private void markAsYours() {
         try {
@@ -61,6 +65,7 @@ public class AlbumController {
         }
     }
 
+    // Modify UI elements when shifting to and from edit mode
     @FXML
     public void toggleEditMode() {
         if (inEditMode) {
@@ -124,17 +129,20 @@ public class AlbumController {
         try {
             databaseManager = DatabaseManager.getInstance();
 
+            // Set properties of album
             album.setName(albumNameTextField.getText());
             album.setImagePath(imagePathTextField.getText());
             album.setYear(Integer.parseInt(yearTextField.getText()));
             album.setGenre(genreTextField.getText());
 
+            // Set the values of the UI elements
             albumNameLabel.setText(album.getName());
             Image image = new Image(album.getImagePath());
             albumImageView.setImage(image);
             albumYearLabel.setText(album.getYear()+"");
             albumGenreLabel.setText(album.getGenre());
 
+            // Update the album in the DB
             databaseManager.updateAlbum(album);
 
         } catch (Exception e) {
@@ -164,6 +172,8 @@ public class AlbumController {
 
     }
 
+    // Set up method called when 'page' is changed to album.fxml
+    // Initializes variables and sets up the UI elements of album.fxml with the proper values
     public void setUp(Album album, User user, String prevPage) {
         this.album = album;
         this.user = user;

@@ -2,11 +2,8 @@ package MyMusic;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -14,13 +11,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
-import sun.jvm.hotspot.debugger.Page;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+// Controller for search.fxml
+*/
 public class SearchController {
     private User user;
 
@@ -382,6 +380,7 @@ public class SearchController {
         return genreList;
     }
 
+    // Set up method called when 'page' is changed to search.fxml
     public void setUp(User user) {
         this.user = user;
         nameLabel.setText(user.getName());
@@ -390,5 +389,6 @@ public class SearchController {
     @FXML
     public void logout() {
         PageChanger.getInstance().goToLoginPage(searchField.getScene());
+        MediaPlayerManager.stop();
     }
 }

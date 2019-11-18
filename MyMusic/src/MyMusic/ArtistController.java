@@ -42,6 +42,7 @@ public class ArtistController {
     private CheckBox yoursCheckBox;
 
 
+    // Get a UI element to show an artist's albums
     private Node getAlbumResults(List<Album> albumList) {
         // VBox that will contain everything and be returned
         VBox albumResults = new VBox();
@@ -101,6 +102,7 @@ public class ArtistController {
     }
 
 
+    // When check mark box is clicked either add artist or remove artist from the current user's library
     @FXML
     private void markAsYours() {
         try {
@@ -118,6 +120,7 @@ public class ArtistController {
         }
     }
 
+    // Modify UI elements when shifting to and from edit mode
     @FXML
     public void toggleEditMode() {
         if (inEditMode) {
@@ -155,13 +158,16 @@ public class ArtistController {
     private void save() {
         DatabaseManager databaseManager = DatabaseManager.getInstance();
         try {
+            // Set the properties of the artist
             artist.setName(artistNameTextField.getText());
             artist.setImagePath(imagePathTextField.getText());
 
+            // Set the values of the UI elements
             artistNameLabel.setText(artist.getName());
             Image image = new Image(artist.getImagePath());
             artistImageView.setImage(image);
 
+            // Update the artist in the DB
             databaseManager.updateArtist(artist);
         } catch (Exception e) {
             e.printStackTrace();
@@ -178,6 +184,8 @@ public class ArtistController {
         }
     }
 
+    // Set up method called when 'page' is changed to artist.fxml
+    // Initializes variables and sets up the UI elements of artist.fxml with the proper values
     public void setUp(Artist artist, User user, String prevPage) {
         this.artist = artist;
         this.user = user;

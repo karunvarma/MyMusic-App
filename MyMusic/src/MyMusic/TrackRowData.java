@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
+
+// Used as rows in a TrackTableView
 public class TrackRowData {
     private User user;
     private Track track;

@@ -13,6 +13,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+// Controller for home.fxml
+*/
 public class Controller {
     private User user;
 
@@ -31,6 +34,8 @@ public class Controller {
     private VBox yourMusicContent;
 
 
+
+    // Display methods to set the shown content when tabs are clicked
     @FXML
     private void displayTracks() {
         yourMusicContent.getChildren().clear();
@@ -60,10 +65,12 @@ public class Controller {
     }
 
 
+    // Get a UI element to show a users's tracks
     public void setTrackContent(List<Track> trackList) {
         trackContent = new TrackTableView(trackList, user);
     }
 
+    // Get a UI element to show a users's albums
     public void setAlbumContent(List<Album> albumList) {
         albumContent = new VBox();
         albumContent.setSpacing(5);
@@ -106,6 +113,7 @@ public class Controller {
         }
     }
 
+    // Get a UI element to show a users's artists
     public void setArtistContent(List<Artist> artistList) {
         artistContent = new VBox();
         artistContent.setSpacing(5);
@@ -148,6 +156,7 @@ public class Controller {
         }
     }
 
+    // Get a UI element to show an users's playlists
     public void setPlaylistContent() {
         VBox content = new VBox();
 
@@ -206,10 +215,14 @@ public class Controller {
     }
 
 
+    // Go to admin page when admin tab is clicked
     public void adminBtnAction() {
         PageChanger.getInstance().goToAdminPage(nameLabel.getScene(), user);
     }
 
+    // Set up method called when 'page' is changed to home.fxml
+    // Sets up the UI elements of home.fxml with the proper values
+    // Set the content based on tab param
     public void setUp(User user, String tab) {
         this.user = user;
         nameLabel.setText(user.getName());
@@ -237,6 +250,7 @@ public class Controller {
             e.printStackTrace();
         }
 
+        // Only display admin tab if the current user is an admin
         if (user.isAdmin()) {
             adminButton.setVisible(true);
         }
@@ -250,5 +264,6 @@ public class Controller {
     @FXML
     public void logout() {
         PageChanger.getInstance().goToLoginPage(yourMusicContent.getScene());
+        MediaPlayerManager.stop();
     }
 }
