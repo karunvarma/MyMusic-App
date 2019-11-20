@@ -41,13 +41,20 @@ public class MediaPlayerManager {
             mediaPlayer.setOnPaused(new Runnable() {
                 @Override
                 public void run() {
-                    button.setText("Play");
+                    button.setText("Continue");
                 }
             });
             mediaPlayer.setOnPlaying(new Runnable() {
                 @Override
                 public void run() {
                     button.setText("Pause");
+                }
+            });
+            mediaPlayer.setOnStopped(new Runnable() {
+                @Override
+                public void run() {
+                    button.setText("Play");
+                    track.setIsActiveTrack(false);
                 }
             });
         }
@@ -82,6 +89,13 @@ public class MediaPlayerManager {
                 @Override
                 public void run() {
                     button.setText("Pause");
+                }
+            });
+            mediaPlayer.setOnStopped(new Runnable() {
+                @Override
+                public void run() {
+                    button.setText("Play");
+                    album.getTracks().get(playIndex).setIsActiveTrack(false);
                 }
             });
         }

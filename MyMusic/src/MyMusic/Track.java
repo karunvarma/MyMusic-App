@@ -6,7 +6,7 @@ import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 
-public class Track {
+public class Track implements Component{
 	private int id;
 	private String name;
 	private String genre;
@@ -158,9 +158,20 @@ public class Track {
 
 
 
+	public void printInfo() {
+    	System.out.println("Track");
+		System.out.println("Name: " + name);
+		System.out.println("Genre:" + genre);
+		System.out.println("Time: " + time);
+		System.out.println("Artist name: " + artist_name);
+	}
 
 	public void play(Button playButton) {
         MediaPlayerManager.playTrack(this, playButton);
+	}
+
+	public void continuePlaying() {
+		MediaPlayerManager.continuePlaying();
 	}
 
 	public void pause() {
@@ -170,4 +181,5 @@ public class Track {
     public void stop() {
         MediaPlayerManager.stop();
     }
+
 }

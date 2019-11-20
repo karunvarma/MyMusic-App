@@ -18,7 +18,9 @@ public class ArtistController {
     private Artist artist;
     private User user;
     private boolean inEditMode;
-    private String prevPage;
+
+    // State object
+    private PageOriginState pageOriginState;
 
     @FXML
     private Label artistNameLabel;
@@ -76,7 +78,7 @@ public class ArtistController {
                     itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            PageChanger.getInstance().goToAlbumPage(artistNameLabel.getScene(), album, user, prevPage);
+                            PageChanger.getInstance().goToAlbumPage(artistNameLabel.getScene(), album, user, pageOriginState);
                         }
                     });
                     itemBoxRow.getChildren().add(itemBox);
@@ -176,21 +178,16 @@ public class ArtistController {
 
     @FXML
     public void goBack() {
-        if (prevPage.equals("home")) {
-            PageChanger.getInstance().goToHomePage(artistNameLabel.getScene(), user, "artist");
-        }
-        else if (prevPage.equals("search")){
-            PageChanger.getInstance().goToSearchPage(artistNameLabel.getScene(), user);
-        }
+        pageOriginState.goBack(artistNameLabel.getScene(), user);
     }
 
     // Set up method called when 'page' is changed to artist.fxml
     // Initializes variables and sets up the UI elements of artist.fxml with the proper values
-    public void setUp(Artist artist, User user, String prevPage) {
+    public void setUp(Artist artist, User user, PageOriginState state) {
         this.artist = artist;
         this.user = user;
         inEditMode = false;
-        this.prevPage = prevPage;
+        pageOriginState = state;
 
         if (artist != null) {
             Image image = new Image(artist.getImagePath());

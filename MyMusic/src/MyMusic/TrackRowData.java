@@ -39,6 +39,9 @@ public class TrackRowData {
                 if (playBtn.getText().equals("Play")) {
                     track.play(playBtn);
                 }
+                else if (playBtn.getText().equals("Continue")) {
+                    track.play(playBtn);
+                }
                 else if (playBtn.getText().equals("Pause")){
                     track.pause();
                 }

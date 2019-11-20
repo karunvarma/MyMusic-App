@@ -92,7 +92,7 @@ public class Controller {
                 itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        PageChanger.getInstance().goToAlbumPage(yourMusicContent.getScene(), album, user, "home");
+                        PageChanger.getInstance().goToAlbumPage(yourMusicContent.getScene(), album, user, new FromHomePageState());
                     }
                 });
                 itemBoxRow.getChildren().add(itemBox);
@@ -135,7 +135,7 @@ public class Controller {
                 itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        PageChanger.getInstance().goToArtistPage(yourMusicContent.getScene(), artist, user, "home");
+                        PageChanger.getInstance().goToArtistPage(yourMusicContent.getScene(), artist, user, new FromHomePageState());
                     }
                 });
                 itemBoxRow.getChildren().add(itemBox);

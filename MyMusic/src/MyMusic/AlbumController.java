@@ -13,7 +13,10 @@ public class AlbumController {
     private Album album;
     private User user;
     boolean inEditMode;
-    String prevPage;
+
+    // State object
+    private PageOriginState pageOriginState;
+
 
     @FXML
     private Button playButton;
@@ -153,12 +156,7 @@ public class AlbumController {
 
     @FXML
     public void goBack() {
-        if (prevPage.equals("home")) {
-            PageChanger.getInstance().goToHomePage(albumNameLabel.getScene(), user, "album");
-        }
-        else if (prevPage.equals("search")) {
-            PageChanger.getInstance().goToSearchPage(albumNameLabel.getScene(), user);
-        }
+        pageOriginState.goBack(albumNameLabel.getScene(), user);
     }
 
     @FXML
@@ -174,11 +172,11 @@ public class AlbumController {
 
     // Set up method called when 'page' is changed to album.fxml
     // Initializes variables and sets up the UI elements of album.fxml with the proper values
-    public void setUp(Album album, User user, String prevPage) {
+    public void setUp(Album album, User user, PageOriginState state) {
         this.album = album;
         this.user = user;
         inEditMode = false;
-        this.prevPage = prevPage;
+        pageOriginState = state;
 
         if (album != null) {
             Image image = new Image(album.getImagePath());

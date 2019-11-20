@@ -4,7 +4,7 @@ import javafx.scene.media.MediaPlayer;
 
 import java.util.ArrayList;
 
-public class Album {
+public class Album implements Component {
 	private int id;
 	private String name;
 	private String imagePath;
@@ -130,6 +130,22 @@ public class Album {
 
 	public void stop() {
 		MediaPlayerManager.stop();
+	}
+
+
+	// Method used in composite pattern
+	public void printInfo() {
+		System.out.println("Album");
+		System.out.println("Name: " + name);
+		System.out.println("Genre:" + genre);
+		System.out.println("Year: " + year);
+		System.out.println("Artist name: " + artistName);
+		System.out.println("Rating: " + rating);
+
+		for (Track track : tracks) {
+			System.out.println();
+			track.printInfo();
+		}
 	}
 
 }

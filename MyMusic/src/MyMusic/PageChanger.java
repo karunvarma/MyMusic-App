@@ -20,7 +20,7 @@ public final class PageChanger {
     }
 
 
-    public void goToArtistPage(Scene scene, Artist artist, User user, String prevPage) {
+    public void goToArtistPage(Scene scene, Artist artist, User user, PageOriginState state) {
         try {
             Parent root = null;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/artist.fxml"));
@@ -30,7 +30,7 @@ public final class PageChanger {
             ArtistController controller = loader.getController();
 
             // Set property of the controller
-            controller.setUp(artist, user, prevPage);
+            controller.setUp(artist, user, state);
 
             scene.setRoot(root);
         } catch (IOException e) {
@@ -38,7 +38,7 @@ public final class PageChanger {
         }
     }
 
-    public void goToAlbumPage(Scene scene, Album album, User user, String prevPage) {
+    public void goToAlbumPage(Scene scene, Album album, User user, PageOriginState state) {
         try {
             Parent root = null;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/album.fxml"));
@@ -48,7 +48,7 @@ public final class PageChanger {
             AlbumController controller = loader.getController();
 
             // Set property of the controller
-            controller.setUp(album, user, prevPage);
+            controller.setUp(album, user, state);
 
             scene.setRoot(root);
         } catch (IOException e) {

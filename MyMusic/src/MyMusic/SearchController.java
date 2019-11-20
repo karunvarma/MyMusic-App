@@ -205,7 +205,7 @@ public class SearchController {
                 itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        PageChanger.getInstance().goToAlbumPage(searchField.getScene(), album, user, "search");
+                        PageChanger.getInstance().goToAlbumPage(searchField.getScene(), album, user, new FromSearchPageState());
                     }
                 });
                 itemBoxRow.getChildren().add(itemBox);
@@ -266,7 +266,7 @@ public class SearchController {
                 itemBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        PageChanger.getInstance().goToArtistPage(searchField.getScene(), artist, user, "search");
+                        PageChanger.getInstance().goToArtistPage(searchField.getScene(), artist, user, new FromSearchPageState());
                     }
                 });
                 itemBoxRow.getChildren().add(itemBox);
